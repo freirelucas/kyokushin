@@ -27,7 +27,7 @@
 --branca:#8899bb;--laranja:#cc7722;--azul:#4488ee;--amarela:#ddaa22;
 --verde:#33aa66;--marrom:#aa6633;--kata:#8844dd;--shodan:#e8d5a3;
 --acao:#e8a030;--buki-mao:#e06060;--buki-pe:#4488dd;
---direcao:#8866ee;--alvo:#44aa66;--dachi:#cc8833;--ido:#33aaaa;}
+--direcao:#8866ee;--alvo:#44aa66;--dachi:#cc8833;--ido:#33aaaa;--mod:#aa88cc;}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100vh;background:var(--bg);color:var(--text);
 font-family:system-ui,-apple-system,Segoe UI,sans-serif;overflow:hidden}
@@ -607,7 +607,7 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
 </div></div>
 
 <script>
-const NT={acao:'#e8a030',buki_mao:'#e06060',buki_pe:'#4488dd',direcao:'#8866ee',alvo:'#44aa66',dachi:'#cc8833',ido:'#33aaaa'};
+const NT={acao:'#e8a030',buki_mao:'#e06060',buki_pe:'#4488dd',direcao:'#8866ee',alvo:'#44aa66',dachi:'#cc8833',ido:'#33aaaa',mod:'#aa88cc'};
 const BS={branca:'#8899bb',laranja:'#cc7722',azul:'#4488ee',amarela:'#ddaa22',verde:'#33aa66',marrom:'#aa6633',kata:'#8844dd',shodan:'#e8d5a3'};
 const BELT_ORDER=['branca','laranja','azul','amarela','verde','marrom','shodan'];
 let activeBelt='all';
@@ -698,6 +698,66 @@ note:'歩み — "caminhada, passo." De 歩む, "caminhar avançando." O desloca
 note:'送り — de 送る, "enviar, acompanhar." O pé de trás segue o de frente sem cruzar — deslizamento coordenado. Mantém a postura durante o avanço; mais estável que ayumi sob pressão.'},
 {id:'tobi',label:'Tobi',pt:'salto',type:'ido',
 note:'飛び — de 飛ぶ, "voar, saltar." Deslocamento com fase aérea — máxima explosão de potência. O Tobi no Pinan Sono Go e no Kanku representa a resolução de um impasse de distância pelo ar.'},
+{id:'tenshin',label:'Tenshin',pt:'transformação corporal',type:'ido',
+note:'転身 — 転 = girar, transformar; 身 = corpo. "Transformar o corpo." Recuo em ângulo 45° para fora da linha de ataque. Não é recuo — é reposicionamento estratégico. Presente no Yantsu e nos renraku de marrom/shodan.'},
+{id:'fumi',label:'Fumi',pt:'pisar/avançar',type:'ido',
+note:'踏み — de 踏む, "pisar, avançar." Fumi-dashi = passo largo de entrada a 45°. Diferente de ayumi (alternado) e okuri (deslizante) — fumi é explosivo e diagonal. Tai sabaki básico do kumite.'},
+{id:'oi',label:'Oi',pt:'perseguição',type:'ido',
+note:'追い — de 追う, "perseguir." Oi Tsuki = soco com a mão da frente ao avançar. O corpo inteiro persegue o alvo — pé, quadril e punho se movem como unidade. Base dos Taikyoku.'},
+// acao — novas acções verbais
+{id:'osae',label:'Osae',pt:'pressionar/esmagar',type:'acao',
+note:'押さえ — de 押さえる, "pressionar, suprimir." Acção de supressão contínua — diferente de uke (receber/desviar). Shuto Osae Uke pressiona o ataque para baixo em vez de desviá-lo. Presente no Tensho e Pinan Sono Go.'},
+{id:'ate',label:'Ate',pt:'golpe directo',type:'acao',
+note:'当て — de 当てる, "acertar, impactar." Golpe de compressão — nem linear (tsuki) nem percussivo (uchi). Hiji Ate = cotovelada directa. O cotovelo não chicoteia como uchi; empurra como pistão.'},
+{id:'kakiwake',label:'Kakiwake',pt:'separar/cunha',type:'acao',
+note:'掻き分け — de 掻く (raspar) + 分ける (separar). "Separar raspando." Os dois braços abrem simultaneamente em direcções opostas, criando uma cunha. Defesa contra agarramento ou ataque duplo.'},
+{id:'hiki',label:'Hiki',pt:'puxar',type:'acao',
+note:'引き — de 引く, "puxar." Acção de tracção — a única acção que traz o oponente para si em vez de afastá-lo. No Tensho, Hiki fecha a sequência de mão aberta puxando o braço do oponente.'},
+// direcao — novos vectores/trajectórias
+{id:'otoshi',label:'Otoshi',pt:'descendente',type:'direcao',
+note:'落とし — de 落とす, "deixar cair, derrubar." Vector descendente — oposto de Age (ascendente). Otoshi Empi cai sobre o oponente usando gravidade + massa. Kakato Otoshi = calcanhar descendente.'},
+{id:'ura',label:'Ura',pt:'invertido/reverso',type:'direcao',
+note:'裏 — "verso, avesso, oculto." Inversão da posição da arma, não da direcção do corpo (isso é Gyaku). Ura Tsuki = punho invertido (palma para cima). Ura Mawashi = chute circular reverso (calcanhar lidera).'},
+{id:'tate',label:'Tate',pt:'vertical',type:'direcao',
+note:'縦 — "vertical, perpendicular." Orientação do punho, não trajectória. Tate Tsuki = soco com punho vertical (polegar para cima em vez de rotação completa). Menor alcance, maior velocidade de retorno.'},
+{id:'shita',label:'Shita',pt:'inferior/ascendente',type:'direcao',
+note:'下 — "abaixo, inferior." Vector de baixo para cima. Seiken Shita Tsuki = uppercut. O nome parece paradoxal (shita=baixo, mas o soco sobe) — indica a posição de partida, não o destino.'},
+{id:'shomen',label:'Shomen',pt:'frontal/face',type:'direcao',
+note:'正面 — 正 = correcto; 面 = face, superfície. "Face frontal." Distingue-se de Mae (frontal genérico): Shomen especifica o vector perpendicular ao rosto. Uraken Shomen Uchi = dorso do punho directo à face.'},
+{id:'sayu',label:'Sayu',pt:'bilateral (esq-dir)',type:'direcao',
+note:'左右 — 左 = esquerda; 右 = direita. "Esquerda-e-direita." Indica alternância bilateral ou vector horizontal amplo. Uraken Sayu Uchi golpeia em arco horizontal que cobre ambos os lados.'},
+// alvo
+{id:'ude',label:'Ude',pt:'antebraço',type:'buki_mao',
+note:'腕 — "antebraço, braço." Superfície estrutural do bloqueio. É a arma implícita de todo Uke e Barai — o antebraço nunca aparece no nome porque é o padrão absoluto. Quando outra arma é usada (Shuto, Koken), ela é nomeada.'},
+// mod — modificadores de quantidade/padrão
+{id:'morote',label:'Morote',pt:'duas mãos',type:'mod',
+note:'諸手 — 諸 = vários, todos; 手 = mão. "Ambas as mãos." Modificador de quantidade: a técnica usa dois braços simultaneamente. Morote Uke = bloqueio reforçado; Morote Tsuki = soco duplo.'},
+{id:'juji',label:'Juji',pt:'cruz/X',type:'mod',
+note:'十字 — 十 = dez; 字 = caractere. "Caractere dez = cruz." Padrão geométrico: os dois braços cruzam em X. Juji Uke bloqueia formando uma cruz — cada braço suporta o outro. Defesa contra ataques pesados.'},
+{id:'nidan',label:'Nidan',pt:'dois níveis',type:'mod',
+note:'二段 — 二 = dois; 段 = nível. "Dois níveis." Modificador de sequência: dois golpes com a mesma perna sem pousar entre eles. Nidan Geri = chute duplo no ar. Exige controlo aéreo excepcional.'},
+{id:'yonhon',label:'Yonhon',pt:'quatro (dedos)',type:'mod',
+note:'四本 — 四 = quatro; 本 = contagem de objetos longos. "Quatro (dedos)." Especifica a variante de Nukite com quatro dedos estendidos (vs Ippon Nukite com um dedo). Pinan Sono San introduz Yonhon Nukite.'},
+// direcao — vectores adicionais
+{id:'kagi',label:'Kagi',pt:'gancho',type:'direcao',
+note:'鉤 — "gancho, curva." Trajetória em arco de 90°. Seiken Kagi Tsuki = soco em gancho lateral. O punho viaja em semicírculo horizontal, não em linha reta.'},
+// alvo — alvos adicionais
+{id:'ago',label:'Ago',pt:'queixo/mandíbula',type:'alvo',
+note:'顎 — "queixo, mandíbula." Alvo específico dentro de Gammen (rosto). Seiken Ago Uchi visa o ponto mais vulnerável da linha mandibular — golpe ascendente ao queixo.'},
+{id:'sakotsu',label:'Sakotsu',pt:'clavícula',type:'alvo',
+note:'鎖骨 — 鎖 = corrente; 骨 = osso. "Osso corrente = clavícula." Alvo entre Jodan e Chudan. Shuto Sakotsu Uchi desce a mão-faca sobre a clavícula — osso superficial e exposto.'},
+{id:'kin',label:'Kin',pt:'virilha',type:'alvo',
+note:'金 — abreviação de 金的 (kinteki), "alvo dourado" = virilha. Kin Geri é o chute à virilha — proibido no kumite mas ensinado na autodefesa. O nome eufemístico oculta o alvo real.'},
+// acao — acções adicionais
+{id:'kake',label:'Kake',pt:'enganchar',type:'acao',
+note:'掛け — de 掛ける, "enganchar, pendurar." Kake Uke = bloqueio enganchante. O pulso curva e engata no ataque em vez de simplesmente deflectir. Aparece em Kanku e kata avançados.'},
+{id:'uchikomi',label:'Uchikomi',pt:'percussão penetrante',type:'acao',
+note:'打ち込み — de 打ち込む, "bater e penetrar." Diferente de Uchi (percussão de superfície) — Uchikomi é percussão que visa penetrar o alvo. Shuto Sakotsu Uchikomi afunda a mão-faca na clavícula.'},
+// buki_mao — armas adicionais
+{id:'hiji',label:'Hiji',pt:'cotovelo (sinónimo)',type:'buki_mao',
+note:'肘 — "cotovelo." Sinónimo coloquial de Empi (猿臂). Hiji é o nome anatómico directo; Empi é o nome poético (braço de macaco). Ambos referem a mesma arma — o cotovelo. Hiji Uke, Hiji Ate.'},
+{id:'teisho',label:'Teisho',pt:'calcanhar da palma (sinónimo)',type:'buki_mao',
+note:'底掌 — 底 = base; 掌 = palma. "Base da palma." Sinónimo de Shotei. Teisho é mais usado em Goju-ryu (via Tensho); Shotei em Kyokushin. Mesma superfície: base óssea da palma.'},
 ];
 
 const TECHS=[
@@ -710,7 +770,7 @@ nodes:['seiken','tsuki','mae','jodan'],dachi:'zenkutsu',
 desc:'Mesma mecânica do Chudan Tsuki — apenas a linha do punho sobe ao nível do rosto. Jodan é modificador de altura, não técnica nova.',
 exec:'Linha do punho ao nível dos olhos. Cotovelo não levanta — o punho lidera.'},
 {id:'t03',name:'Seiken Shita Tsuki',pt:'soco ascendente (uppercut)',belt:'branca',action:'tsuki',kataOnly:false,
-nodes:['seiken','tsuki','age','chudan'],dachi:'zenkutsu',
+nodes:['seiken','tsuki','shita','chudan'],dachi:'zenkutsu',
 desc:'Soco em trajetória ascendente. Punho rotaciona com face para cima. Distância média, força do quadril subindo.',
 exec:'Cotovelo aponta ao chão no início. Força vem do quadril subindo, não do braço empurrando.'},
 {id:'t04',name:'Seiken Kagi Tsuki',pt:'soco em gancho',belt:'branca',action:'tsuki',kataOnly:false,
@@ -730,7 +790,7 @@ nodes:['uraken','uchi','mae','gammen'],dachi:'zenkutsu',
 desc:'Dorso do punho (uraken) golpeia o rosto. Trajetória de chicote — a velocidade do snap é a força.',
 exec:'Punho começa junto ao queixo. Braço estende rapidamente e retorna — chicote. Snap no impacto.'},
 {id:'t08',name:'Uraken Sayu Uchi',pt:'dorso do punho lateral',belt:'branca',action:'uchi',kataOnly:false,
-nodes:['uraken','uchi','yoko','jodan'],dachi:'kiba',
+nodes:['uraken','uchi','sayu','jodan'],dachi:'kiba',
 desc:'Uraken em trajetória horizontal lateral. Mesma arma, vetor diferente. Alvo: têmpora ou orelha.',
 exec:'Braço em arco horizontal. Uraken golpeia no mesmo eixo do ombro. Kiba dachi estabiliza.'},
 {id:'t09',name:'Uraken Hizo Uchi',pt:'dorso do punho na costela',belt:'branca',action:'uchi',kataOnly:false,
@@ -839,7 +899,7 @@ nodes:['shotei','uchi','mae'],dachi:'zenkutsu',
 desc:'Base da mão aberta golpeia. Superfície sólida, menos risco de lesionar dedos. Tensho usa shotei exclusivamente.',
 exec:'Mão abre, dedos dobram para trás. Base carnuda avança. Frontal (empurrar) ou circular.'},
 {id:'t35',name:'Morote Uke',pt:'bloqueio reforçado',belt:'azul',action:'uke',kataOnly:false,
-nodes:['uke','chudan','mae'],dachi:'zenkutsu',
+nodes:['morote','uke','chudan','mae'],dachi:'zenkutsu',
 desc:'Punho do braço de bloqueio apoiado no cotovelo do braço de apoio. Dois braços cooperando em defesa.',
 exec:'Um braço bloqueia (Soto Uke), o outro apoia sob o cotovelo. Estrutura rígida.'},
 {id:'t36',name:'Mawashi Uke',pt:'bloqueio circular',belt:'azul',action:'uke',kataOnly:false,
@@ -859,7 +919,7 @@ nodes:['haito','uchi','yoko'],dachi:'zenkutsu',
 desc:'Borda interna da mão (lado do indicador). Espelho do shuto — shuto usa borda do mínimo, haito usa borda do indicador.',
 exec:'Mão aberta, borda interna (indicador) projeta. Arco horizontal. Snap do pulso.'},
 {id:'t40',name:'Morote Tsuki',pt:'soco duplo simultâneo',belt:'amarela',action:'tsuki',kataOnly:false,
-nodes:['seiken','tsuki','mae','chudan'],dachi:'zenkutsu',
+nodes:['morote','seiken','tsuki','mae','chudan'],dachi:'zenkutsu',
 desc:'Ambos os punhos seiken avançam simultaneamente ao chudan. Dobra força — dobra dificuldade de coordenação.',
 exec:'Ambos os punhos partem do quadril. Chegam ao chudan no mesmo instante. O quadril empurra os dois.'},
 {id:'t41',name:'Koken Uke',pt:'bloqueio com pulso curvado',belt:'amarela',action:'uke',kataOnly:false,
@@ -867,15 +927,15 @@ nodes:['koken','uke','chudan'],dachi:'zenkutsu',
 desc:'Koken como buki defensivo. Mesma forma de pulso que golpeia em Koken Uchi agora redireciona ataques.',
 exec:'Koken desce em arco sobre o ataque. Redirecionar para baixo e lateral.'},
 {id:'t42',name:'Juji Uke',pt:'bloqueio em X',belt:'amarela',action:'uke',kataOnly:false,
-nodes:['uke','jodan','mae'],dachi:'zenkutsu',
+nodes:['juji','uke','jodan','mae'],dachi:'zenkutsu',
 desc:'Dois antebraços cruzados formam X. Defende socos altos ou baixos. Primeiro bloqueio com dois braços em oposição.',
 exec:'Ambos os punhos cruzam simultaneamente. Para jodan: sobem juntos. A estrutura X recebe o golpe.'},
 {id:'k01',name:'Ura Tsuki',pt:'soco invertido (uppercut curto)',belt:'kata',action:'tsuki',kataOnly:true,
-kataSrc:['Saifa','Seienchin'],nodes:['seiken','tsuki','gyaku'],dachi:'zenkutsu',
+kataSrc:['Saifa','Seienchin'],nodes:['seiken','tsuki','ura'],dachi:'zenkutsu',
 desc:'Soco com punho invertido (palma para cima). Técnica de clinch — distância mínima. Não canonizado no kihon porque requer contacto.',
 exec:'Punho invertido. Soco curto em linha reta. Cotovelo quase reto — distância de combate real.'},
 {id:'k02',name:'Tate Tsuki',pt:'soco com punho vertical',belt:'kata',action:'tsuki',kataOnly:true,
-kataSrc:['Tsuki no Kata'],nodes:['seiken','tsuki','mae'],dachi:'zenkutsu',
+kataSrc:['Tsuki no Kata'],nodes:['seiken','tsuki','tate','mae'],dachi:'zenkutsu',
 desc:'Punho na posição vertical (tate = vertical). Polegar para cima. Mecânica diferente — cotovelo aponta para o lado.',
 exec:'Punho vertical, mesmo caminho do tsuki padrão, mas sem rotação final.'},
 {id:'k03',name:'Haishu Uchi',pt:'dorso da mão aberta',belt:'kata',action:'uchi',kataOnly:true,
@@ -887,11 +947,11 @@ kataSrc:['Pinan Sono San'],nodes:['seiken','tsuki','ushiro'],dachi:'kiba',
 desc:'Soco com seiken disparado para trás. Kiba dachi com rotação de quadril inversa. Contra-ataque a agarrada por trás.',
 exec:'Em kiba dachi: punho dispara para trás, o outro bloqueia à frente. Quadril rotaciona para o lado do soco traseiro.'},
 {id:'k05',name:'Nidan Geri',pt:'chute duplo sem apoiar o pé',belt:'kata',action:'geri',kataOnly:true,
-kataSrc:['Saifa'],nodes:['geri','chusoku','mae'],dachi:'zenkutsu',
+kataSrc:['Saifa'],nodes:['nidan','geri','chusoku','mae'],dachi:'zenkutsu',
 desc:'Dois chutes consecutivos com a mesma perna sem pousar. Nidan = dois níveis. Exclusivo de kata.',
 exec:'Primeiro chute (gedan). Recolhe sem pousar. Segundo chute (jodan). Força em dois pulsos rápidos.'},
 {id:'k06',name:'Otoshi Empi',pt:'cotovelada descendente',belt:'kata',action:'uchi',kataOnly:true,
-kataSrc:['Saifa'],nodes:['empi','uchi','age'],dachi:'zenkutsu',
+kataSrc:['Saifa'],nodes:['empi','ate','otoshi'],dachi:'zenkutsu',
 desc:'Otoshi = cair. Cotovelada para baixo sobre o oponente. Usa o peso corporal.',
 exec:'Cotovelo sobe e cai com peso. Alvo abaixo: costela, coluna. Usar peso, não força muscular.'},
 {id:'k07',name:'Mawashi Empi',pt:'cotovelada circular',belt:'kata',action:'uchi',kataOnly:true,
@@ -903,7 +963,7 @@ kataSrc:['Seienchin','Pinan Sono Yon'],nodes:['empi','uchi','age'],dachi:'zenkut
 desc:'Cotovelada ascendente. Age = subir. Cotovelo sobe em arco — uppercut de cotovelo. Alvo: queixo.',
 exec:'Cotovelo parte da lateral e sobe em arco. O peso do corpo sobe junto.'},
 {id:'k09',name:'Kakiwake Uke',pt:'bloqueio em cunha',belt:'kata',action:'uke',kataOnly:true,
-kataSrc:['Pinan Sono Yon'],nodes:['uke','jodan','mae'],dachi:'zenkutsu',
+kataSrc:['Pinan Sono Yon'],nodes:['kakiwake','uke','jodan','mae'],dachi:'zenkutsu',
 desc:'Antebraços se separam de dentro para fora como cunha, dividindo espaço entre dois ataques simultâneos.',
 exec:'Ambos os punhos cruzados à frente. Abrir os dois braços simultaneamente para fora.'},
 {id:'k10',name:'Kake Uke',pt:'bloqueio em gancho',belt:'kata',action:'uke',kataOnly:true,
@@ -911,13 +971,87 @@ kataSrc:['Pinan Sono Yon'],nodes:['uke','mawashi','chudan'],dachi:'kokutsu',
 desc:'Pulso curva e captura o ataque em vez de desviá-lo. Kake = ganchar. Desvio para controle.',
 exec:'Pulso curva sobre o ataque e engancha. Captura e controla o membro atacante.'},
 {id:'k11',name:'Shuto Osae Uke',pt:'mão faca pressionando',belt:'kata',action:'uke',kataOnly:true,
-kataSrc:['Pinan Sono Go'],nodes:['shuto','uke','mae'],dachi:'kokutsu',
+kataSrc:['Pinan Sono Go'],nodes:['shuto','osae','uke','mae'],dachi:'kokutsu',
 desc:'Shuto que pressiona o ataque para baixo (osae = suprimir). Suprime em vez de desviar.',
 exec:'Shuto desce sobre o ataque e pressiona. Força descendente contínua, não snap.'},
 {id:'k12',name:'Teisho Uke',pt:'bloqueio com calcanhar da palma',belt:'kata',action:'uke',kataOnly:true,
 kataSrc:['Tensho'],nodes:['shotei','uke','mae'],dachi:'sanchin',
 desc:'Bloqueio com teisho (shotei). Em Tensho, todos os bloqueios são teisho — único kata inteiramente de mão aberta.',
 exec:'Base da palma avança e redireciona. Suave no contato, firme no controle. Sanchin dachi.'},
+// --- técnicas referenciadas nos kata mas antes sem entrada própria ---
+{id:'k13',name:'Hiji Uke',pt:'bloqueio com cotovelo',belt:'kata',action:'uke',kataOnly:true,
+kataSrc:['Pinan Sono San'],nodes:['empi','uke','chudan'],dachi:'kiba',
+desc:'O cotovelo recebe o ataque. Defesa de curta distância — quando o adversário já penetrou a guarda dos punhos.',
+exec:'Cotovelo sobe lateralmente ou para dentro. Absorve no osso. Distância mínima.'},
+{id:'k14',name:'Ushiro Hiji Ate',pt:'cotovelada para trás',belt:'kata',action:'ate',kataOnly:true,
+kataSrc:['Pinan Sono San'],nodes:['empi','ate','ushiro'],dachi:'zenkutsu',
+desc:'Cotovelada directa para trás sem virar o corpo. Ataque ao adversário que agarra por trás.',
+exec:'Cotovelo dispara para trás em linha reta. Quadril não rotaciona — a força é estrutural.'},
+{id:'k15',name:'Hiji Chudan Ate',pt:'cotovelada ao tronco',belt:'kata',action:'ate',kataOnly:true,
+kataSrc:['Pinan Sono Go'],nodes:['empi','ate','mae','chudan'],dachi:'zenkutsu',
+desc:'Cotovelada frontal ao nível do tronco. Mae Empi direcção frontal, alvo plexo solar.',
+exec:'Braço dobra ao máximo. Cotovelo avança em linha reta ao plexo. Corpo inteiro empurra.'},
+{id:'k16',name:'Morote Uchi Uke',pt:'bloqueio duplo de fora para dentro',belt:'kata',action:'uke',kataOnly:true,
+kataSrc:['Pinan Sono Go'],nodes:['morote','uke','soto','chudan'],dachi:'kokutsu',
+desc:'Dois antebraços bloqueiam simultaneamente em vectores opostos. Um de fora para dentro, outro de dentro para fora.',
+exec:'Os dois braços cruzam e abrem ao mesmo tempo. Defesa contra agarramento frontal.'},
+{id:'k17',name:'Uraken Shomen Uchi',pt:'dorso do punho frontal',belt:'kata',action:'uchi',kataOnly:true,
+kataSrc:['Yantsu'],nodes:['uraken','uchi','shomen','gammen'],dachi:'zenkutsu',
+desc:'Uraken directamente à face (shomen). Diferente do Mawashi Uchi (circular) — vector recto e descendente.',
+exec:'Punho sobe e cai sobre o rosto. Snap no impacto. Shomen = face frontal — alvo perpendicular.'},
+{id:'k18',name:'Seiken Gedan Tsuki',pt:'soco baixo',belt:'kata',action:'tsuki',kataOnly:true,
+kataSrc:['Tsuki no Kata'],nodes:['seiken','tsuki','mae','gedan'],dachi:'zenkutsu',
+desc:'Soco frontal ao nível baixo. Mesmo mecanismo do Chudan Tsuki, linha desce ao abdómen inferior.',
+exec:'Punho em linha reta ao gedan. Quadril desce ligeiramente para acompanhar a linha.'},
+{id:'k19',name:'Yonhon Nukite',pt:'lança de quatro dedos',belt:'kata',action:'tsuki',kataOnly:true,
+kataSrc:['Pinan Sono San'],nodes:['yonhon','nukite','mae','chudan'],dachi:'zenkutsu',
+desc:'Nukite com quatro dedos estendidos (yonhon = quatro). Alvo: plexo solar. Penetração com superfície larga.',
+exec:'Dedos juntos e estendidos. Ponta dos dedos como superfície. Requer condicionamento.'},
+// --- variantes referenciadas nos kata ---
+{id:'k20',name:'Seiken Chudan Oi Tsuki',pt:'soco frontal médio em perseguição',belt:'branca',action:'tsuki',kataOnly:false,
+kataSrc:['Taikyoku Sono Ichi'],nodes:['seiken','tsuki','oi','mae','chudan'],dachi:'zenkutsu',
+desc:'Oi Tsuki = soco com a mão da frente ao avançar. Mão e pé da frente atacam simultaneamente. A técnica mais praticada dos Taikyoku.',
+exec:'Passo em zenkutsu. Mão da frente soca ao avançar — quadril e pé movem juntos.'},
+{id:'k21',name:'Seiken Jodan Oi Tsuki',pt:'soco alto em perseguição',belt:'branca',action:'tsuki',kataOnly:false,
+kataSrc:['Taikyoku Sono Ni'],nodes:['seiken','tsuki','oi','mae','jodan'],dachi:'zenkutsu',
+desc:'Mesma mecânica do Chudan Oi Tsuki com linha elevada ao rosto. Taikyoku Sono Ni substitui chudan por jodan.',
+exec:'Passo em zenkutsu. Mão da frente soca ao nível dos olhos ao avançar.'},
+{id:'k22',name:'Seiken Chudan Gyaku Tsuki',pt:'soco reverso médio',belt:'branca',action:'tsuki',kataOnly:false,
+kataSrc:['Pinan Sono Ichi'],nodes:['seiken','tsuki','gyaku','mae','chudan'],dachi:'zenkutsu',
+desc:'Gyaku = reverso. Soco com a mão de trás — gera mais potência que Oi Tsuki pela rotação completa do quadril.',
+exec:'Em zenkutsu, mão de trás dispara ao chudan. Quadril rotaciona completamente. Base do kumite.'},
+{id:'k23',name:'Tettsui Hizo Uchi',pt:'punho martelo à costela',belt:'azul',action:'uchi',kataOnly:true,
+kataSrc:['Pinan Sono Ni'],nodes:['tettsui','uchi','yoko','hizo'],dachi:'kiba',
+desc:'Tettsui golpeia lateralmente a costela flutuante (hizo). Kiba Dachi estabiliza o eixo lateral.',
+exec:'Tettsui desce em arco lateral sobre o hizo. Quadril rotaciona no sentido do golpe.'},
+{id:'k24',name:'Uraken Jodan Yoko Uchi',pt:'dorso do punho lateral alto',belt:'azul',action:'uchi',kataOnly:true,
+kataSrc:['Pinan Sono Ni'],nodes:['uraken','uchi','yoko','jodan'],dachi:'kiba',
+desc:'Uraken em arco horizontal ao nível alto a partir de Kiba Dachi. Alvo: têmpora.',
+exec:'Punho chicoteia lateralmente ao jodan. Kiba Dachi mantém a base estável.'},
+{id:'k25',name:'Uraken Sayu Gammen Uchi',pt:'dorso do punho bilateral ao rosto',belt:'azul',action:'uchi',kataOnly:true,
+kataSrc:['Pinan Sono San'],nodes:['uraken','uchi','sayu','gammen'],dachi:'kiba',
+desc:'Uraken alternante ao rosto em ambos os lados. Sayu = bilateral. Ataque rápido de chicote duplo.',
+exec:'Uraken direito e esquerdo em sequência rápida. Cada golpe chicoteia ao gammen.'},
+{id:'k26',name:'Mawashi Geri Jodan',pt:'chute circular alto',belt:'verde',action:'geri',kataOnly:true,
+kataSrc:['Gekisai Dai'],nodes:['geri','chusoku','mawashi','jodan'],dachi:'zenkutsu',
+desc:'Mawashi Geri com alvo jodan. Maior amplitude que chudan — quadril precisa abrir completamente.',
+exec:'Câmara lateral. Quadril abre 180°. Chusoku impacta na têmpora ou mandíbula.'},
+{id:'k27',name:'Yoko Geri Jodan',pt:'chute lateral alto',belt:'verde',action:'geri',kataOnly:true,
+kataSrc:['Gekisai Dai'],nodes:['geri','sokuto','yoko','jodan'],dachi:'kiba',
+desc:'Yoko Geri com alvo ao nível da cabeça. Exige flexibilidade extrema do quadril.',
+exec:'Câmara lateral. Sokuto dispara ao jodan. O corpo inclina para contrabalancear.'},
+{id:'k28',name:'Seiken Tsuki',pt:'soco frontal (genérico)',belt:'branca',action:'tsuki',kataOnly:false,
+kataSrc:['Seienchin','Garyu'],nodes:['seiken','tsuki','mae','chudan'],dachi:'zenkutsu',
+desc:'Referência genérica a soco com seiken. Nos kata avançados, o contexto (postura, sequência) define a variante exacta.',
+exec:'Soco linear padrão. O kata determina o alvo e a dinâmica.'},
+{id:'k29',name:'Mawashi Uke',pt:'bloqueio circular',belt:'kata',action:'uke',kataOnly:true,
+kataSrc:['Tensho','Saifa'],nodes:['uke','mawashi','chudan'],dachi:'sanchin',
+desc:'Bloqueio em arco circular contínuo. Mão aberta ou fechada. No Tensho, Mawashi Uke é a transição fundamental entre bloqueios.',
+exec:'O braço descreve um arco circular completo, desviando o ataque para o lado.'},
+{id:'k30',name:'Shotei',pt:'calcanhar da palma (referência)',belt:'kata',action:'uchi',kataOnly:true,
+kataSrc:['Gekisai Sho','Tensho'],nodes:['shotei','uchi','mae','chudan'],dachi:'sanchin',
+desc:'Referência ao uso de Shotei/Teisho como arma primária nos kata de mão aberta.',
+exec:'Base da palma avança em linha reta. Dedos para cima, pulso firme.'},
 ];
 
 const KATA=[
@@ -1109,14 +1243,14 @@ steps:[
 {id:'k_pi3',name:'Pinan Sono San',belt:'azul',time:'22s',
 origin:'Kiba Dachi predomina. Introduz Hiji Uke, Ushiro Hiji Ate e Ushiro Tsuki.',
 embusen:'M5,50 L55,50 M20,50 L20,15 M40,50 L40,15',
-techs:['Hiji Uke','Ushiro Hiji Ate','Ushiro Tsuki','Uraken Sayu Ganmen Uchi','Yonhon Nukite'],
+techs:['Hiji Uke','Ushiro Hiji Ate','Ushiro Tsuki','Uraken Sayu Gammen Uchi','Yonhon Nukite'],
 note:'Kata de combate de curta distância. Ushiro Tsuki é exclusivo deste kata.',
 silences:'Sem geri.',
 steps:[
   'Yoi! — heisoku dachi',
   '1. Hidari Chudan Uchi Uke + Migi Chudan Uchi Uke (simultâneos, kiba dachi)',
   '  ▶ Hiji Uke: cotovelos de dentro para fora, defendendo duas linhas.',
-  '2. Migi Uraken Sayu Ganmen Uchi (dorso do punho → rosto lateral)',
+  '2. Migi Uraken Sayu Gammen Uchi (dorso do punho → rosto lateral)',
   '3. Giro esq 90° → Hidari Gedan Barai · zenkutsu',
   '4. Avança → Migi Oi Tsuki chudan',
   '5. Avança → Migi Oi Tsuki chudan',
@@ -1239,7 +1373,7 @@ steps:[
   '7. Avança → Migi Oi Tsuki jodan · KIAI',
   '8. Mawashi Geri jodan migi (chute circular alto)',
   '  ▶ Quadril orbita; haisoku à têmpora. Jodan = arriscar, alto retorno.',
-  '9. Migi Tettsui Hizo Uchi + Hidari Uraken Ganmen Uchi (simultâneos)',
+  '9. Migi Tettsui Hizo Uchi + Hidari Uraken Gammen Uchi (simultâneos)',
   '10. Yoko Geri jodan hidari (chute lateral ao rosto)',
   '  ▶ Sokuto ao queixo — técnica de competição de alto nível.',
   '11. Hidari Tettsui + Migi Uraken (simultâneos)',
@@ -1552,6 +1686,7 @@ const SHAPE_CFG={
   alvo:    {sides:5,rot:-18, star:false,outerR:1.45},
   buki_mao:{sides:6,rot:0,   star:false,outerR:1.4},
   buki_pe: {sides:4,rot:0,   star:false,outerR:1.5},
+  mod:     {sides:3,rot:60,  star:false,outerR:1.3},
 };
 
 /// Ido canonical map: techniques that use okuri (rotational/lateral) or tobi (jumping)
@@ -1609,6 +1744,7 @@ const m={
   alvo:{x:W*.50,y:H*.50},
   dachi:{x:W*.18,y:H*.78},
   ido:{x:W*.82,y:H*.78},
+  mod:{x:W*.50,y:H*.90},
 };
 return m[type]||{x:W*.5,y:H*.5};
 }
@@ -1618,7 +1754,7 @@ const cx=W/2,cy=H/2,half=Math.min(W,H)/2;
 const r0=half*.22,r1=half*.47,r2=half*.78;
 const RING0=['alvo'];
 const RING1=['acao','direcao','ido'];
-const RING2=['buki_mao','buki_pe','dachi'];
+const RING2=['buki_mao','buki_pe','dachi','mod'];
 const GAP=0.14;
 function placeRing(ring,r,startA){
   const byType={};
@@ -1747,7 +1883,7 @@ hg.setAttribute('pointer-events','none');
 const NS='http://www.w3.org/2000/svg';
 const cx=W/2,cy=H/2,half=Math.min(W,H)/2;
 const RING_R={alvo:half*.22,acao:half*.47,direcao:half*.47,ido:half*.47,
-  buki_mao:half*.78,buki_pe:half*.78,dachi:half*.78};
+  buki_mao:half*.78,buki_pe:half*.78,dachi:half*.78,mod:half*.78};
 Object.entries(NT).forEach(([type,col])=>{
   const ns=SIM_NODES.filter(n=>n.type===type);
   if(!ns.length)return;
@@ -1853,6 +1989,12 @@ if(type==='acao'){
   grp.appendChild(filled(polyPoints(cx,cy,r,4,0)));
   grp.appendChild(wline(v[0].x,v[0].y,v[2].x,v[2].y));
   grp.appendChild(wline(v[1].x,v[1].y,v[3].x,v[3].y));
+}else if(type==='mod'){
+  // Prisma: triângulo invertido + anel
+  grp.appendChild(ring(polyPoints(cx,cy,r*1.3,3,60)));
+  grp.appendChild(filled(polyPoints(cx,cy,r,3,60)));
+  const v=verts(3,60);
+  v.forEach(({x,y})=>grp.appendChild(mk('circle',{cx:x.toFixed(1),cy:y.toFixed(1),r:1.5,fill:col,opacity:.4})));
 }else{
   grp.appendChild(ring(polyPoints(cx,cy,r*1.4,6,0)));
   grp.appendChild(filled(polyPoints(cx,cy,r,6,0)));
@@ -2920,6 +3062,10 @@ const ELISION_RULES={
   keage:{keep:['direcao'],buki_pe_only:['hiza'],order:['direcao','buki_pe','acao']},
   uke:  {keep:['direcao','alvo'],buki_mao_only:['shuto','koken'],order:['buki_mao','direcao','alvo','acao']},
   barai:{keep:['alvo'],optional:['direcao'],buki_mao_only:['shuto'],order:['buki_mao','alvo','direcao','acao']},
+  osae: {keep:['buki_mao'],optional:['alvo'],order:['buki_mao','acao','acao']},
+  ate:  {keep:['buki_mao','direcao'],optional:['alvo'],drop_if:{direcao:'mae'},order:['buki_mao','direcao','alvo','acao']},
+  kakiwake:{keep:['alvo'],order:['acao','alvo']},
+  hiki: {keep:[],order:['acao']},
 };
 
 function buildCanonicalName(acao,bukim,bukipe,dir,alvo){
@@ -3074,6 +3220,7 @@ function initConstrutor(){
   const bukipeNodes=NODES.filter(n=>n.type==='buki_pe');
   const dirNodes=NODES.filter(n=>n.type==='direcao');
   const alvoNodes=NODES.filter(n=>n.type==='alvo');
+  const modNodes=NODES.filter(n=>n.type==='mod');
 
   function mkSel(id,nodes,placeholder,col){
     const label=document.createElement('label');label.textContent=placeholder;
@@ -3096,6 +3243,7 @@ function initConstrutor(){
   grid.appendChild(mkSel('cs-bukipe',bukipeNodes,'Arma de Pé',NT.buki_pe));
   grid.appendChild(mkSel('cs-dir',dirNodes,'Direção',NT.direcao));
   grid.appendChild(mkSel('cs-alvo',alvoNodes,'Alvo',NT.alvo));
+  grid.appendChild(mkSel('cs-mod',modNodes,'Modificador',NT.mod));
 
   const hint=document.createElement('p');
   hint.style.cssText='font-size:11px;color:var(--text2);margin:0 0 12px;line-height:1.6';
@@ -3506,7 +3654,8 @@ const TYPE_META={
   direcao: {label:'Direção', element:'Ar',      solid:'Octaedro',   role:'Advérbio',    ex:'Mae · Mawashi · Yoko · Ushiro'},
   alvo:    {label:'Alvo',    element:'Éter',    solid:'Dodecaedro', role:'Objeto',      ex:'Jodan · Chudan · Gedan · Gammen'},
   dachi:   {label:'Postura', element:'Terra',   solid:'Cubo',       role:'Fundação',    ex:'Zenkutsu · Kiba · Kokutsu · Sanchin'},
-  ido:     {label:'Movimento',element:'Água',   solid:'Icosaedro',  role:'Fluxo',       ex:'Okuri · Tobi · Ayumi'},
+  ido:     {label:'Movimento',element:'Água',   solid:'Icosaedro',  role:'Fluxo',       ex:'Okuri · Tobi · Ayumi · Tenshin'},
+  mod:     {label:'Modificador',element:'Luz',  solid:'Prisma',     role:'Adjectivo',   ex:'Morote · Juji · Nidan · Yonhon'},
 };
 
 // formula demo with select
@@ -4050,6 +4199,7 @@ _silSel('acao','AÇÃO',NODES.filter(n=>n.type==='acao'));
 _silSel('buki','ARMA (mão ou pé)',NODES.filter(n=>n.type==='buki_mao'||n.type==='buki_pe'));
 _silSel('dir','DIREÇÃO',NODES.filter(n=>n.type==='direcao'));
 _silSel('alvo','ALVO',NODES.filter(n=>n.type==='alvo'));
+_silSel('mod','MODIFICADOR',NODES.filter(n=>n.type==='mod'));
 
 const analyzeBtn=document.createElement('button');analyzeBtn.className='silence-btn';
 analyzeBtn.textContent='Analisar combinação';
