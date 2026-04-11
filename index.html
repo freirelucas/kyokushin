@@ -664,8 +664,8 @@ note:'廻し — de 廻す, "girar, fazer circular." Trajetória de arco gerada 
 note:'横 — "lateral, de lado, horizontal." Vetor perpendicular à linha de combate frontal. Yoko Geri usa o sokuto — a "faca do pé" aponta para o lado, o corpo é a haste.'},
 {id:'ushiro',label:'Ushiro',pt:'posterior',type:'direcao',
 note:'後ろ — "atrás, posterior." O vetor mais raro — exige rotação de 180° do corpo. Alto risco, alto poder: o Ushiro Geri é o chute mais potente do currículo por usar toda a massa corporal.'},
-{id:'gyaku',label:'Gyaku',pt:'reverso',type:'direcao',
-note:'逆 — "contrário, reverso, oposto." Não é uma direção física, mas relacional: a mão/pé que está atrás na postura. Gyaku Tsuki gira o quadril ao contrário da postura — daí a potência.'},
+{id:'gyaku',label:'Gyaku',pt:'reverso (contralateral)',type:'mod',
+note:'逆 — "contrário, reverso, oposto." Modo de coordenação corporal: mão/pé contralateral — o lado oposto ao pé da frente. Par lógico de Oi (ipsilateral). Gyaku Tsuki gira o quadril ao contrário da postura — daí a potência.'},
 {id:'soto',label:'Soto',pt:'de fora para dentro',type:'direcao',
 note:'外 — "exterior, de fora." Trajetória de fora para dentro — o arco externo. Soto Uke bloqueia cruzando para dentro; Soto Uchi golpeia do lado externo para o centro.'},
 {id:'age',label:'Age',pt:'ascendente',type:'direcao',
@@ -702,8 +702,8 @@ note:'飛び — de 飛ぶ, "voar, saltar." Deslocamento com fase aérea — má
 note:'転身 — 転 = girar, transformar; 身 = corpo. "Transformar o corpo." Recuo em ângulo 45° para fora da linha de ataque. Não é recuo — é reposicionamento estratégico. Presente no Yantsu e nos renraku de marrom/shodan.'},
 {id:'fumi',label:'Fumi',pt:'pisar/avançar',type:'ido',
 note:'踏み — de 踏む, "pisar, avançar." Fumi-dashi = passo largo de entrada a 45°. Diferente de ayumi (alternado) e okuri (deslizante) — fumi é explosivo e diagonal. Tai sabaki básico do kumite.'},
-{id:'oi',label:'Oi',pt:'perseguição',type:'ido',
-note:'追い — de 追う, "perseguir." Oi Tsuki = soco com a mão da frente ao avançar. O corpo inteiro persegue o alvo — pé, quadril e punho se movem como unidade. Base dos Taikyoku.'},
+{id:'oi',label:'Oi',pt:'perseguição (ipsilateral)',type:'mod',
+note:'追い — de 追う, "perseguir." Modo de coordenação corporal: mão/pé ipsilateral — mesmo lado do pé da frente. Par lógico de Gyaku (contralateral). Oi Tsuki = soco com a mão da frente ao avançar. O corpo inteiro persegue o alvo.'},
 // acao — novas acções verbais
 {id:'osae',label:'Osae',pt:'pressionar/esmagar',type:'acao',
 note:'押さえ — de 押さえる, "pressionar, suprimir." Acção de supressão contínua — diferente de uke (receber/desviar). Shuto Osae Uke pressiona o ataque para baixo em vez de desviá-lo. Presente no Tensho e Pinan Sono Go.'},
@@ -2231,7 +2231,7 @@ if(cvMandalMode!=='solidos'){
       });
     }
     // Dashed edges: tsuki → mae (already in graph)
-    TECHS.filter(t=>t.action==='tsuki'&&!t.nodes.includes('mae')&&!t.nodes.includes('gyaku')&&!t.nodes.includes('yoko')).forEach(t=>{
+    TECHS.filter(t=>t.action==='tsuki'&&!t.nodes.includes('mae')&&!t.nodes.includes('yoko')).forEach(t=>{
       const maeN=ni['mae'];if(!maeN)return;
       const techPts=t.nodes.map(id=>ni[id]).filter(Boolean);if(!techPts.length)return;
       const tx=techPts.reduce((s,n)=>s+n.x,0)/techPts.length;
@@ -2461,8 +2461,8 @@ document.getElementById('det-desc').innerHTML=
   +(tech.exec?'<div class="dc-exec" style="font-size:12px;padding:8px 12px;background:var(--bg2);border-radius:6px;border-left:3px solid var(--gold);line-height:1.5">'+tech.exec+'</div>':'');
 // Visual grammar formula
 const ul=document.getElementById('det-techs');
-const AXIS_ORDER=['buki_mao','buki_pe','acao','direcao','alvo','ido'];
-const AXIS_LBL={buki_mao:'Buki·Mão',buki_pe:'Buki·Pé',acao:'Ação',direcao:'Direção',alvo:'Alvo',ido:'Ido'};
+const AXIS_ORDER=['mod','buki_mao','buki_pe','acao','direcao','alvo','ido'];
+const AXIS_LBL={mod:'Mod',buki_mao:'Buki·Mão',buki_pe:'Buki·Pé',acao:'Ação',direcao:'Direção',alvo:'Alvo',ido:'Ido'};
 const orderedNodes=[...tech.nodes].sort((a,b)=>AXIS_ORDER.indexOf(NMAP[a]?.type)-AXIS_ORDER.indexOf(NMAP[b]?.type));
 let fHtml='<div class="gram-formula">';
 let axHtml='<div class="gram-axis-row">';
@@ -3056,39 +3056,45 @@ out.appendChild(copyBtn);
 // UKE/BARAI: mentions direcao + alvo, drops buki unless shuto/koken
 // UCHI: mentions buki_mao + alvo or direcao
 const ELISION_RULES={
-  tsuki:{keep:['buki_mao','alvo'],optional:['direcao'],drop_if:{direcao:'mae'},order:['buki_mao','alvo','direcao','acao']},
-  uchi: {keep:['buki_mao'],choose:['alvo','direcao'],order:['buki_mao','alvo','direcao','acao']},
-  geri: {keep:['direcao'],optional:['alvo'],buki_pe_only:['hiza','kansetsu'],drop_if:{alvo:'chudan'},order:['alvo','direcao','buki_pe','acao']},
-  keage:{keep:['direcao'],buki_pe_only:['hiza'],order:['direcao','buki_pe','acao']},
-  uke:  {keep:['direcao','alvo'],buki_mao_only:['shuto','koken'],order:['buki_mao','direcao','alvo','acao']},
-  barai:{keep:['alvo'],optional:['direcao'],buki_mao_only:['shuto'],order:['buki_mao','alvo','direcao','acao']},
-  osae: {keep:['buki_mao'],optional:['alvo'],order:['buki_mao','acao','acao']},
-  ate:  {keep:['buki_mao','direcao'],optional:['alvo'],drop_if:{direcao:'mae'},order:['buki_mao','direcao','alvo','acao']},
-  kakiwake:{keep:['alvo'],order:['acao','alvo']},
-  hiki: {keep:[],order:['acao']},
+  tsuki:{keep:['buki_mao','alvo'],optional:['direcao','mod'],drop_if:{direcao:'mae'},order:['buki_mao','alvo','direcao','mod','acao']},
+  uchi: {keep:['buki_mao'],choose:['alvo','direcao'],optional:['mod'],order:['buki_mao','alvo','direcao','mod','acao']},
+  geri: {keep:['direcao'],optional:['alvo','mod'],buki_pe_only:['hiza','kansetsu'],drop_if:{alvo:'chudan'},order:['alvo','direcao','mod','buki_pe','acao']},
+  keage:{keep:['direcao'],optional:['mod'],buki_pe_only:['hiza'],order:['direcao','mod','buki_pe','acao']},
+  uke:  {keep:['direcao','alvo'],buki_mao_only:['shuto','koken'],optional:['mod'],order:['mod','buki_mao','direcao','alvo','acao']},
+  barai:{keep:['alvo'],optional:['direcao','mod'],buki_mao_only:['shuto'],order:['buki_mao','alvo','direcao','mod','acao']},
+  osae: {keep:['buki_mao'],optional:['alvo','mod'],order:['buki_mao','alvo','mod','acao']},
+  ate:  {keep:['buki_mao','direcao'],optional:['alvo','mod'],drop_if:{direcao:'mae'},order:['buki_mao','direcao','alvo','mod','acao']},
+  kakiwake:{keep:['alvo'],optional:['mod'],order:['mod','acao','alvo']},
+  hiki: {keep:[],optional:['mod'],order:['mod','acao']},
+  kake: {keep:['buki_mao','alvo'],optional:['mod'],order:['buki_mao','alvo','mod','acao']},
+  uchikomi:{keep:['buki_mao','direcao'],optional:['mod'],order:['buki_mao','direcao','mod','acao']},
 };
 
-function buildCanonicalName(acao,bukim,bukipe,dir,alvo){
+function buildCanonicalName(acao,bukim,bukipe,dir,alvo,mod){
   if(!acao)return null;
   const L=id=>id&&NMAP[id]?NMAP[id].label:null;
-  const r=ELISION_RULES[acao]||{order:['buki_mao','buki_pe','direcao','alvo','acao']};
+  const r=ELISION_RULES[acao]||{order:['buki_mao','buki_pe','direcao','alvo','mod','acao']};
   const parts=[];
   if(acao==='tsuki'){
     if(bukim)parts.push(L(bukim));
     if(alvo)parts.push(L(alvo));
     if(dir&&dir!=='mae')parts.push(L(dir));
+    if(mod)parts.push(L(mod));
     parts.push(L(acao));
   } else if(acao==='uchi'){
     if(bukim)parts.push(L(bukim));
     if(alvo)parts.push(L(alvo));
     else if(dir)parts.push(L(dir));
+    if(mod)parts.push(L(mod));
     parts.push(L(acao));
   } else if(acao==='geri'||acao==='keage'){
     if(alvo&&alvo!=='chudan')parts.push(L(alvo));
     if(dir)parts.push(L(dir));
+    if(mod)parts.push(L(mod));
     if(bukipe&&['hiza','kansetsu'].includes(bukipe))parts.push(L(bukipe));
     parts.push(L(acao));
   } else if(acao==='uke'){
+    if(mod)parts.push(L(mod));
     if(bukim&&['shuto','koken'].includes(bukim))parts.push(L(bukim));
     if(dir&&dir!=='mae')parts.push(L(dir));
     if(alvo)parts.push(L(alvo));
@@ -3097,20 +3103,21 @@ function buildCanonicalName(acao,bukim,bukipe,dir,alvo){
     if(bukim&&['shuto'].includes(bukim))parts.push(L(bukim));
     if(alvo)parts.push(L(alvo));
     if(dir&&dir!=='mae')parts.push(L(dir));
+    if(mod)parts.push(L(mod));
     parts.push(L(acao));
   } else {
-    [bukim,bukipe,dir,alvo,acao].filter(Boolean).forEach(id=>parts.push(L(id)));
+    [bukim,bukipe,dir,alvo,mod,acao].filter(Boolean).forEach(id=>parts.push(L(id)));
   }
   return parts.filter(Boolean).join(' ');
 }
 
-function buildPtName(acao,bukim,bukipe,dir,alvo){
+function buildPtName(acao,bukim,bukipe,dir,alvo,mod){
   const P=id=>id&&NMAP[id]?NMAP[id].pt:null;
-  return [P(bukim)||P(bukipe),P(dir),P(alvo),P(acao)].filter(Boolean).join(' + ');
+  return [P(bukim)||P(bukipe),P(dir),P(alvo),P(mod),P(acao)].filter(Boolean).join(' + ');
 }
 
-function findCorpusMatch(acao,bukim,bukipe,dir,alvo){
-  const selected=[acao,bukim,bukipe,dir,alvo].filter(Boolean);
+function findCorpusMatch(acao,bukim,bukipe,dir,alvo,mod){
+  const selected=[acao,bukim,bukipe,dir,alvo,mod].filter(Boolean);
   if(!selected.length)return[];
   return TECHS.map(t=>{
     const tn=t.nodes.filter(Boolean);
@@ -3138,6 +3145,7 @@ function updateConstrutor(){
   const bukipe=document.getElementById('cs-bukipe').value||null;
   const dir=document.getElementById('cs-dir').value||null;
   const alvo=document.getElementById('cs-alvo').value||null;
+  const mod=document.getElementById('cs-mod').value||null;
 
   // Mutual exclusion
   const bmSel=document.getElementById('cs-bukim');
@@ -3153,8 +3161,8 @@ function updateConstrutor(){
     matches.innerHTML='';return;
   }
 
-  const jpName=buildCanonicalName(acao,bukim,bukipe,dir,alvo);
-  const ptName=buildPtName(acao,bukim,bukipe,dir,alvo);
+  const jpName=buildCanonicalName(acao,bukim,bukipe,dir,alvo,mod);
+  const ptName=buildPtName(acao,bukim,bukipe,dir,alvo,mod);
 
   // Build axes display: which are present/implied/absent
   const r=ELISION_RULES[acao]||{};
@@ -3163,8 +3171,9 @@ function updateConstrutor(){
   if(acao==='tsuki'){if(bukim)inName.push(bukim);if(alvo)inName.push(alvo);if(dir&&dir!=='mae')inName.push(dir);}
   else if(acao==='uchi'){if(bukim)inName.push(bukim);if(alvo)inName.push(alvo);else if(dir)inName.push(dir);}
   else if(acao==='geri'||acao==='keage'){if(alvo&&alvo!=='chudan')inName.push(alvo);if(dir)inName.push(dir);if(bukipe&&['hiza','kansetsu'].includes(bukipe))inName.push(bukipe);}
-  else if(acao==='uke'){if(bukim&&['shuto','koken'].includes(bukim))inName.push(bukim);if(dir&&dir!=='mae')inName.push(dir);if(alvo)inName.push(alvo);}
+  else if(acao==='uke'){if(mod)inName.push(mod);if(bukim&&['shuto','koken'].includes(bukim))inName.push(bukim);if(dir&&dir!=='mae')inName.push(dir);if(alvo)inName.push(alvo);}
   else if(acao==='barai'){if(alvo)inName.push(alvo);if(dir&&dir!=='mae')inName.push(dir);}
+  if(mod&&!inName.includes(mod))inName.push(mod);
   inName.push(acao);
 
   const axes=[];
@@ -3176,7 +3185,7 @@ function updateConstrutor(){
     axes.push({id,label:n.label,pt:n.pt,type,state:inN?'present':implied?'implied':'absent'});
   };
   addAxis(bukim,'buki_mao');addAxis(bukipe,'buki_pe');
-  addAxis(dir,'direcao');addAxis(alvo,'alvo');addAxis(acao,'acao');
+  addAxis(dir,'direcao');addAxis(alvo,'alvo');addAxis(mod,'mod');addAxis(acao,'acao');
 
   const axHtml=axes.map(a=>`<span class="const-axis ${a.state}" title="${a.pt} · ${a.state==='present'?'no nome':a.state==='implied'?'implícito':'ausente/padrão'}">${a.label}</span>`).join('');
 
@@ -3196,11 +3205,11 @@ function updateConstrutor(){
     ${elisionMsg?'<div class="const-elision">'+elisionMsg+'</div>':''}`;
 
   // Corpus matches
-  const found=findCorpusMatch(acao,bukim,bukipe,dir,alvo);
+  const found=findCorpusMatch(acao,bukim,bukipe,dir,alvo,mod);
   if(!found.length){matches.innerHTML='<div style="font-size:12px;color:var(--text2);opacity:.6">Nenhuma técnica no corpus com estes componentes.</div>';return;}
   matches.innerHTML='<div class="const-matches-title">No corpus</div>';
   found.forEach(({t,hits,exact})=>{
-    const scoreLabel=exact?'✓ exato':`${hits}/${[acao,bukim,bukipe,dir,alvo].filter(Boolean).length} eixos`;
+    const scoreLabel=exact?'✓ exato':`${hits}/${[acao,bukim,bukipe,dir,alvo,mod].filter(Boolean).length} eixos`;
     const d=document.createElement('div');d.className='const-match';
     d.innerHTML=`<span class="const-match-score${exact?' const-match-exact':''}">${scoreLabel}</span>`+
       `<div><div style="font-size:13px;font-weight:600">${t.name}</div>`+
@@ -3654,8 +3663,8 @@ const TYPE_META={
   direcao: {label:'Direção', element:'Ar',      solid:'Octaedro',   role:'Advérbio',    ex:'Mae · Mawashi · Yoko · Ushiro'},
   alvo:    {label:'Alvo',    element:'Éter',    solid:'Dodecaedro', role:'Objeto',      ex:'Jodan · Chudan · Gedan · Gammen'},
   dachi:   {label:'Postura', element:'Terra',   solid:'Cubo',       role:'Fundação',    ex:'Zenkutsu · Kiba · Kokutsu · Sanchin'},
-  ido:     {label:'Movimento',element:'Água',   solid:'Icosaedro',  role:'Fluxo',       ex:'Okuri · Tobi · Ayumi · Tenshin'},
-  mod:     {label:'Modificador',element:'Luz',  solid:'Prisma',     role:'Adjectivo',   ex:'Morote · Juji · Nidan · Yonhon'},
+  ido:     {label:'Movimento',element:'Água',   solid:'Icosaedro',  role:'Fluxo',       ex:'Ayumi · Okuri · Tobi · Tenshin · Fumi'},
+  mod:     {label:'Modificador',element:'Luz',  solid:'Prisma',     role:'Adjectivo',   ex:'Gyaku · Oi · Morote · Juji · Nidan'},
 };
 
 // formula demo with select
@@ -3677,8 +3686,8 @@ const formulaDiv=document.createElement('div');
 formulaDiv.id='gram-formula-live';
 function updateDemoFormula(){
   const tech=TECHS[+sel.value];if(!tech)return;
-  const AXIS_ORDER=['buki_mao','buki_pe','acao','direcao','alvo','ido'];
-  const AXIS_LBL={buki_mao:'Arma·Mão',buki_pe:'Arma·Pé',acao:'Ação',direcao:'Direção',alvo:'Alvo',ido:'Ido'};
+  const AXIS_ORDER=['mod','buki_mao','buki_pe','acao','direcao','alvo','ido'];
+  const AXIS_LBL={mod:'Mod',buki_mao:'Arma·Mão',buki_pe:'Arma·Pé',acao:'Ação',direcao:'Direção',alvo:'Alvo',ido:'Ido'};
   const ordered=[...tech.nodes].sort((a,b)=>AXIS_ORDER.indexOf(NMAP[a]?.type)-AXIS_ORDER.indexOf(NMAP[b]?.type));
   let html='<div class="gram-formula" style="margin-bottom:8px">';
   ordered.forEach((nid,i)=>{
@@ -3822,7 +3831,6 @@ const dirData=[
   {lbl:'Ushiro',sub:'posterior',a:Math.PI/2},
   {lbl:'Yoko',sub:'lateral',a:0},
   {lbl:'Mawashi',sub:'circular',a:-Math.PI/4},
-  {lbl:'Gyaku',sub:'reverso',a:Math.PI},
   {lbl:'Age',sub:'ascendente',a:-Math.PI*0.35},
   {lbl:'Soto',sub:'fora→dentro',a:-Math.PI*0.65},
 ];
@@ -3953,6 +3961,10 @@ elisionTable.innerHTML=`<thead><tr>
   <td><span style="color:${NT.direcao}">Direção</span> + <span style="color:${NT.alvo}">Alvo</span></td>
   <td><span style="color:${NT.buki_mao}">Arma·Mão</span> (antebraço)</td>
   <td>Bloqueios usam o antebraço estrutural por padrão. Quando outra superfície é usada (Shuto, Koken), ela <em>aparece</em> no nome.</td></tr>
+<tr><td class="dim-name" style="color:${NT.mod}">Modificador</td>
+  <td><span style="color:${NT.mod}">Morote · Juji · Nidan · Gyaku · Oi</span></td>
+  <td>Ausência = técnica padrão (unilateral, ipsilateral, nível único).</td>
+  <td>Modificadores alteram quantidade (Morote), padrão (Juji, Nidan), ou coordenação corporal (Gyaku = contralateral, Oi = ipsilateral). Quando presentes, são sempre explícitos.</td></tr>
 </tbody>`;
 s6.appendChild(elisionTable);
 
@@ -4006,7 +4018,7 @@ s8.innerHTML=`<h3>VIII. O que o Nome Não Diz — Eixos Implícitos</h3>
 const chainData=[
   {tech:'Seiken Chudan Tsuki',nodes:['seiken','chudan','tsuki'],implicit:{id:'mae',type:'direcao',label:'Mae'},
    rule:'Tsuki é por definição linear-frontal. A direção <em>mae</em> nunca aparece no nome porque é o vetor padrão absoluto — não há soco "Seiken Chudan Mae Tsuki" porque seria redundante.',
-   consequence:'Todos os socos são frontais a não ser que um modificador explícito apareça (Gyaku, Ushiro, Yoko).'},
+   consequence:'Todos os socos são frontais a não ser que uma direção alternativa (Ushiro, Yoko) ou um modo de coordenação corporal (Gyaku, Oi) apareça.'},
   {tech:'Mae Geri',nodes:['mae','geri'],implicit:{id:'chusoku',type:'buki_pe',label:'Chusoku'},
    rule:'Geri frontal usa naturalmente a meia-pata (chusoku). A trajetória linear expõe a frente do pé.',
    consequence:'Quando a arma muda, ela aparece: Kakato Geri, Hiza Geri. A ausência de nome de arma ≡ chusoku.'},
@@ -4143,8 +4155,8 @@ const progData=[
    desc:'Tsuki no Kata é um kata de socos. O que não está presente é a mensagem pedagógica.',
    kata:'Tsuki no Kata',example:'Nenhum chute — o silêncio de Tsuki no Kata é o seu conteúdo.'},
   {belt:'verde',beltKey:'verde',sectionNum:'VI',concept:'A Gramática do Silêncio',
-   desc:'"Gyaku" implica "oposto". As elisions ocultam eixos que o praticante já internalizou.',
-   kata:'Gekisai Dai',example:'Gyaku Tsuki — Gyaku (implica lado oposto) está explícito; mae está oculto.'},
+   desc:'"Gyaku" (modificador de coordenação corporal) implica "lado oposto". As elisões ocultam eixos que o praticante já internalizou.',
+   kata:'Gekisai Dai',example:'Gyaku Tsuki — Gyaku (modo contralateral) está explícito; mae (direcção) está oculto.'},
   {belt:'marrom',beltKey:'marrom',sectionNum:'VIII',concept:'Eixos Implícitos',
    desc:'Tensho: todos os uke são com antebraço (ude), nunca mencionado. O silêncio ativo.',
    kata:'Tensho',example:'Teisho Uke nomeia a arma (raro) porque é excepção à regra implícita.'},
@@ -4382,8 +4394,10 @@ function advanceDemo(){
   const bp=t.nodes.find(n=>NMAP[n]?.type==='buki_pe');
   const dir=t.nodes.find(n=>NMAP[n]?.type==='direcao');
   const alvo=t.nodes.find(n=>NMAP[n]?.type==='alvo');
+  const mod_n=t.nodes.find(n=>NMAP[n]?.type==='mod');
   setVal('cs-bukim',bm||''); setVal('cs-bukipe',bp||'');
   setVal('cs-dir',dir||''); setVal('cs-alvo',alvo||'');
+  setVal('cs-mod',mod_n||'');
   updateConstrutor();
   speak(t.name);
 }
