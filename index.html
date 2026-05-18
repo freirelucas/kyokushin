@@ -23,184 +23,218 @@
 <title>Atlas Kyokushin</title>
 <style>
 :root{--bg:#0b0b10;--bg2:#111118;--bg3:#1c1c2a;--gold:#c9a84c;--gold2:rgba(201,168,76,.12);
---text:#e8e8ee;--text2:#7788aa;--border:#1e1e30;
+--text:#e8e8ee;--text2:#9ba8c0;--text3:#7788aa;--border:#1e1e30;
 --branca:#8899bb;--laranja:#cc7722;--azul:#4488ee;--amarela:#ddaa22;
 --verde:#33aa66;--marrom:#aa6633;--kata:#8844dd;--shodan:#e8d5a3;
 --acao:#e8a030;--buki-mao:#e06060;--buki-pe:#4488dd;
---direcao:#8866ee;--alvo:#44aa66;--dachi:#cc8833;--ido:#33aaaa;}
+--direcao:#8866ee;--alvo:#44aa66;--dachi:#cc8833;--ido:#33aaaa;
+/* tipografia — chão mínimo de 11px em estático, 12px em interativo */
+--fs-micro:10px;--fs-xs:11px;--fs-sm:12px;--fs-base:13px;--fs-md:14px;--fs-lg:16px;--fs-xl:18px;
+--focus-ring:0 0 0 2px var(--gold),0 0 0 4px rgba(201,168,76,.25);}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100vh;background:var(--bg);color:var(--text);
-font-family:system-ui,-apple-system,Segoe UI,sans-serif;overflow:hidden}
+font-family:system-ui,-apple-system,Segoe UI,sans-serif;overflow:hidden;
+-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+/* Foco visível global para teclado */
+:focus{outline:none}
+:focus-visible{box-shadow:var(--focus-ring);border-radius:6px}
+button:focus-visible,select:focus-visible,input:focus-visible,
+[role="button"]:focus-visible,[tabindex]:focus-visible{box-shadow:var(--focus-ring)}
+::selection{background:var(--gold2);color:var(--text)}
 #app{display:flex;height:100vh}
 #sidebar{width:220px;background:var(--bg2);border-right:1px solid var(--border);
 display:flex;flex-direction:column;flex-shrink:0;padding:0}
-.sb-logo{padding:18px 16px 14px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center}
+.sb-logo{padding:20px 16px 16px;border-bottom:1px solid var(--border);display:flex;gap:11px;align-items:center}
 .sb-logo svg{flex-shrink:0}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
 .sb-t{display:flex;flex-direction:column}
-.sb-t .t1{font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
-.sb-t .t2{font-size:10px;color:var(--text2);letter-spacing:.06em}
+.sb-t .t1{font-size:var(--fs-base);font-weight:700;letter-spacing:.1em;color:var(--gold)}
+.sb-t .t2{font-size:var(--fs-micro);color:var(--text2);letter-spacing:.08em;text-transform:uppercase}
 .sb-nav{display:flex;flex-direction:column;gap:1px;padding:10px 8px;flex:1}
 .nav-btn{background:none;border:none;color:var(--text2);cursor:pointer;border-radius:7px;
-padding:8px 12px;font-size:13px;text-align:left;transition:all .18s;
+padding:8px 12px;font-size:var(--fs-base);text-align:left;transition:all .18s;
 display:flex;align-items:center;gap:9px}
 .nav-btn:hover{background:var(--bg3);color:var(--text)}
+.nav-btn:focus-visible{background:var(--bg3);color:var(--text);box-shadow:var(--focus-ring)}
 .nav-btn.active{background:var(--gold2);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+.nav-btn[aria-current="page"]{background:var(--gold2);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
 .nav-btn .ic{font-size:15px;width:18px;text-align:center}
-.sb-foot{padding:12px 16px;border-top:1px solid var(--border);font-size:10px;color:var(--text2);letter-spacing:.05em}
+.sb-foot{padding:12px 16px;border-top:1px solid var(--border);font-size:var(--fs-micro);color:var(--text2);letter-spacing:.08em}
 #main{flex:1;position:relative;overflow:hidden}
 .panel{position:absolute;inset:0;display:none;overflow-y:auto}
 .panel.active{display:block}
-.panel-inner{padding:24px;max-width:1100px;margin:0 auto}
-h2{font-size:18px;font-weight:700;margin-bottom:4px;color:var(--gold);letter-spacing:.05em}
-.sub{font-size:12px;color:var(--text2);margin-bottom:20px}
+.panel-inner{padding:28px 28px 60px;max-width:1100px;margin:0 auto}
+h2{font-size:var(--fs-xl);font-weight:700;margin-bottom:6px;color:var(--gold);letter-spacing:.04em;line-height:1.2}
+.sub{font-size:var(--fs-sm);color:var(--text2);margin-bottom:22px;line-height:1.6;max-width:62ch}
 /* CONSTELLATION */
 #cv-wrap{position:absolute;inset:0;overflow:hidden}
 #cv{display:block;cursor:grab}#cv:active{cursor:grabbing}
 #tip{position:absolute;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
-padding:9px 13px;font-size:12px;pointer-events:none;z-index:10;opacity:0;transition:opacity .15s;max-width:220px}
-#tip b{display:block;font-size:13px;margin-bottom:2px}
-#tip .belt-pill{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;margin-top:4px}
+padding:10px 14px;font-size:var(--fs-sm);pointer-events:none;z-index:10;opacity:0;transition:opacity .15s;max-width:240px;
+box-shadow:0 4px 14px #0006;line-height:1.5}
+#tip b{display:block;font-size:var(--fs-base);margin-bottom:3px;letter-spacing:.01em}
+#tip .belt-pill{display:inline-block;padding:2px 8px;border-radius:4px;font-size:var(--fs-micro);margin-top:4px;letter-spacing:.04em;font-weight:600}
 #detail{position:absolute;right:0;top:0;bottom:0;width:280px;background:var(--bg2);
 border-left:1px solid var(--border);padding:18px;overflow-y:auto;transform:translateX(100%);
 transition:transform .25s;z-index:5}
 #detail.open{transform:translateX(0)}
-#detail .dt{font-size:12px;color:var(--text2);margin-bottom:12px}
-.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;
-border:1px solid;margin:2px;letter-spacing:.03em}
+#detail .dt{font-size:var(--fs-sm);color:var(--text2);margin-bottom:12px;font-style:italic}
+.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:var(--fs-micro);
+border:1px solid;margin:2px;letter-spacing:.04em;font-weight:500}
 #detail ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:4px;max-height:46vh;overflow-y:auto;padding-right:2px}
 #detail ul::after{content:'';position:sticky;bottom:0;display:block;height:18px;background:linear-gradient(transparent,var(--bg2));margin-top:-18px;pointer-events:none;flex-shrink:0}
-#detail ul li{background:var(--bg3);border-radius:6px;padding:6px 10px;font-size:11px;
-border-left:3px solid;cursor:pointer;transition:all .15s}
+#detail ul li{background:var(--bg3);border-radius:6px;padding:7px 11px;font-size:var(--fs-xs);
+border-left:3px solid;cursor:pointer;transition:all .15s;line-height:1.4}
 #detail ul li:hover{background:#ffffff08}
+#detail ul li:focus-visible{background:#ffffff10;box-shadow:var(--focus-ring)}
 #det-close{position:absolute;top:10px;right:10px;background:none;border:none;
-color:var(--text2);cursor:pointer;font-size:16px;border-radius:4px;padding:2px 4px}
-#det-close:hover{color:var(--text)}
+color:var(--text2);cursor:pointer;font-size:18px;border-radius:4px;padding:4px 8px;
+line-height:1;width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+#det-close:hover,#det-close:focus-visible{color:var(--text);background:rgba(255,255,255,.05)}
 #det-back{position:absolute;top:10px;left:10px;background:none;border:1px solid var(--border);
-color:var(--text2);cursor:pointer;font-size:13px;border-radius:5px;padding:2px 7px;display:none;transition:all .15s}
-#det-back:hover{color:var(--gold);border-color:var(--gold);background:var(--gold2)}
-#det-counter{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:10px;
-color:var(--text2);letter-spacing:.04em;display:none;pointer-events:none;white-space:nowrap}
-#detail h3{font-size:16px;font-weight:700;margin-bottom:4px;padding-top:22px}
+color:var(--text2);cursor:pointer;font-size:var(--fs-base);border-radius:5px;padding:3px 9px;display:none;transition:all .15s;line-height:1.2}
+#det-back:hover,#det-back:focus-visible{color:var(--gold);border-color:var(--gold);background:var(--gold2)}
+#det-counter{position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:var(--fs-micro);
+color:var(--text2);letter-spacing:.06em;display:none;pointer-events:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+#detail h3{font-size:var(--fs-lg);font-weight:700;margin-bottom:4px;padding-top:24px;letter-spacing:.01em}
 /* NAV SEARCH */
-#nav-search-wrap{padding:2px 8px 8px;position:relative}
+#nav-search-wrap{padding:2px 8px 10px;position:relative}
 #nav-search{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);
-border-radius:7px;padding:6px 10px;font-size:12px;outline:none;box-sizing:border-box}
+border-radius:7px;padding:7px 11px;font-size:var(--fs-sm);outline:none;box-sizing:border-box;font-family:inherit;
+transition:border-color .18s}
 #nav-search:focus{border-color:var(--gold)}
-#nav-search::placeholder{color:var(--text2);opacity:.7}
-#search-drop{position:absolute;left:8px;right:8px;top:calc(100% - 4px);background:var(--bg2);
+#nav-search::placeholder{color:var(--text3);opacity:.8}
+#search-drop{position:absolute;left:8px;right:8px;top:calc(100% - 6px);background:var(--bg2);
 border:1px solid var(--border);border-radius:8px;z-index:200;overflow:hidden;display:none;
-box-shadow:0 4px 20px #0008}
-.sdrop-item{padding:7px 11px;cursor:pointer;font-size:11px;border-bottom:1px solid var(--border)}
+box-shadow:0 4px 20px #0008;max-height:60vh;overflow-y:auto}
+.sdrop-item{padding:8px 12px;cursor:pointer;font-size:var(--fs-xs);border-bottom:1px solid var(--border);line-height:1.4}
 .sdrop-item:last-child{border-bottom:none}
 .sdrop-item:hover,.sdrop-item.hi{background:var(--gold2)}
-.sdrop-item b{display:block;font-size:12px;color:var(--text)}
-.sdrop-item span{color:var(--text2);font-size:10px}
+.sdrop-item b{display:block;font-size:var(--fs-sm);color:var(--text);margin-bottom:2px;font-weight:600}
+.sdrop-item span{color:var(--text2);font-size:var(--fs-micro)}
 /* Clickable gram-slots */
 .gram-slot.nav{cursor:pointer;transition:filter .14s,opacity .14s}
 .gram-slot.nav:hover{filter:brightness(1.3);opacity:.85}
+.gram-slot.nav:focus-visible{outline:2px solid var(--gold);outline-offset:2px;box-shadow:var(--focus-ring)}
 /* DICT */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .f-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);
-border-radius:16px;padding:4px 12px;font-size:11px;cursor:pointer;transition:all .18s}
-.f-btn.on{color:var(--text);border-color:var(--gold)}
+border-radius:16px;padding:5px 13px;font-size:var(--fs-xs);cursor:pointer;transition:all .18s;
+font-family:inherit;letter-spacing:.02em;min-height:26px}
+.f-btn:hover{color:var(--text);border-color:rgba(201,168,76,.4)}
+.f-btn.on{color:var(--text);border-color:var(--gold);background:var(--gold2);font-weight:600}
+.f-btn[aria-pressed="true"]{color:var(--text);border-color:var(--gold);background:var(--gold2);font-weight:600}
 .search{background:var(--bg3);border:1px solid var(--border);color:var(--text);
-border-radius:8px;padding:8px 12px;font-size:13px;width:100%;margin-bottom:14px;outline:none}
+border-radius:8px;padding:9px 14px;font-size:var(--fs-base);width:100%;margin-bottom:14px;outline:none;
+font-family:inherit;transition:border-color .18s}
 .search:focus{border-color:var(--gold)}
-.dict-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.dc{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:12px 14px;
-cursor:pointer;transition:all .18s;border-left:4px solid}
+.search::placeholder{color:var(--text3)}
+.dict-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.dc{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:13px 15px;
+cursor:pointer;transition:all .18s;border-left:4px solid;outline-offset:2px}
 .dc:hover{border-color:var(--gold);transform:translateY(-1px)}
+.dc:focus-visible{border-color:var(--gold);box-shadow:var(--focus-ring)}
 .dc.exp{grid-column:1/-1}
-.dc-name{font-size:14px;font-weight:600;margin-bottom:3px}
-.dc-pt{font-size:11px;color:var(--text2);margin-bottom:8px}
-.dc-tags{display:flex;gap:4px;flex-wrap:wrap}
-.dc-tag{font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,.06);color:var(--text2)}
+.dc-name{font-size:var(--fs-md);font-weight:600;margin-bottom:3px;letter-spacing:.01em}
+.dc-pt{font-size:var(--fs-xs);color:var(--text2);margin-bottom:10px;font-style:italic}
+.dc-tags{display:flex;gap:5px;flex-wrap:wrap}
+.dc-tag{font-size:var(--fs-micro);padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.06);color:var(--text2);letter-spacing:.02em;font-weight:500}
 .dc-exp{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .dc.exp .dc-exp{display:block}
-.dc-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:8px}
-.dc-exec{font-size:12px;padding:8px 12px;background:var(--bg2);border-radius:6px;
-border-left:3px solid var(--gold);line-height:1.5}
+.dc-desc{font-size:var(--fs-sm);color:var(--text2);line-height:1.65;margin-bottom:10px}
+.dc-exec{font-size:var(--fs-sm);padding:10px 13px;background:var(--bg2);border-radius:6px;
+border-left:3px solid var(--gold);line-height:1.55;color:var(--text)}
 /* KATA */
-.kata-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
-.kc{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .18s}
+.kata-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.kc{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .18s;outline-offset:2px}
 .kc:hover{border-color:var(--gold)}
-.kc-belt{font-size:10px;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:8px;letter-spacing:.04em}
-.kc-name{font-size:16px;font-weight:700;margin-bottom:2px}
-.kc-origin{font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.4}
+.kc:focus-visible{border-color:var(--gold);box-shadow:var(--focus-ring)}
+.kc-belt{font-size:var(--fs-micro);padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.kc-name{font-size:var(--fs-lg);font-weight:700;margin-bottom:2px;letter-spacing:.01em}
+.kc-origin{font-size:var(--fs-xs);color:var(--text2);margin-bottom:10px;line-height:1.5}
 .kc-emb{margin:8px 0}
-.kc-note{font-size:11px;color:var(--text2);line-height:1.5}
+.kc-note{font-size:var(--fs-xs);color:var(--text2);line-height:1.6}
 .kc-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 .kc.open .kc-detail{display:block}
 /* IDO */
 .ido-belts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.ib-tab{padding:5px 14px;border-radius:16px;border:1px solid var(--border);
-background:var(--bg3);color:var(--text2);cursor:pointer;font-size:12px;transition:all .18s}
-.ib-tab.on{color:var(--text);border-color:var(--gold)}
+.ib-tab{padding:6px 15px;border-radius:16px;border:1px solid var(--border);
+background:var(--bg3);color:var(--text2);cursor:pointer;font-size:var(--fs-sm);transition:all .18s;
+font-family:inherit;text-transform:capitalize;letter-spacing:.02em}
+.ib-tab:hover{color:var(--text);border-color:rgba(201,168,76,.4)}
+.ib-tab.on,.ib-tab[aria-pressed="true"]{color:var(--text);border-color:var(--gold);background:var(--gold2);font-weight:600}
 .req-box{background:var(--bg3);border:1px solid var(--border);border-radius:8px;
-padding:13px;margin-bottom:14px;font-size:12px;color:var(--text2);line-height:1.7}
-.req-box strong{color:var(--text);display:block;margin-bottom:5px}
+padding:14px 16px;margin-bottom:14px;font-size:var(--fs-sm);color:var(--text2);line-height:1.7}
+.req-box strong{color:var(--text);display:block;margin-bottom:6px;font-size:var(--fs-base);letter-spacing:.04em}
+.req-section{display:block;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)}
+.req-section-lbl{font-size:var(--fs-micro);color:var(--text3);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:3px;display:block}
 .gen-btn{background:var(--gold);color:#0b0b10;border:none;border-radius:8px;
-padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:.06em;margin-bottom:16px;transition:opacity .18s}
-.gen-btn:hover{opacity:.88}
+padding:11px 24px;font-size:var(--fs-base);font-weight:600;cursor:pointer;letter-spacing:.06em;margin-bottom:16px;transition:opacity .18s,transform .12s;font-family:inherit}
+.gen-btn:hover{opacity:.92}
+.gen-btn:active{transform:translateY(1px)}
 .script-out{display:flex;flex-direction:column;gap:10px}
-.s-block{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:13px;border-left:3px solid var(--gold)}
-.sb-label{font-size:10px;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
-.sb-name{font-size:15px;font-weight:600;margin-bottom:3px}
-.sb-note{font-size:11px;color:var(--text2);line-height:1.5}
+.s-block{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:14px;border-left:3px solid var(--gold)}
+.sb-label{font-size:var(--fs-micro);color:var(--text2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;font-weight:600}
+.sb-name{font-size:var(--fs-md);font-weight:600;margin-bottom:4px;letter-spacing:.01em}
+.sb-note{font-size:var(--fs-xs);color:var(--text2);line-height:1.55}
 .s-kiai{background:rgba(201,168,76,.1);border:1px solid var(--gold);border-radius:9px;
-padding:13px;text-align:center;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:.15em}
-.s-total{font-size:11px;color:var(--text2);margin-top:8px}
+padding:14px;text-align:center;font-size:var(--fs-lg);font-weight:700;color:var(--gold);letter-spacing:.18em}
+.s-total{font-size:var(--fs-xs);color:var(--text2);margin-top:10px;line-height:1.6}
 /* MATH */
-.math-s{margin-bottom:28px}
-.math-s h3{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:10px;letter-spacing:.04em}
-.math-s p{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:8px}
+.math-s{margin-bottom:32px}
+.math-s h3{font-size:var(--fs-md);font-weight:700;color:var(--gold);margin-bottom:12px;letter-spacing:.04em}
+.math-s p{font-size:var(--fs-sm);color:var(--text2);line-height:1.75;margin-bottom:10px}
 .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-.br-l{font-size:11px;width:170px;flex-shrink:0;color:var(--text2)}
+.br-l{font-size:var(--fs-xs);width:170px;flex-shrink:0;color:var(--text2)}
 .br-b{height:8px;flex:1;background:var(--border);border-radius:4px;overflow:hidden}
 .br-f{height:100%;border-radius:4px}
-.br-v{font-size:11px;width:80px;text-align:right;color:var(--text)}
+.br-v{font-size:var(--fs-xs);width:80px;text-align:right;color:var(--text);font-variant-numeric:tabular-nums}
 .insight{background:var(--bg3);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
-padding:10px 13px;font-size:12px;color:var(--text2);line-height:1.65;margin:10px 0}
+padding:11px 14px;font-size:var(--fs-sm);color:var(--text2);line-height:1.7;margin:12px 0}
 .insight strong{color:var(--text)}
-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
-th{color:var(--text2);font-weight:500;padding:6px 10px;border-bottom:1px solid var(--border);text-align:left}
-td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);margin:12px 0}
+th{color:var(--text2);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;letter-spacing:.04em;font-size:var(--fs-xs);text-transform:uppercase}
+td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);line-height:1.55}
 /* FONTES */
-.fonte{border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:10px;background:var(--bg3)}
-.fonte h4{font-size:13px;font-weight:600;margin-bottom:3px}
-.fonte .url{font-size:11px;color:var(--text2);margin-bottom:7px}
+.fonte{border:1px solid var(--border);border-radius:9px;padding:15px 16px;margin-bottom:12px;background:var(--bg3);transition:border-color .18s}
+.fonte:hover{border-color:rgba(201,168,76,.3)}
+.fonte h4{font-size:var(--fs-base);font-weight:600;margin-bottom:4px;letter-spacing:.01em}
+.fonte .url{font-size:var(--fs-xs);color:var(--text2);margin-bottom:8px;display:inline-block}
 .fonte a.url{color:var(--text2);text-decoration:none;transition:color .15s}
-.fonte a.url:hover{color:var(--gold)}
-.fonte p{font-size:12px;color:var(--text2);line-height:1.6}
+.fonte a.url:hover,.fonte a.url:focus-visible{color:var(--gold);text-decoration:underline;text-underline-offset:2px}
+.fonte p{font-size:var(--fs-sm);color:var(--text2);line-height:1.65}
 /* DICT EXPAND HINT + CONST BUTTON */
-.dc-hint{font-size:10px;color:var(--text2);margin-top:6px;opacity:.5;transition:opacity .18s;
+.dc-hint{font-size:var(--fs-xs);color:var(--text2);margin-top:6px;opacity:.6;transition:opacity .18s;
   display:flex;align-items:center;gap:3px}
-.dc:hover .dc-hint{opacity:1}
+.dc:hover .dc-hint,.dc:focus-within .dc-hint{opacity:1}
 .dc.exp .dc-hint{display:none}
 .dc-const-btn{margin-top:10px;background:var(--gold2);border:1px solid rgba(201,168,76,.3);
-  color:var(--gold);cursor:pointer;border-radius:6px;padding:5px 12px;font-size:11px;
-  letter-spacing:.03em;transition:background .18s}
-.dc-const-btn:hover{background:rgba(201,168,76,.2)}
+  color:var(--gold);cursor:pointer;border-radius:6px;padding:6px 14px;font-size:var(--fs-xs);
+  letter-spacing:.03em;transition:background .18s,border-color .18s;font-weight:500}
+.dc-const-btn:hover{background:rgba(201,168,76,.2);border-color:var(--gold)}
 /* HELP OVERLAY */
 #help-overlay{position:fixed;inset:0;background:rgba(11,11,16,.88);z-index:9999;display:none;
   align-items:center;justify-content:center}
 #help-overlay.open{display:flex}
 .help-box{background:var(--bg3);border:1px solid var(--border);border-radius:14px;
-  padding:24px 28px;min-width:260px;max-width:340px;width:90%}
-.help-box h3{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:14px;
-  letter-spacing:.06em;text-align:center}
+  padding:24px 28px;min-width:280px;max-width:380px;width:90%;
+  box-shadow:0 12px 40px #000a}
+.help-box h3{font-size:var(--fs-md);font-weight:700;color:var(--gold);margin-bottom:16px;
+  letter-spacing:.08em;text-align:center;text-transform:uppercase}
 .hk-row{display:flex;justify-content:space-between;align-items:center;
-  padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}
+  padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:var(--fs-sm)}
 .hk-row:last-child{border-bottom:none}
 .hk-key{background:var(--bg2);border:1px solid var(--border);border-radius:4px;
-  padding:2px 7px;font-size:11px;font-family:monospace;color:var(--text);min-width:32px;text-align:center}
-.hk-desc{color:var(--text2);flex:1;padding-left:12px}
-.help-close{display:block;margin-top:14px;text-align:center;font-size:11px;
-  color:var(--text2);cursor:pointer;opacity:.6}
-.help-close:hover{opacity:1}
+  padding:3px 9px;font-size:var(--fs-xs);font-family:ui-monospace,SF Mono,Menlo,monospace;color:var(--text);min-width:36px;text-align:center}
+.hk-desc{color:var(--text2);flex:1;padding-left:14px;line-height:1.4}
+.help-close{display:block;margin-top:16px;text-align:center;font-size:var(--fs-xs);
+  color:var(--text2);cursor:pointer;opacity:.7;background:none;border:none;width:100%;font-family:inherit}
+.help-close:hover,.help-close:focus-visible{opacity:1;color:var(--text)}
 /* DICT COUNT */
-#dict-count{font-size:10px;color:var(--text2);text-align:right;margin-top:8px;
-  padding-top:6px;border-top:1px solid var(--border);opacity:.7}
+#dict-count{font-size:var(--fs-xs);color:var(--text2);text-align:right;margin-top:10px;
+  padding-top:8px;border-top:1px solid var(--border);opacity:.8;font-variant-numeric:tabular-nums}
 [data-nid]{transition:opacity .15s;transform-box:fill-box;transform-origin:center}
 @keyframes breathe{
   0%,100%{transform:scale(1)}
@@ -218,73 +252,81 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
 #detail.bodymap #det-tags,
 #detail.bodymap #det-desc,
 #detail.bodymap #det-techs{display:none}
-#karateka-wrap{padding:4px 0 8px}
-#karateka-wrap h4{font-size:10px;letter-spacing:.08em;color:var(--text2);
-  text-transform:uppercase;margin-bottom:8px;text-align:center}
+#karateka-wrap{padding:6px 0 10px}
+#karateka-wrap h4{font-size:var(--fs-xs);letter-spacing:.1em;color:var(--text2);
+  text-transform:uppercase;margin-bottom:10px;text-align:center;font-weight:600}
 .kzone{cursor:pointer;transition:opacity .18s}
 .kzone:hover{opacity:.9!important}
-.kzone-label{pointer-events:none;font-size:7px;dominant-baseline:middle;text-anchor:middle}
+.kzone:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}
+.kzone-label{pointer-events:none;font-size:8px;font-weight:600;dominant-baseline:middle;text-anchor:middle;letter-spacing:.04em}
 /* BELT BAR */
 #belt-bar{position:absolute;top:12px;left:50%;transform:translateX(-50%);
   z-index:8;display:flex;gap:5px;background:var(--bg2);
   border:1px solid var(--border);border-radius:20px;padding:4px 8px}
-.bb-btn{background:none;border:none;cursor:pointer;font-size:9px;
-  padding:3px 8px;border-radius:12px;color:var(--text2);transition:all .18s;letter-spacing:.04em}
-.bb-btn.on{background:var(--bg3);font-weight:700}
+.bb-btn{background:none;border:none;cursor:pointer;font-size:var(--fs-xs);
+  padding:4px 10px;border-radius:12px;color:var(--text2);transition:all .18s;letter-spacing:.04em;
+  min-height:24px}
+.bb-btn:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.bb-btn.on{background:var(--bg3);font-weight:700;color:var(--text)}
 /* MODE BAR */
-#mode-bar{position:absolute;top:12px;right:12px;z-index:8;display:flex;gap:4px}
+#mode-bar{position:absolute;top:12px;right:12px;z-index:8;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
 .mode-btn{background:var(--bg2);border:1px solid var(--border);cursor:pointer;
-  font-size:10px;padding:4px 10px;border-radius:12px;color:var(--text2);transition:all .18s}
-.mode-btn.on{color:var(--gold);border-color:var(--gold)}
+  font-size:var(--fs-xs);padding:5px 11px;border-radius:12px;color:var(--text2);transition:all .18s;min-height:26px}
+.mode-btn:hover{color:var(--text);border-color:rgba(201,168,76,.4)}
+.mode-btn.on{color:var(--gold);border-color:var(--gold);background:var(--gold2)}
 /* PLATONIC LEGEND */
 #platonic-legend{padding-bottom:8px}
 .pcell{padding:4px;border-radius:6px;transition:background .18s}
 .pcell:hover{opacity:1!important}
 /* GRAMMAR FORMULA (detail panel) */
-.gram-formula{display:flex;flex-wrap:wrap;align-items:center;gap:3px;margin:10px 0 2px}
-.gram-slot{border-radius:6px;padding:3px 8px;text-align:center;border:1px solid}
-.gram-slot-lbl{font-size:8px;letter-spacing:.07em;text-transform:uppercase;opacity:.7}
-.gram-slot-val{font-size:12px;font-weight:700;letter-spacing:.02em}
-.gram-op{color:var(--text2);font-size:12px;padding:0 1px}
-.gram-sep{color:var(--border);font-size:18px;padding:0 6px;line-height:1}
-.gram-axis-row{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px}
-.gram-axis-lbl{font-size:8px;color:var(--text2);letter-spacing:.06em;padding:0 8px;text-align:center;flex:1;min-width:40px}
+.gram-formula{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:12px 0 2px}
+.gram-slot{border-radius:6px;padding:5px 10px;text-align:center;border:1px solid;min-width:56px}
+.gram-slot-lbl{font-size:var(--fs-micro);letter-spacing:.1em;text-transform:uppercase;opacity:.8;font-weight:600;margin-bottom:1px}
+.gram-slot-val{font-size:var(--fs-base);font-weight:700;letter-spacing:.02em;line-height:1.2}
+.gram-op{color:var(--text3);font-size:var(--fs-base);padding:0 2px;opacity:.6}
+.gram-sep{color:var(--border);font-size:var(--fs-xl);padding:0 6px;line-height:1}
+.gram-axis-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.gram-axis-lbl{font-size:var(--fs-micro);color:var(--text2);letter-spacing:.08em;padding:0 8px;text-align:center;flex:1;min-width:44px;font-weight:600;text-transform:uppercase}
 /* GRAMMAR TAB */
-.gram-s{margin-bottom:32px}
-.gram-s h3{font-size:14px;font-weight:700;color:var(--gold);letter-spacing:.06em;margin-bottom:8px}
-.gram-s p{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:10px}
-.gram-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:12px 0}
+.gram-s{margin-bottom:36px;scroll-margin-top:20px}
+.gram-s h3{font-size:var(--fs-md);font-weight:700;color:var(--gold);letter-spacing:.06em;margin-bottom:10px;line-height:1.3}
+.gram-s p{font-size:var(--fs-sm);color:var(--text2);line-height:1.75;margin-bottom:12px;max-width:68ch}
+.gram-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:14px 0}
 .gram-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;
-  padding:12px;display:flex;flex-direction:column;align-items:center;gap:5px;
-  transition:all .18s;cursor:pointer}
-.gram-card:hover{background:var(--bg3)}
-.gc-element{font-size:9px;letter-spacing:.1em;opacity:.7;text-transform:uppercase;text-align:center}
-.gc-label{font-size:11px;font-weight:700;letter-spacing:.06em}
-.gc-role{font-size:10px;color:var(--text2);text-align:center;font-style:italic}
-.gc-ex{font-size:9px;color:var(--text2);text-align:center;line-height:1.5;margin-top:2px}
+  padding:14px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  transition:all .18s;cursor:pointer;outline-offset:2px}
+.gram-card:hover{background:var(--bg3);border-color:rgba(201,168,76,.3)}
+.gram-card:focus-visible{background:var(--bg3);box-shadow:var(--focus-ring)}
+.gc-element{font-size:var(--fs-micro);letter-spacing:.1em;opacity:.85;text-transform:uppercase;text-align:center;font-weight:600}
+.gc-label{font-size:var(--fs-sm);font-weight:700;letter-spacing:.06em}
+.gc-role{font-size:var(--fs-xs);color:var(--text2);text-align:center;font-style:italic;line-height:1.4}
+.gc-ex{font-size:var(--fs-micro);color:var(--text3);text-align:center;line-height:1.55;margin-top:2px}
 .gram-demo-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:10px;
-  padding:16px 20px;margin:12px 0}
+  padding:18px 22px;margin:14px 0}
 .gram-demo-wrap select{background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  font-size:11px;padding:4px 8px;border-radius:6px;margin-bottom:12px;width:100%}
+  font-size:var(--fs-sm);padding:7px 11px;border-radius:6px;margin-bottom:14px;width:100%;font-family:inherit;
+  cursor:pointer;transition:border-color .15s}
+.gram-demo-wrap select:hover{border-color:rgba(201,168,76,.4)}
 .gram-silence{background:var(--bg2);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
-  padding:12px 16px;margin:12px 0;font-size:12px;color:var(--text2);line-height:1.7}
-.gram-silence strong{color:var(--text);display:block;margin-bottom:4px;font-size:13px}
-.gram-3pillar{display:flex;gap:10px;margin:12px 0}
+  padding:14px 18px;margin:14px 0;font-size:var(--fs-sm);color:var(--text2);line-height:1.75}
+.gram-silence strong{color:var(--text);display:block;margin-bottom:5px;font-size:var(--fs-base);letter-spacing:.01em}
+.gram-3pillar{display:flex;gap:12px;margin:14px 0}
 .gram-pillar{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;
-  padding:12px 8px;text-align:center}
-.gp-kanji{font-size:26px;display:block;color:var(--gold);opacity:.85;margin-bottom:4px}
-.gp-jp{font-size:9px;color:var(--text2);letter-spacing:.12em}
-.gp-pt{font-size:11px;font-weight:600;margin:4px 0 2px}
-.gp-desc{font-size:10px;color:var(--text2);line-height:1.4}
+  padding:14px 10px;text-align:center;transition:border-color .18s}
+.gram-pillar:hover{border-color:rgba(201,168,76,.3)}
+.gp-kanji{font-size:30px;display:block;color:var(--gold);opacity:.9;margin-bottom:4px;line-height:1}
+.gp-jp{font-size:var(--fs-micro);color:var(--text2);letter-spacing:.14em;font-weight:600}
+.gp-pt{font-size:var(--fs-sm);font-weight:600;margin:6px 0 3px}
+.gp-desc{font-size:var(--fs-xs);color:var(--text2);line-height:1.5}
 .gram-kk{background:var(--bg2);border:1px solid rgba(201,168,76,.3);border-radius:12px;
-  padding:20px;margin:12px 0;display:flex;gap:18px;align-items:flex-start}
-.gram-kk-text h4{font-size:13px;color:var(--gold);margin-bottom:8px;letter-spacing:.06em}
-.gram-kk-text p{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:8px}
-.gram-kk-text blockquote{border-left:2px solid var(--gold);padding-left:10px;
-  font-size:11px;color:var(--text2);font-style:italic;margin:8px 0;line-height:1.6}
-.gram-kanji-hero{font-size:48px;color:var(--gold);opacity:.85;line-height:1;margin-bottom:6px;
+  padding:22px;margin:14px 0;display:flex;gap:20px;align-items:flex-start}
+.gram-kk-text h4{font-size:var(--fs-base);color:var(--gold);margin-bottom:10px;letter-spacing:.06em}
+.gram-kk-text p{font-size:var(--fs-sm);color:var(--text2);line-height:1.75;margin-bottom:10px}
+.gram-kk-text blockquote{border-left:2px solid var(--gold);padding-left:12px;
+  font-size:var(--fs-xs);color:var(--text2);font-style:italic;margin:10px 0;line-height:1.7}
+.gram-kanji-hero{font-size:52px;color:var(--gold);opacity:.92;line-height:1;margin-bottom:8px;
   text-align:center;letter-spacing:.05em}
-.gram-kanji-sub{font-size:10px;color:var(--text2);letter-spacing:.12em;text-align:center}
+.gram-kanji-sub{font-size:var(--fs-xs);color:var(--text2);letter-spacing:.14em;text-align:center;font-weight:600;text-transform:uppercase}
 /* ===== RESPONSIVO MOBILE ===== */
 @media (max-width:680px){
   #app{flex-direction:column-reverse}
@@ -292,7 +334,7 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
   .sb-logo,.sb-foot,#nav-search-wrap{display:none}
   .sb-nav{flex-direction:row;overflow-x:auto;padding:3px 4px;flex:1;gap:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;align-items:stretch}
   .sb-nav::-webkit-scrollbar{display:none}
-  .nav-btn{flex-direction:column;font-size:8px;padding:4px 2px;gap:1px;min-width:44px;flex:1;text-align:center;justify-content:center;border-radius:7px;border:none!important}
+  .nav-btn{flex-direction:column;font-size:9.5px;padding:4px 2px;gap:1px;min-width:44px;flex:1;text-align:center;justify-content:center;border-radius:7px;border:none!important;letter-spacing:.02em;font-weight:500}
   .nav-btn .ic{font-size:17px;width:auto;display:block;text-align:center}
   #detail{width:100%;bottom:56px}
   #detail h3{font-size:14px}
@@ -302,112 +344,117 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
   .kata-grid{grid-template-columns:1fr!important}
   .filters{gap:4px}
   .f-btn{padding:3px 9px;font-size:10px}
-  .panel-inner{padding:16px}
+  .panel-inner{padding:18px 16px 40px}
   .gram-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
   #belt-bar{padding:3px 5px;gap:3px}
   .bb-btn{padding:2px 5px}
   .nd-pair{grid-template-columns:1fr!important}
 }
 /* ===== CONSTRUTOR ===== */
-.const-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.const-field{display:flex;flex-direction:column;gap:5px}
-.const-field label{font-size:10px;color:var(--text2);letter-spacing:.07em;text-transform:uppercase}
+.const-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.const-field{display:flex;flex-direction:column;gap:6px}
+.const-field label{font-size:var(--fs-micro);color:var(--text2);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
 .const-field select{background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  font-size:12px;padding:6px 10px;border-radius:8px;cursor:pointer}
+  font-size:var(--fs-sm);padding:8px 12px;border-radius:8px;cursor:pointer;font-family:inherit;
+  transition:border-color .18s}
 .const-field select:focus{outline:none;border-color:var(--gold)}
+.const-field select:focus-visible{box-shadow:var(--focus-ring)}
 .const-field select:disabled{opacity:.35;cursor:not-allowed}
 .const-result{background:var(--bg2);border:1px solid rgba(201,168,76,.25);border-radius:14px;
-  padding:20px;margin:4px 0 16px;text-align:center;min-height:90px;
+  padding:22px;margin:4px 0 16px;text-align:center;min-height:96px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.const-name-jp{font-size:24px;font-weight:700;letter-spacing:.06em;color:var(--text)}
-.const-name-pt{font-size:12px;color:var(--text2);font-style:italic}
-.const-axes{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:4px}
-.const-axis{font-size:10px;padding:2px 8px;border-radius:4px;letter-spacing:.04em}
+.const-name-jp{font-size:26px;font-weight:700;letter-spacing:.06em;color:var(--text);line-height:1.2}
+.const-name-pt{font-size:var(--fs-sm);color:var(--text2);font-style:italic}
+.const-axes{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.const-axis{font-size:var(--fs-micro);padding:3px 10px;border-radius:4px;letter-spacing:.04em;font-weight:500}
 .const-axis.present{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
 .const-axis.implied{background:rgba(255,255,255,.04);color:var(--text2);border:1px solid var(--border)}
-.const-axis.absent{opacity:.3;color:var(--text2);border:1px dashed var(--border)}
-.const-empty{color:var(--text2);font-size:13px;opacity:.5}
-.const-matches-title{font-size:10px;color:var(--text2);letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+.const-axis.absent{opacity:.35;color:var(--text3);border:1px dashed var(--border)}
+.const-empty{color:var(--text2);font-size:var(--fs-base);opacity:.7;line-height:1.6}
+.const-matches-title{font-size:var(--fs-micro);color:var(--text2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-weight:600}
 .const-match{background:var(--bg3);border:1px solid var(--border);border-radius:8px;
-  padding:10px 13px;margin-bottom:6px;cursor:pointer;transition:border-color .15s;display:flex;align-items:center;gap:10px}
+  padding:11px 14px;margin-bottom:7px;cursor:pointer;transition:border-color .15s;display:flex;align-items:center;gap:12px}
 .const-match:hover{border-color:var(--gold)}
-.const-match-score{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(201,168,76,.12);color:var(--gold);flex-shrink:0}
+.const-match:focus-visible{border-color:var(--gold);box-shadow:var(--focus-ring)}
+.const-match-score{font-size:var(--fs-micro);padding:3px 9px;border-radius:10px;background:rgba(201,168,76,.12);color:var(--gold);flex-shrink:0;font-weight:600;letter-spacing:.02em}
 .const-match-exact{background:rgba(51,170,102,.12);color:#33aa66}
 .const-elision{background:var(--bg2);border-left:3px solid rgba(136,102,238,.5);border-radius:0 8px 8px 0;
-  padding:10px 14px;font-size:11px;color:var(--text2);line-height:1.7;margin-top:8px}
+  padding:11px 15px;font-size:var(--fs-xs);color:var(--text2);line-height:1.75;margin-top:10px;text-align:left}
+.const-elision strong{color:var(--text)}
 /* Kata tech links */
-.kc-tl{font-size:11px;padding:3px 6px;border-bottom:1px solid var(--border);cursor:pointer;
-  transition:color .15s;border-radius:3px}
-.kc-tl:hover{color:var(--gold);background:rgba(201,168,76,.06)}
+.kc-tl{font-size:var(--fs-xs);padding:5px 8px;border-bottom:1px solid var(--border);cursor:pointer;
+  transition:color .15s,background .15s;border-radius:3px;line-height:1.5}
+.kc-tl:last-child{border-bottom:none}
+.kc-tl:hover,.kc-tl:focus-visible{color:var(--gold);background:rgba(201,168,76,.06)}
 /* Elision table */
-.elision-table{width:100%;border-collapse:collapse;font-size:11px;margin:12px 0}
-.elision-table th{font-size:10px;color:var(--text2);padding:5px 8px;
-  border-bottom:1px solid var(--border);text-align:left;letter-spacing:.06em}
-.elision-table td{padding:6px 8px;border-bottom:1px solid rgba(30,30,48,.5);
-  color:var(--text);line-height:1.5;vertical-align:top}
+.elision-table{width:100%;border-collapse:collapse;font-size:var(--fs-xs);margin:14px 0}
+.elision-table th{font-size:var(--fs-micro);color:var(--text2);padding:7px 10px;
+  border-bottom:1px solid var(--border);text-align:left;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.elision-table td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.5);
+  color:var(--text);line-height:1.6;vertical-align:top}
 .elision-table tr:last-child td{border-bottom:none}
-.elision-table .dim-name{font-weight:600;white-space:nowrap}
+.elision-table .dim-name{font-weight:700;white-space:nowrap;letter-spacing:.02em}
 /* Near-duplicate */
-.nd-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
-.nd-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px}
-.nd-name{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
-.nd-nodes{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
-.nd-node{font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.06)}
-.nd-diff{font-size:11px;color:var(--text2);border-top:1px solid var(--border);padding-top:6px;margin-top:4px}
+.nd-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.nd-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px}
+.nd-name{font-size:var(--fs-base);font-weight:700;margin-bottom:7px;color:var(--text);letter-spacing:.01em}
+.nd-nodes{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px}
+.nd-node{font-size:var(--fs-micro);padding:2px 8px;border-radius:4px;background:rgba(255,255,255,.06);letter-spacing:.02em;font-weight:500}
+.nd-diff{font-size:var(--fs-xs);color:var(--text2);border-top:1px solid var(--border);padding-top:7px;margin-top:5px;line-height:1.6}
 /* ===== KATA ROTEIRO ===== */
 .kc-steps-wrap{margin-top:4px}
-.kc-steps-hdr{font-size:10px;color:var(--text2);margin-bottom:6px;letter-spacing:.07em;
-  display:flex;align-items:center;justify-content:space-between}
-.kc-step-item{font-size:11px;color:var(--text);padding:4px 8px;
-  border-bottom:1px solid rgba(30,30,48,.4);line-height:1.6}
+.kc-steps-hdr{font-size:var(--fs-micro);color:var(--text2);margin-bottom:8px;letter-spacing:.1em;
+  display:flex;align-items:center;justify-content:space-between;text-transform:uppercase;font-weight:600}
+.kc-step-item{font-size:var(--fs-xs);color:var(--text);padding:5px 10px;
+  border-bottom:1px solid rgba(30,30,48,.4);line-height:1.65}
 .kc-step-item:last-child{border-bottom:none}
-.kc-step-item.sub{color:var(--text2);padding-left:20px;font-style:italic;font-size:10.5px}
-.kc-step-item .kiai{color:#e85050;font-weight:700;font-size:10px;
-  padding:1px 5px;border-radius:3px;background:rgba(232,80,80,.1);margin-left:6px}
-.kc-step-item .step-n{color:var(--gold);min-width:22px;display:inline-block;font-size:10px}
+.kc-step-item.sub{color:var(--text2);padding-left:22px;font-style:italic;font-size:var(--fs-xs)}
+.kc-step-item .kiai{color:#e85050;font-weight:700;font-size:var(--fs-micro);
+  padding:2px 6px;border-radius:3px;background:rgba(232,80,80,.12);margin-left:6px;letter-spacing:.08em}
+.kc-step-item .step-n{color:var(--gold);min-width:24px;display:inline-block;font-size:var(--fs-xs);font-variant-numeric:tabular-nums;font-weight:600}
 .kc-step-item .step-cmd{font-weight:500;color:var(--text)}
-.kc-step-item .step-sub{font-size:10px;color:var(--text2)}
+.kc-step-item .step-sub{font-size:var(--fs-micro);color:var(--text2)}
 /* ===== ÁUDIO / SPEAK ===== */
 .speak-btn{background:none;border:1px solid var(--border);border-radius:6px;
-  color:var(--text2);font-size:11px;padding:3px 8px;cursor:pointer;
-  transition:color .15s,border-color .15s;letter-spacing:.04em}
-.speak-btn:hover{color:var(--gold);border-color:var(--gold)}
+  color:var(--text2);font-size:var(--fs-xs);padding:4px 10px;cursor:pointer;
+  transition:color .15s,border-color .15s;letter-spacing:.04em;font-family:inherit}
+.speak-btn:hover,.speak-btn:focus-visible{color:var(--gold);border-color:var(--gold)}
 .speak-btn:disabled{opacity:.3;cursor:not-allowed}
 /* ===== CONSTRUTOR AUTO-DEMO ===== */
-.demo-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  padding:10px 0 4px;border-top:1px solid var(--border);margin-top:12px}
+.demo-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:12px 0 4px;border-top:1px solid var(--border);margin-top:14px}
 .demo-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  border-radius:7px;font-size:12px;padding:5px 14px;cursor:pointer;transition:border-color .15s}
+  border-radius:7px;font-size:var(--fs-sm);padding:6px 15px;cursor:pointer;transition:border-color .15s;font-family:inherit}
 .demo-btn:hover{border-color:var(--gold)}
-.demo-btn.active{border-color:var(--gold);color:var(--gold)}
+.demo-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold2)}
 .demo-speed{background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  border-radius:6px;font-size:11px;padding:4px 8px;cursor:pointer}
-.demo-prog{font-size:11px;color:var(--text2);min-width:40px;text-align:right;margin-left:auto}
+  border-radius:6px;font-size:var(--fs-xs);padding:5px 9px;cursor:pointer;font-family:inherit}
+.demo-prog{font-size:var(--fs-xs);color:var(--text2);min-width:48px;text-align:right;margin-left:auto;font-variant-numeric:tabular-nums}
 /* ===== MANDALA MODE TOGGLE ===== */
-.mandal-toggle{display:flex;gap:4px;margin-left:auto}
+.mandal-toggle{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
 .mt-btn{background:none;border:1px solid var(--border);color:var(--text2);
-  font-size:10px;padding:3px 9px;border-radius:5px;cursor:pointer;
-  transition:color .15s,border-color .15s,background .15s;letter-spacing:.04em}
-.mt-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+  font-size:var(--fs-xs);padding:4px 10px;border-radius:5px;cursor:pointer;
+  transition:color .15s,border-color .15s,background .15s;letter-spacing:.04em;font-family:inherit;min-height:24px}
+.mt-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08);font-weight:600}
 .mt-btn:hover:not(.on){color:var(--text);border-color:rgba(201,168,76,.4)}
 /* Ghost nodes in implícitos mode */
 .cv-ghost-lbl{font-size:9px;fill:#ffffff44;font-style:italic;pointer-events:none}
 /* Implicit axis chain section */
-.impl-chain{display:grid;gap:6px;margin:12px 0}
-.impl-row{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;
-  background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:11px}
-.impl-row .impl-left{min-width:120px;flex-shrink:0}
-.impl-row .impl-tech{font-weight:600;color:var(--text);font-size:12px}
-.impl-row .impl-rule{color:var(--text2);line-height:1.5;font-size:10.5px}
-.impl-row .impl-arrow{color:var(--gold);font-size:14px;flex-shrink:0;margin-top:1px}
+.impl-chain{display:grid;gap:8px;margin:14px 0}
+.impl-row{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:var(--fs-xs)}
+.impl-row .impl-left{min-width:130px;flex-shrink:0}
+.impl-row .impl-tech{font-weight:700;color:var(--text);font-size:var(--fs-sm);letter-spacing:.01em}
+.impl-row .impl-rule{color:var(--text2);line-height:1.65;font-size:var(--fs-xs)}
+.impl-row .impl-arrow{color:var(--gold);font-size:var(--fs-md);flex-shrink:0;margin-top:1px}
 /* ===== KATA TIMER ===== */
-.kt-timer{display:inline-flex;align-items:center;gap:7px;margin-left:auto}
+.kt-timer{display:inline-flex;align-items:center;gap:8px;margin-left:auto}
 .kt-timer-btn{background:none;border:1px solid var(--border);border-radius:6px;
-  color:var(--text2);font-size:10px;padding:2px 8px;cursor:pointer;
-  transition:color .15s,border-color .15s}
-.kt-timer-btn:hover{color:var(--gold);border-color:var(--gold)}
-.kt-timer-display{font-size:12px;font-variant-numeric:tabular-nums;
-  color:var(--gold);min-width:34px;font-weight:600;letter-spacing:.03em}
+  color:var(--text2);font-size:var(--fs-xs);padding:3px 10px;cursor:pointer;
+  transition:color .15s,border-color .15s;font-family:inherit}
+.kt-timer-btn:hover,.kt-timer-btn:focus-visible{color:var(--gold);border-color:var(--gold)}
+.kt-timer-display{font-size:var(--fs-sm);font-variant-numeric:tabular-nums;
+  color:var(--gold);min-width:40px;font-weight:600;letter-spacing:.03em}
 /* ===== @PRINT — kata roteiro ===== */
 @media print{
   body{background:#fff;color:#111}
@@ -428,9 +475,9 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
 /* ===== STEP TECH LINK ===== */
 .step-tech-link{color:var(--gold);cursor:pointer;
   text-decoration:underline dotted;text-underline-offset:2px;
-  transition:color .12s,opacity .12s;border-radius:2px;
-  padding:0 1px}
-.step-tech-link:hover{color:#fff;background:var(--gold);
+  transition:color .12s,opacity .12s,background .12s;border-radius:3px;
+  padding:0 2px}
+.step-tech-link:hover,.step-tech-link:focus-visible{color:#0b0b10;background:var(--gold);
   text-decoration:none;opacity:1}
 /* ===== PROGRESSÃO PEDAGÓGICA (Grammar IX) ===== */
 .prog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
@@ -439,32 +486,34 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
   background:var(--bg2);transition:border-color .15s,box-shadow .15s;
   cursor:default}
 .prog-card:hover{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold2)}
-.prog-belt{font-size:9px;letter-spacing:.1em;font-weight:700;
-  margin-bottom:6px;padding:2px 8px;border-radius:12px;
-  display:inline-block;background:rgba(255,255,255,.05)}
-.prog-concept{font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px}
-.prog-section-link{font-size:10px;color:var(--gold);cursor:pointer;
-  text-decoration:underline dotted;opacity:.8}
-.prog-section-link:hover{opacity:1}
-.prog-kata{font-size:10px;color:var(--text2);margin-top:4px;line-height:1.6}
-.prog-example{font-size:10px;color:var(--text2);margin-top:5px;padding-top:5px;
-  border-top:1px solid var(--border);font-style:italic}
+.prog-belt{font-size:var(--fs-micro);letter-spacing:.12em;font-weight:700;
+  margin-bottom:8px;padding:3px 10px;border-radius:12px;
+  display:inline-block;background:rgba(255,255,255,.05);text-transform:uppercase}
+.prog-concept{font-size:var(--fs-base);font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:.01em}
+.prog-section-link{font-size:var(--fs-xs);color:var(--gold);cursor:pointer;
+  text-decoration:underline dotted;text-underline-offset:2px;opacity:.85;
+  background:none;border:none;padding:0;font-family:inherit}
+.prog-section-link:hover,.prog-section-link:focus-visible{opacity:1}
+.prog-kata{font-size:var(--fs-xs);color:var(--text2);margin-top:6px;line-height:1.6}
+.prog-example{font-size:var(--fs-xs);color:var(--text2);margin-top:6px;padding-top:6px;
+  border-top:1px solid var(--border);font-style:italic;line-height:1.6}
 /* ===== ANALISADOR DE SILÊNCIOS ===== */
-.silence-form{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.silence-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
 .silence-select{background:var(--bg3);border:1px solid var(--border);
-  color:var(--text);border-radius:7px;font-size:11px;padding:6px 8px;
-  width:100%;cursor:pointer;transition:border-color .15s}
+  color:var(--text);border-radius:7px;font-size:var(--fs-sm);padding:8px 10px;
+  width:100%;cursor:pointer;transition:border-color .15s;font-family:inherit}
 .silence-select:focus{border-color:var(--gold);outline:none}
 .silence-btn{grid-column:1/-1;background:var(--bg3);border:1px solid var(--border);
-  color:var(--text);border-radius:8px;font-size:12px;font-weight:600;
-  padding:8px 16px;cursor:pointer;letter-spacing:.05em;transition:border-color .15s,color .15s}
-.silence-btn:hover{border-color:var(--gold);color:var(--gold)}
-.silence-result{margin-top:10px;border-radius:10px;padding:14px 16px;
-  border:1px solid var(--border);background:var(--bg2);font-size:12px;
-  line-height:1.7;display:none}
+  color:var(--text);border-radius:8px;font-size:var(--fs-base);font-weight:600;
+  padding:10px 18px;cursor:pointer;letter-spacing:.05em;transition:border-color .15s,color .15s,background .15s;
+  font-family:inherit}
+.silence-btn:hover,.silence-btn:focus-visible{border-color:var(--gold);color:var(--gold);background:var(--gold2)}
+.silence-result{margin-top:12px;border-radius:10px;padding:16px 18px;
+  border:1px solid var(--border);background:var(--bg2);font-size:var(--fs-sm);
+  line-height:1.75;display:none}
 .silence-result.show{display:block}
-.sil-badge{display:inline-block;font-size:10px;font-weight:700;
-  padding:2px 10px;border-radius:12px;letter-spacing:.07em;margin-bottom:8px}
+.sil-badge{display:inline-block;font-size:var(--fs-micro);font-weight:700;
+  padding:3px 11px;border-radius:12px;letter-spacing:.1em;margin-bottom:10px;text-transform:uppercase}
 .sil-canon{background:#44aa6622;color:#44aa66;border:1px solid #44aa6644}
 .sil-silent{background:rgba(200,160,76,.12);color:var(--gold);border:1px solid rgba(200,160,76,.3)}
 .sil-invalid{background:#e8505022;color:#e85050;border:1px solid #e8505044}
@@ -472,22 +521,22 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
 /* ===== BELT FILTER INDICATOR ===== */
 #belt-bar .bb-btn.belt-filtering{box-shadow:0 0 0 2px currentColor;opacity:1}
 </style></head><body>
-<div id="help-overlay">
+<div id="help-overlay" role="dialog" aria-modal="true" aria-labelledby="help-title" aria-hidden="true">
   <div class="help-box">
-    <h3>Atalhos de Teclado</h3>
-    <div class="hk-row"><span class="hk-key">ESC</span><span class="hk-desc">Fechar painel / overlay</span></div>
-    <div class="hk-row"><span class="hk-key">?</span><span class="hk-desc">Mostrar / ocultar esta ajuda</span></div>
-    <div class="hk-row"><span class="hk-key">→</span><span class="hk-desc">Próxima técnica (painel aberto)</span></div>
-    <div class="hk-row"><span class="hk-key">←</span><span class="hk-desc">Técnica anterior (painel aberto)</span></div>
-    <div class="hk-row"><span class="hk-key">↑ ↓</span><span class="hk-desc">Navegar na busca rápida</span></div>
-    <div class="hk-row"><span class="hk-key">Enter</span><span class="hk-desc">Selecionar item da busca</span></div>
-    <span class="help-close" id="help-close">Pressione ESC ou ? para fechar</span>
+    <h3 id="help-title">Atalhos do teclado</h3>
+    <div class="hk-row"><span class="hk-key">Esc</span><span class="hk-desc">Fechar painel ou esta ajuda</span></div>
+    <div class="hk-row"><span class="hk-key">?</span><span class="hk-desc">Abrir ou fechar esta ajuda</span></div>
+    <div class="hk-row"><span class="hk-key">→</span><span class="hk-desc">Próxima técnica (com painel aberto)</span></div>
+    <div class="hk-row"><span class="hk-key">←</span><span class="hk-desc">Técnica anterior (com painel aberto)</span></div>
+    <div class="hk-row"><span class="hk-key">↑ ↓</span><span class="hk-desc">Navegar resultados da busca</span></div>
+    <div class="hk-row"><span class="hk-key">Enter</span><span class="hk-desc">Abrir o item destacado</span></div>
+    <button class="help-close" id="help-close" type="button">Esc ou ? para fechar</button>
   </div>
 </div>
 <div id="app">
-<div id="sidebar">
+<aside id="sidebar" aria-label="Navegação principal">
   <div class="sb-logo">
-    <svg width="34" height="34" viewBox="0 0 34 34">
+    <svg width="34" height="34" viewBox="0 0 34 34" role="img" aria-label="Atlas Kyokushin">
       <circle cx="17" cy="17" r="15" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity=".5"/>
       <polygon points="17,3 31,17 17,31 3,17" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
       <circle cx="17" cy="17" r="2.5" fill="#c9a84c"/>
@@ -496,112 +545,113 @@ td{padding:6px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text)}
     </svg>
     <div class="sb-t"><span class="t1">ATLAS</span><span class="t2">KYOKUSHIN</span></div>
   </div>
-  <nav class="sb-nav">
-    <button class="nav-btn active" data-tab="constelacao"><span class="ic">✦</span>Constelação</button>
-    <button class="nav-btn" data-tab="dicionario"><span class="ic">≡</span>Dicionário</button>
-    <button class="nav-btn" data-tab="kata"><span class="ic">◈</span>Kata</button>
-    <button class="nav-btn" data-tab="ido"><span class="ic">↻</span>Ido-Geiko</button>
-    <button class="nav-btn" data-tab="math"><span class="ic">∑</span>Matemática</button>
-    <button class="nav-btn" data-tab="fontes"><span class="ic">∂</span>Fontes</button>
-    <button class="nav-btn" data-tab="gramatica"><span class="ic">λ</span>Gramática</button>
-    <button class="nav-btn" data-tab="construtor"><span class="ic">⌨</span>Construtor</button>
+  <nav class="sb-nav" role="tablist" aria-label="Seções do atlas">
+    <button class="nav-btn active" data-tab="constelacao" id="tab-constelacao" role="tab" aria-current="page" aria-selected="true" aria-controls="p-constelacao" type="button"><span class="ic" aria-hidden="true">✦</span>Constelação</button>
+    <button class="nav-btn" data-tab="dicionario" id="tab-dicionario" role="tab" aria-selected="false" aria-controls="p-dicionario" type="button"><span class="ic" aria-hidden="true">≡</span>Dicionário</button>
+    <button class="nav-btn" data-tab="kata" id="tab-kata" role="tab" aria-selected="false" aria-controls="p-kata" type="button"><span class="ic" aria-hidden="true">◈</span>Kata</button>
+    <button class="nav-btn" data-tab="ido" id="tab-ido" role="tab" aria-selected="false" aria-controls="p-ido" type="button"><span class="ic" aria-hidden="true">↻</span>Ido-Geiko</button>
+    <button class="nav-btn" data-tab="math" id="tab-math" role="tab" aria-selected="false" aria-controls="p-math" type="button"><span class="ic" aria-hidden="true">∑</span>Matemática</button>
+    <button class="nav-btn" data-tab="fontes" id="tab-fontes" role="tab" aria-selected="false" aria-controls="p-fontes" type="button"><span class="ic" aria-hidden="true">∂</span>Fontes</button>
+    <button class="nav-btn" data-tab="gramatica" id="tab-gramatica" role="tab" aria-selected="false" aria-controls="p-gramatica" type="button"><span class="ic" aria-hidden="true">λ</span>Gramática</button>
+    <button class="nav-btn" data-tab="construtor" id="tab-construtor" role="tab" aria-selected="false" aria-controls="p-construtor" type="button"><span class="ic" aria-hidden="true">⌨</span>Construtor</button>
   </nav>
   <div id="nav-search-wrap">
-    <input id="nav-search" placeholder="buscar técnica…" autocomplete="off" spellcheck="false">
-    <div id="search-drop"></div>
+    <label for="nav-search" class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Buscar no atlas</label>
+    <input id="nav-search" placeholder="Buscar técnica, kata, nó…" autocomplete="off" spellcheck="false" aria-label="Buscar no atlas" type="search">
+    <div id="search-drop" role="listbox" aria-label="Resultados da busca"></div>
   </div>
-  <div class="sb-foot"><span style="font-size:15px;color:var(--gold);opacity:.75;margin-right:6px;vertical-align:middle" title="Kyokushin — Verdade Última">極真</span>CBKKO · IKO1 Honbu</div>
-</div>
+  <div class="sb-foot"><span style="font-size:16px;color:var(--gold);opacity:.85;margin-right:7px;vertical-align:middle" title="極真 — Kyokushin: a Verdade Última" aria-hidden="true">極真</span>CBKKO · IKO1 Honbu</div>
+</aside>
 <div id="main">
   <div class="panel active" id="p-constelacao">
     <div id="cv-wrap">
       <div id="belt-bar"></div>
-      <div id="mode-bar">
-        <button class="mode-btn on" id="mode-mandala" onclick="setMode('mandala')">◉ Mandala</button>
-        <button class="mode-btn" id="mode-chord" onclick="setMode('chord')">◎ Corda</button>
-        <button class="mode-btn" id="mode-reset" onclick="resetView()" title="Resetar viewport">⊙</button>
-        <span style="margin-left:8px;width:1px;height:16px;background:var(--border);display:inline-block;vertical-align:middle;opacity:.5"></span>
-        <div class="mandal-toggle">
-          <button class="mt-btn on" id="mt-solidos" onclick="setMandalMode('solidos')" title="Sólidos platônicos">◈ Sólidos</button>
-          <button class="mt-btn" id="mt-palavras" onclick="setMandalMode('palavras')" title="Mandala de palavras — técnicas como polígonos">◇ Palavras</button>
-          <button class="mt-btn" id="mt-implicitos" onclick="setMandalMode('implicitos')" title="Com eixos implícitos (nós fantasma)">◌ Implícitos</button>
+      <div id="mode-bar" role="group" aria-label="Modos da constelação">
+        <button class="mode-btn on" id="mode-mandala" onclick="setMode('mandala')" type="button" aria-pressed="true" title="Layout em mandala — eixos em anéis concêntricos">◉ Mandala</button>
+        <button class="mode-btn" id="mode-chord" onclick="setMode('chord')" type="button" aria-pressed="false" title="Layout em corda — técnicas como arcos">◎ Corda</button>
+        <button class="mode-btn" id="mode-reset" onclick="resetView()" type="button" title="Centralizar e redefinir zoom" aria-label="Centralizar visualização">⊙</button>
+        <span style="margin-left:8px;width:1px;height:16px;background:var(--border);display:inline-block;vertical-align:middle;opacity:.5" aria-hidden="true"></span>
+        <div class="mandal-toggle" role="group" aria-label="Sub-modo da mandala">
+          <button class="mt-btn on" id="mt-solidos" onclick="setMandalMode('solidos')" type="button" aria-pressed="true" title="Cada nó como sólido platônico do seu eixo">◈ Sólidos</button>
+          <button class="mt-btn" id="mt-palavras" onclick="setMandalMode('palavras')" type="button" aria-pressed="false" title="Cada técnica como polígono ligando seus nós">◇ Palavras</button>
+          <button class="mt-btn" id="mt-implicitos" onclick="setMandalMode('implicitos')" type="button" aria-pressed="false" title="Mostra também eixos implícitos como nós fantasma">◌ Implícitos</button>
         </div>
       </div>
-      <svg id="cv"></svg>
-      <div id="tip"></div>
-      <div id="detail">
-        <button id="det-back">←</button>
-        <button id="det-close">✕</button>
-        <span id="det-counter"></span>
+      <svg id="cv" role="img" aria-label="Mapa da constelação de técnicas Kyokushin"></svg>
+      <div id="tip" role="tooltip" aria-hidden="true"></div>
+      <aside id="detail" aria-label="Detalhe da técnica ou nó">
+        <button id="det-back" type="button" aria-label="Voltar à técnica anterior">←</button>
+        <button id="det-close" type="button" aria-label="Fechar painel de detalhe">✕</button>
+        <span id="det-counter" aria-live="polite"></span>
         <h3 id="det-name"></h3><div class="dt" id="det-type"></div>
         <div id="det-tags"></div>
-        <div id="det-desc" style="font-size:12px;color:var(--text2);margin-top:10px;line-height:1.6"></div>
+        <div id="det-desc" style="font-size:var(--fs-sm);color:var(--text2);margin-top:12px;line-height:1.65"></div>
         <ul id="det-techs"></ul>
-      </div>
+      </aside>
     </div>
   </div>
-  <div class="panel" id="p-dicionario">
+  <div class="panel" id="p-dicionario" role="tabpanel" aria-labelledby="tab-dicionario">
     <div class="panel-inner">
-      <h2>Dicionário Técnico</h2>
-      <div class="sub">54 técnicas · kihon (branca→amarela) + exclusivas de kata</div>
-      <div class="filters" id="dict-filters"></div>
-      <input class="search" id="dict-search" placeholder="Buscar técnica ou tradução…" autocomplete="off">
-      <div class="dict-grid" id="dict-grid"></div>
-      <div id="dict-count"></div>
+      <h2>Dicionário técnico</h2>
+      <p class="sub">As 54 técnicas do currículo: kihon canônico (branca → amarela) mais técnicas que aparecem exclusivamente em kata. Toque um card para abrir os detalhes de execução.</p>
+      <div class="filters" id="dict-filters" role="group" aria-label="Filtros do dicionário"></div>
+      <input class="search" id="dict-search" placeholder="Buscar por nome japonês, tradução ou nó…" autocomplete="off" type="search" aria-label="Buscar no dicionário">
+      <div class="dict-grid" id="dict-grid" aria-live="polite"></div>
+      <div id="dict-count" aria-live="polite"></div>
     </div>
   </div>
-  <div class="panel" id="p-kata">
+  <div class="panel" id="p-kata" role="tabpanel" aria-labelledby="tab-kata">
     <div class="panel-inner">
       <h2>Kata</h2>
-      <div class="sub">23 formas do currículo IKO1 — branca ao Shodan</div>
-      <div class="filters" id="kata-filters"></div>
-      <div class="kata-grid" id="kata-grid"></div>
+      <p class="sub">As 23 formas do currículo IKO1, da branca ao Shodan. Cada card abre o roteiro de prática, o embusen (linha do movimento) e os silêncios canônicos da forma.</p>
+      <div class="filters" id="kata-filters" role="group" aria-label="Filtros de kata"></div>
+      <div class="kata-grid" id="kata-grid" aria-live="polite"></div>
     </div>
   </div>
-  <div class="panel" id="p-ido">
+  <div class="panel" id="p-ido" role="tabpanel" aria-labelledby="tab-ido">
     <div class="panel-inner">
       <h2>Ido-Geiko</h2>
-      <div class="sub">Gerador de sequências por faixa · requisitos CBKKO/IKO1</div>
-      <div class="ido-belts" id="ido-belts"></div>
+      <p class="sub">Gerador de sequências de deslocamento por faixa. Escolha uma faixa para ver os requisitos do exame e a recomendação pedagógica de treino — depois gere uma sequência respeitando o mínimo de golpes.</p>
+      <div class="ido-belts" id="ido-belts" role="tablist" aria-label="Selecionar faixa"></div>
       <div id="ido-req"></div>
-      <div id="ido-slider-wrap" style="display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:12px;color:var(--text2)">
+      <div id="ido-slider-wrap" style="display:flex;align-items:center;gap:12px;margin-bottom:16px;font-size:var(--fs-sm);color:var(--text2)">
         <label for="ido-nblocks" style="flex-shrink:0">Blocos:</label>
-        <input type="range" id="ido-nblocks" min="3" max="12" value="4" style="flex:1;accent-color:var(--gold);cursor:pointer">
-        <span id="ido-nblocks-val" style="min-width:16px;text-align:right;color:var(--text)">4</span>
-        <span id="ido-est" style="min-width:72px;text-align:right;opacity:.55;font-size:11px"></span>
+        <input type="range" id="ido-nblocks" min="3" max="12" value="4" style="flex:1;accent-color:var(--gold);cursor:pointer" aria-label="Quantidade de blocos de renraku" aria-valuemin="3" aria-valuemax="12">
+        <span id="ido-nblocks-val" style="min-width:18px;text-align:right;color:var(--text);font-variant-numeric:tabular-nums" aria-hidden="true">4</span>
+        <span id="ido-est" style="min-width:76px;text-align:right;opacity:.7;font-size:var(--fs-xs);font-variant-numeric:tabular-nums" aria-live="polite"></span>
       </div>
-      <button class="gen-btn" onclick="generateIdo()">Gerar Sequência</button>
-      <div id="ido-out"></div>
+      <button class="gen-btn" onclick="generateIdo()" type="button">Gerar sequência</button>
+      <div id="ido-out" aria-live="polite"></div>
     </div>
   </div>
-  <div class="panel" id="p-math">
+  <div class="panel" id="p-math" role="tabpanel" aria-labelledby="tab-math">
     <div class="panel-inner">
-      <h2>Matemática Combinatória</h2>
-      <div class="sub">Entropia, silêncios canônicos e complexidade do sistema</div>
+      <h2>Matemática combinatória</h2>
+      <p class="sub">O que a contagem revela sobre o currículo: entropia do vocabulário, paradoxo da canonização e os silêncios deliberados que dão forma ao sistema.</p>
       <div id="math-content"></div>
     </div>
   </div>
-  <div class="panel" id="p-fontes">
+  <div class="panel" id="p-fontes" role="tabpanel" aria-labelledby="tab-fontes">
     <div class="panel-inner">
-      <h2>Fontes e Referências</h2>
-      <div class="sub">Documentação institucional utilizada neste atlas</div>
+      <h2>Fontes e referências</h2>
+      <p class="sub">Documentação institucional usada para validar os dados deste atlas — linhagem IKO1/CBKKO e materiais públicos auditáveis.</p>
       <div id="fontes-content"></div>
     </div>
   </div>
-  <div class="panel" id="p-gramatica">
+  <div class="panel" id="p-gramatica" role="tabpanel" aria-labelledby="tab-gramatica">
     <div class="panel-inner">
       <h2>Gramática · Geometria · Filosofia</h2>
-      <div class="sub">A língua do corpo — 5 eixos semânticos que descrevem toda técnica Kyokushin</div>
+      <p class="sub">A língua do corpo: cinco eixos semânticos descrevem toda técnica do Kyokushin. Esta seção decompõe a fórmula, mapeia os silêncios da nomenclatura e mostra a progressão pedagógica do currículo.</p>
       <div id="gram-root"></div>
     </div>
   </div>
-  <div class="panel" id="p-construtor">
+  <div class="panel" id="p-construtor" role="tabpanel" aria-labelledby="tab-construtor">
     <div class="panel-inner">
-      <h2>Construtor</h2>
-      <div class="sub">Monte uma técnica · do português ao japonês · veja onde ela mora no corpus</div>
+      <h2>Construtor de técnica</h2>
+      <p class="sub">Monte uma técnica eixo por eixo, do português ao japonês. O construtor aplica as regras de elisão da nomenclatura e mostra onde a sua combinação aparece — ou não — no corpus canônico.</p>
       <div id="const-form"></div>
-      <div id="const-result" class="const-result"><span class="const-empty">Selecione uma ação para começar</span></div>
-      <div id="const-matches"></div>
+      <div id="const-result" class="const-result" aria-live="polite"><span class="const-empty">Comece escolhendo uma ação acima — o nome canônico aparecerá aqui.</span></div>
+      <div id="const-matches" aria-live="polite"></div>
     </div>
   </div>
 </div></div>
@@ -1528,13 +1578,13 @@ note:'Padrão de yakusoku kumite do Shodan: Tenshin + Barai + finalização. Req
 ];
 
 const BELT_REQ={
-branca:{exam:'Técnica única em Zenkutsu. Gedan Barai + Oi Tsuki. Kata: Taikyoku I, II e Sokugi I, II.',ido:'6–8 golpes, técnica única repetida',min:6},
-laranja:{exam:'Taikyoku I-III, Sokugi I-III. Renraku básico (2 técnicas). Kihon geiko em Zenkutsu.',ido:'8–10 golpes, renraku simples',min:8},
-azul:{exam:'Pinan I, II, III. Sanchin no Kata. Ido-Geiko com Kiba Dachi e Kokutsu.',ido:'10–15 golpes, 3 renraku distintos',min:10},
-amarela:{exam:'Pinan I-IV. Tsuki no Kata. Kaiten Ido (360°). Renraku de 3 técnicas.',ido:'15–20 golpes, alternância mão/pé',min:15},
-verde:{exam:'Pinan I-V. Gekisai Dai. Footwork de kumite: okuri-ashi, fumi-dashi, kosa-ashi. Renraku de 3–4 técnicas com deslocamento.',ido:'20–25 golpes · footwork: okuri, fumi, kosa · variação de altura e distância',min:20},
-marrom:{exam:'Yantsu, Tensho, Gekisai Sho, Saifa. Yakusoku Kumite. Tenshin, oi-ashi, nidan geri. Tameshiwari 1-2 tábuas.',ido:'25–30 golpes · tai sabaki · renraku de 4+ técnicas com movimentação',min:25},
-shodan:{exam:'Kanku, Seienchin, Garyu, Seipai. 10 lutas de 3min. Tameshiwari 3 tábuas. Teoria: nota mínima 7. Ido-Geiko: mínimo 30 golpes.',ido:'Mínimo 30 golpes (requisito CBKKO/IKO1)',min:30},
+branca:{exam:'Técnica única em Zenkutsu Dachi. Gedan Barai + Oi Tsuki. Kata: Taikyoku Sono Ichi, Ni e Sokugi Taikyoku Ichi, Ni.',ido:'6–8 golpes · uma única técnica repetida',min:6,foco:'Fixar a postura e o gesto fundamental — a fórmula no seu estado mais puro.'},
+laranja:{exam:'Taikyoku Sono Ichi–San. Sokugi Taikyoku Ichi–San. Renraku básico de 2 técnicas. Kihon Geiko em Zenkutsu Dachi.',ido:'8–10 golpes · renraku simples (encadeamento de duas técnicas)',min:8,foco:'Introduzir o encadeamento — duas técnicas que se completam ritmicamente.'},
+azul:{exam:'Pinan Sono Ichi, Ni e San. Sanchin no Kata. Ido-Geiko incluindo Kiba Dachi e Kokutsu Dachi.',ido:'10–15 golpes · 3 renraku distintos · alternar posturas',min:10,foco:'Diversificar posturas — a base muda o ângulo da força.'},
+amarela:{exam:'Pinan Sono Ichi–Yon. Tsuki no Kata. Kaiten Ido (rotação 360°). Renraku de 3 técnicas.',ido:'15–20 golpes · alternância mão/pé · renraku de 3 técnicas',min:15,foco:'Equilibrar mão e pé — o vocabulário começa a se cruzar.'},
+verde:{exam:'Pinan Sono Ichi–Go. Gekisai Dai. Footwork de kumite (okuri-ashi, fumi-dashi, kosa-ashi). Renraku de 3–4 técnicas com deslocamento.',ido:'20–25 golpes · footwork: okuri, fumi, kosa · variação de altura e distância',min:20,foco:'O movimento entra no cálculo — distância e altura passam a importar tanto quanto o golpe.'},
+marrom:{exam:'Yantsu, Tensho, Gekisai Sho, Saifa. Yakusoku Kumite (combate combinado). Tenshin, oi-ashi, nidan geri. Tameshiwari de 1 a 2 tábuas.',ido:'25–30 golpes · tai sabaki · renraku de 4 ou mais técnicas com movimentação',min:25,foco:'Movimentação tática — a estrutura inteira do corpo se desloca em função do oponente.'},
+shodan:{exam:'Kanku, Seienchin, Garyu, Seipai. 10 lutas de 3 minutos. Tameshiwari de 3 tábuas. Prova teórica com nota mínima 7. Ido-Geiko de no mínimo 30 golpes.',ido:'Mínimo 30 golpes · síntese de todos os recursos das faixas anteriores',min:30,foco:'Síntese: o praticante navega o vocabulário inteiro como linguagem fluente.'},
 };
 
 // Node lookup
@@ -2160,7 +2210,7 @@ svg.addEventListener('mousemove',ev=>{
         +'<div style="font-size:11px;color:var(--text2);margin:2px 0">'+tech.pt+'</div>'
         +(tech.desc?'<div style="font-size:11px;line-height:1.4;margin-top:4px;color:var(--text)">'+tech.desc.slice(0,115)+(tech.desc.length>115?'…':'')+'</div>':'')
         +'<br><span class="belt-pill" style="background:'+BS[tech.belt]+'20;color:'+BS[tech.belt]+'">'+tech.belt+'</span>'
-        +(tech.kataOnly?'<span style="font-size:10px;color:var(--text2);margin-left:6px">kata only</span>':'');
+        +(tech.kataOnly?'<span style="font-size:10px;color:var(--text2);margin-left:6px">só em kata</span>':'');
     }
   } else {
     tip.style.opacity='0';
@@ -2312,7 +2362,7 @@ document.getElementById('det-type').innerHTML=tech.pt+
 document.getElementById('det-tags').innerHTML=
   '<span class="tag" style="color:'+BS[tech.belt]+';border-color:'+BS[tech.belt]+'">'+tech.belt+'</span>'+
   '<span class="tag" style="color:var(--text2);border-color:var(--border)">'+tech.action+'</span>'+
-  (tech.kataOnly?'<span class="tag" style="color:var(--kata);border-color:var(--kata)">kata only</span>':'');
+  (tech.kataOnly?'<span class="tag" style="color:var(--kata);border-color:var(--kata)">só em kata</span>':'');
 document.getElementById('det-desc').innerHTML=
   (tech.img?'<div style="margin-bottom:10px;border-radius:8px;overflow:hidden;border:1px solid var(--border)"><img src="'+tech.img+'" alt="'+tech.name+'" loading="lazy" style="width:100%;max-height:160px;object-fit:cover;display:block"/><div style="font-size:9px;color:var(--text2);padding:4px 8px">Wikimedia Commons · CC-BY</div></div>':'')
   +(tech.desc?'<p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:8px">'+tech.desc+'</p>':'')
@@ -2328,14 +2378,14 @@ orderedNodes.forEach((nid,i)=>{
   const node=NMAP[nid];if(!node)return;
   const c=NT[node.type];
   if(i>0){fHtml+='<span class="gram-op">·</span>';}
-  fHtml+=`<div class="gram-slot nav" onclick="showNodeDetail('${nid}')" title="${node.pt}" style="color:${c};border-color:${c}40;background:${c}0f"><div class="gram-slot-lbl" style="color:${c}">${AXIS_LBL[node.type]||node.type}</div><div class="gram-slot-val">${node.label}</div></div>`;
+  fHtml+=`<div class="gram-slot nav" role="button" tabindex="0" onclick="showNodeDetail('${nid}')" onkeydown="if(event.key==='Enter'||event.key===' '){showNodeDetail('${nid}')}" title="${node.pt}" aria-label="${node.pt} — clique para ver detalhes do eixo" style="color:${c};border-color:${c}40;background:${c}0f"><div class="gram-slot-lbl" style="color:${c}">${AXIS_LBL[node.type]||node.type}</div><div class="gram-slot-val">${node.label}</div></div>`;
   axHtml+=`<div class="gram-axis-lbl" style="color:${c}88">${node.pt}</div>`;
 });
 if(tech.dachi){
   const d=NMAP[tech.dachi];
   if(d){
     const c=NT.dachi;
-    fHtml+=`<span class="gram-sep">|</span><div class="gram-slot nav" onclick="showNodeDetail('${tech.dachi}')" title="${d.pt}" style="color:${c};border-color:${c}40;background:${c}0f"><div class="gram-slot-lbl" style="color:${c}">Dachi</div><div class="gram-slot-val">${d.label}</div></div>`;
+    fHtml+=`<span class="gram-sep">|</span><div class="gram-slot nav" role="button" tabindex="0" onclick="showNodeDetail('${tech.dachi}')" onkeydown="if(event.key==='Enter'||event.key===' '){showNodeDetail('${tech.dachi}')}" title="${d.pt}" aria-label="${d.pt} — postura base" style="color:${c};border-color:${c}40;background:${c}0f"><div class="gram-slot-lbl" style="color:${c}">Dachi</div><div class="gram-slot-val">${d.label}</div></div>`;
     axHtml+=`<div class="gram-axis-lbl" style="color:${c}88">${d.pt}</div>`;
   }
 }
@@ -2343,7 +2393,7 @@ const idoId=getIdo(tech.id);
 const idoNode=NMAP[idoId];
 if(idoNode){
   const c=NT.ido;
-  fHtml+=`<span class="gram-op">·</span><div class="gram-slot nav" onclick="showNodeDetail('${idoId}')" title="${idoNode.pt}" style="color:${c};border-color:${c}40;background:${c}0f;min-width:44px"><div class="gram-slot-lbl" style="color:${c}">Ido</div><div class="gram-slot-val">${idoNode.label}</div></div>`;
+  fHtml+=`<span class="gram-op">·</span><div class="gram-slot nav" role="button" tabindex="0" onclick="showNodeDetail('${idoId}')" onkeydown="if(event.key==='Enter'||event.key===' '){showNodeDetail('${idoId}')}" title="${idoNode.pt}" aria-label="${idoNode.pt} — deslocamento" style="color:${c};border-color:${c}40;background:${c}0f;min-width:44px"><div class="gram-slot-lbl" style="color:${c}">Ido</div><div class="gram-slot-val">${idoNode.label}</div></div>`;
   axHtml+=`<div class="gram-axis-lbl" style="color:${c}88">${idoNode.pt}</div>`;
 }
 fHtml+='</div>';axHtml+='</div>';
@@ -2446,7 +2496,7 @@ const old=document.getElementById('karateka-wrap');if(old)old.remove();
 const wrap=document.createElement('div');
 wrap.id='karateka-wrap';
 const title=document.createElement('h4');
-title.textContent='Mapa Corporal · Toque uma zona';
+title.textContent='Mapa Corporal';
 wrap.appendChild(title);
 const NS='http://www.w3.org/2000/svg';
 const ZONES=[
@@ -2545,7 +2595,7 @@ ZONES.forEach(z=>{
 wrap.appendChild(svg);
 const hint=document.createElement('div');
 hint.style.cssText='font-size:10px;color:var(--text2);text-align:center;margin-top:6px;line-height:1.5';
-hint.textContent='Toque uma zona para filtrar a constelação';
+hint.textContent='Toque ou clique uma zona para filtrar a constelação por alvo ou tipo de arma';
 wrap.appendChild(hint);
 document.getElementById('det-techs').parentNode.insertBefore(wrap,document.getElementById('det-techs'));
 renderPlatonicLegend();
@@ -2617,18 +2667,30 @@ let dictFilters={belt:'all',action:'all'};
 function initDict(){
 const fs=document.getElementById('dict-filters');
 fs.innerHTML='';
+const beltLbl={all:'Todas as faixas',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',kata:'Só em kata'};
 ['all','branca','laranja','azul','amarela','verde','marrom','kata'].forEach(b=>{
   const btn=document.createElement('button');
-  btn.className='f-btn'+(dictFilters.belt===b?' on':'');
-  btn.textContent=b==='all'?'Todas as faixas':b;
+  const active=dictFilters.belt===b;
+  btn.className='f-btn'+(active?' on':'');
+  btn.type='button';
+  btn.setAttribute('aria-pressed',active?'true':'false');
+  btn.textContent=beltLbl[b]||b;
   btn.onclick=()=>{dictFilters.belt=b;initDict()};
   fs.appendChild(btn);
 });
+const sep=document.createElement('span');
+sep.style.cssText='color:var(--border);padding:0 6px;font-size:14px;align-self:center;opacity:.5';
+sep.textContent='|';sep.setAttribute('aria-hidden','true');fs.appendChild(sep);
+const actionLbl={'':'Todas as ações',tsuki:'Tsuki · socos',uchi:'Uchi · percussão',geri:'Geri · chutes',uke:'Uke · bloqueios',barai:'Barai · varreduras',keage:'Keage · chicote'};
 ['','tsuki','uchi','geri','uke','barai','keage'].forEach(a=>{
   const btn=document.createElement('button');
-  btn.className='f-btn'+(dictFilters.action===(a||'all')?' on':'');
-  btn.textContent=a||'Todas as ações';
-  btn.onclick=()=>{dictFilters.action=a||'all';initDict()};
+  const key=a||'all';
+  const active=dictFilters.action===key;
+  btn.className='f-btn'+(active?' on':'');
+  btn.type='button';
+  btn.setAttribute('aria-pressed',active?'true':'false');
+  btn.textContent=actionLbl[a]||a;
+  btn.onclick=()=>{dictFilters.action=key;initDict()};
   fs.appendChild(btn);
 });
 renderDict();
@@ -2648,32 +2710,40 @@ TECHS.filter(t=>{
 }).forEach(t=>{
   const div=document.createElement('div');
   div.className='dc';
+  div.setAttribute('role','button');
+  div.setAttribute('tabindex','0');
+  div.setAttribute('aria-expanded','false');
   div.style.borderLeftColor=BS[t.belt];
   div.innerHTML='<div class="dc-name">'+t.name+'</div>'+
     '<div class="dc-pt">'+t.pt+'</div>'+
     '<div class="dc-tags">'+
       '<span class="dc-tag">'+t.action+'</span>'+
       t.nodes.slice(0,3).map(nid=>{const n=NMAP[nid];return n?'<span class="dc-tag" style="color:'+NT[n.type]+'">'+n.label+'</span>':''}).join('')+
-      (t.kataOnly?'<span class="dc-tag" style="color:var(--kata)">kata only</span>':'')+
+      (t.kataOnly?'<span class="dc-tag" style="color:var(--kata)">só em kata</span>':'')+
     '</div>'+
-    '<div class="dc-hint">▸ detalhes</div>'+
+    '<div class="dc-hint" aria-hidden="true">▸ toque para abrir</div>'+
     '<div class="dc-exp">'+
       '<div class="dc-desc">'+(t.desc||'')+'</div>'+
-      (t.exec?'<div class="dc-exec">'+t.exec+'</div>':'')+
+      (t.exec?'<div class="dc-exec"><strong style="color:var(--gold);font-size:var(--fs-micro);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px">Execução</strong>'+t.exec+'</div>':'')+
     '</div>';
-  div.onclick=()=>div.classList.toggle('exp');
+  const toggleCard=()=>{
+    const open=div.classList.toggle('exp');
+    div.setAttribute('aria-expanded',open?'true':'false');
+  };
+  div.onclick=toggleCard;
+  div.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleCard();}};
   const btn=document.createElement('button');
-  btn.className='dc-const-btn';btn.textContent='✦ Ver na Constelação';
+  btn.className='dc-const-btn';btn.type='button';btn.textContent='✦ Ver na constelação';
   btn.onclick=(e)=>{e.stopPropagation();switchTab('constelacao');requestAnimationFrame(()=>showTechDetail(t));};
   div.querySelector('.dc-exp').appendChild(btn);
   grid.appendChild(div);
 });
 const countEl=document.getElementById('dict-count');
 if(grid.children.length===0){
-  grid.innerHTML='<div style="color:var(--text2);font-size:13px">Nenhuma técnica encontrada.</div>';
+  grid.innerHTML='<div style="color:var(--text2);font-size:var(--fs-base);padding:20px;text-align:center;background:var(--bg3);border-radius:8px;line-height:1.6">Nenhuma técnica corresponde aos filtros.<br><span style="font-size:var(--fs-xs);opacity:.7">Tente outra faixa, outra ação ou esvazie a busca.</span></div>';
   if(countEl)countEl.textContent='';
 } else {
-  if(countEl)countEl.textContent='Exibindo '+grid.children.length+' de '+TECHS.length+' técnicas';
+  if(countEl)countEl.textContent='Mostrando '+grid.children.length+' de '+TECHS.length+' técnicas';
 }
 }
 
@@ -2702,20 +2772,27 @@ function linkifyStep(text){
 function initKata(){
 const fs=document.getElementById('kata-filters');if(!fs)return;
 fs.innerHTML='';
+const beltLbl={all:'Todas',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',shodan:'Shodan'};
 ['all','branca','laranja','azul','amarela','verde','marrom','shodan'].forEach(b=>{
   const btn=document.createElement('button');
-  btn.className='f-btn'+(kataFilter===b?' on':'');
-  btn.textContent=b==='all'?'Todas':b;
+  const active=kataFilter===b;
+  btn.className='f-btn'+(active?' on':'');
+  btn.type='button';
+  btn.setAttribute('aria-pressed',active?'true':'false');
+  btn.textContent=beltLbl[b]||b;
   btn.onclick=()=>{kataFilter=b;renderKata();initKata();};
   fs.appendChild(btn);
 });
 const sep=document.createElement('span');
 sep.style.cssText='color:var(--border);padding:0 6px;font-size:14px;align-self:center;opacity:.5';
-sep.textContent='|';fs.appendChild(sep);
-[{key:'taikyoku',lbl:'Taikyoku'},{key:'sokugi',lbl:'Sokugi'},
- {key:'pinan',lbl:'Pinan'},{key:'avancado',lbl:'Avançado'}].forEach(s=>{
+sep.textContent='|';sep.setAttribute('aria-hidden','true');fs.appendChild(sep);
+[{key:'taikyoku',lbl:'Taikyoku · fundamentos'},{key:'sokugi',lbl:'Sokugi · pé'},
+ {key:'pinan',lbl:'Pinan · síntese'},{key:'avancado',lbl:'Avançados'}].forEach(s=>{
   const btn=document.createElement('button');
-  btn.className='f-btn'+(kataFilter===s.key?' on':'');
+  const active=kataFilter===s.key;
+  btn.className='f-btn'+(active?' on':'');
+  btn.type='button';
+  btn.setAttribute('aria-pressed',active?'true':'false');
   btn.textContent=s.lbl;
   btn.onclick=()=>{kataFilter=s.key;renderKata();initKata();};
   fs.appendChild(btn);
@@ -2747,27 +2824,42 @@ KATA.filter(k=>{
     '<circle cx="30" cy="80" r="3" fill="'+BS[belt]+'" opacity=".7"/>'+
     '</svg></div>'+
     '<div class="kc-note">'+k.note+'</div>'+
-    (k.silences?'<div class="kc-detail"><div style="font-size:10px;color:var(--text2);margin-bottom:4px;letter-spacing:.06em">SILÊNCIOS CANÔNICOS</div><div style="font-size:11px;color:var(--text2)">'+k.silences+'</div></div>':'')+
-    (k.techs&&k.techs.length?'<div class="kc-detail"><div style="font-size:10px;color:var(--text2);margin-bottom:4px">TÉCNICAS INTRODUZIDAS</div>'+k.techs.map(tc=>'<div class="kc-tl" data-tc="'+tc+'">'+tc+' <span style="opacity:.4;font-size:9px">→ constelação</span></div>').join('')+'</div>':'')+
-    (k.steps&&k.steps.length?'<div class="kc-detail kc-steps-wrap"><div class="kc-steps-hdr">ROTEIRO DE PRÁTICA <span style="opacity:.5;font-weight:400">('+k.steps.filter(s=>!s.startsWith('  ▶')).length+' seq.)</span>'+(k.time?'<span class="kt-timer"><button class="kt-timer-btn" data-ktime="'+k.time+'" data-kname="'+k.id+'" onclick="kataTimerToggle(this)">⏱ timer</button><span class="kt-timer-display" data-ktdisp>'+k.time+'</span></span>':'')+'</div>'+k.steps.map(s=>{
+    (k.silences?'<div class="kc-detail"><div style="font-size:var(--fs-micro);color:var(--text2);margin-bottom:6px;letter-spacing:.1em;text-transform:uppercase;font-weight:600">Silêncios canônicos</div><div style="font-size:var(--fs-xs);color:var(--text2);line-height:1.65">'+k.silences+'</div></div>':'')+
+    (k.techs&&k.techs.length?'<div class="kc-detail"><div style="font-size:var(--fs-micro);color:var(--text2);margin-bottom:6px;letter-spacing:.1em;text-transform:uppercase;font-weight:600">Técnicas introduzidas</div>'+k.techs.map(tc=>'<div class="kc-tl" data-tc="'+tc+'" role="button" tabindex="0">'+tc+' <span style="opacity:.5;font-size:var(--fs-micro)" aria-hidden="true">→ constelação</span></div>').join('')+'</div>':'')+
+    (k.steps&&k.steps.length?'<div class="kc-detail kc-steps-wrap"><div class="kc-steps-hdr"><span>Roteiro de prática <span style="opacity:.6;font-weight:400;text-transform:none;letter-spacing:0">('+k.steps.filter(s=>!s.startsWith('  ▶')).length+' sequências)</span></span>'+(k.time?'<span class="kt-timer"><button class="kt-timer-btn" data-ktime="'+k.time+'" data-kname="'+k.id+'" onclick="kataTimerToggle(this)" type="button" aria-label="Iniciar cronômetro do kata">⏱ timer</button><span class="kt-timer-display" data-ktdisp aria-live="polite">'+k.time+'</span></span>':'')+'</div>'+k.steps.map(s=>{
       if(s.startsWith('  ▶'))return'<div class="kc-step-item sub">'+linkifyStep(s.slice(3))+'</div>';
       const m=s.match(/^(\d+)\.\s+(.*)/);
       if(m){const kiai=m[2].includes('KIAI');const body=linkifyStep(m[2].replace(/\s*·?\s*KIAI/g,''));return'<div class="kc-step-item"><span class="step-n">'+m[1]+'.</span> <span class="step-cmd">'+body+'</span>'+(kiai?'<span class="kiai">KIAI</span>':'')+'</div>';}
       return'<div class="kc-step-item" style="color:var(--gold);font-size:10px;letter-spacing:.05em">'+s+'</div>';
     }).join('')+'</div>':'');
-  div.querySelectorAll('.kc-tl').forEach(el=>el.addEventListener('click',e=>{
-    e.stopPropagation();findAndShowTech(el.dataset.tc);
-  }));
-  div.querySelectorAll('.step-tech-link').forEach(el=>el.addEventListener('click',e=>{
-    e.stopPropagation();findAndShowTech(el.dataset.tc);
-  }));
-  // Speak kata name on header click
+  div.querySelectorAll('.kc-tl').forEach(el=>{
+    el.addEventListener('click',e=>{e.stopPropagation();findAndShowTech(el.dataset.tc);});
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();findAndShowTech(el.dataset.tc);}});
+  });
+  div.querySelectorAll('.step-tech-link').forEach(el=>{
+    el.setAttribute('role','button');el.setAttribute('tabindex','0');
+    el.addEventListener('click',e=>{e.stopPropagation();findAndShowTech(el.dataset.tc);});
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();findAndShowTech(el.dataset.tc);}});
+  });
+  // Pronunciar nome do kata ao clicar no título
   const nameEl=div.querySelector('.kc-name');
-  if(nameEl)nameEl.addEventListener('click',e=>{e.stopPropagation();speak(k.name);});
-  div.onclick=()=>div.classList.toggle('open');
+  if(nameEl){
+    nameEl.setAttribute('title','Toque para ouvir a pronúncia');
+    nameEl.style.cursor='pointer';
+    nameEl.addEventListener('click',e=>{e.stopPropagation();speak(k.name);});
+  }
+  div.setAttribute('role','button');
+  div.setAttribute('tabindex','0');
+  div.setAttribute('aria-expanded','false');
+  const toggleKata=()=>{
+    const open=div.classList.toggle('open');
+    div.setAttribute('aria-expanded',open?'true':'false');
+  };
+  div.onclick=toggleKata;
+  div.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target===div){e.preventDefault();toggleKata();}};
   grid.appendChild(div);
 });
-if(!grid.children.length)grid.innerHTML='<div style="color:var(--text2);font-size:13px;padding:12px 0">Nenhum kata nesta seleção.</div>';
+if(!grid.children.length)grid.innerHTML='<div style="color:var(--text2);font-size:var(--fs-base);padding:20px;text-align:center;background:var(--bg3);border-radius:8px;line-height:1.6">Nenhum kata corresponde ao filtro.<br><span style="font-size:var(--fs-xs);opacity:.7">Tente outra faixa ou outra série.</span></div>';
 }
 
 // ===== IDO-GEIKO =====
@@ -2775,18 +2867,24 @@ let currentIdoBelt='branca';
 
 function initIdo(){
 const tabs=document.getElementById('ido-belts');tabs.innerHTML='';
+const beltLabels={branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',shodan:'Shodan'};
 Object.keys(BELT_REQ).forEach(b=>{
   const btn=document.createElement('button');
   btn.className='ib-tab'+(b===currentIdoBelt?' on':'');
-  btn.textContent=b;
+  btn.type='button';
+  btn.setAttribute('role','tab');
+  btn.setAttribute('aria-pressed',b===currentIdoBelt?'true':'false');
+  btn.textContent=beltLabels[b]||b;
   btn.onclick=()=>{currentIdoBelt=b;initIdo()};
   tabs.appendChild(btn);
 });
 const req=BELT_REQ[currentIdoBelt];
+const beltName=beltLabels[currentIdoBelt]||currentIdoBelt;
 document.getElementById('ido-req').innerHTML=
-  '<div class="req-box"><strong>Requisitos — Faixa '+currentIdoBelt.toUpperCase()+'</strong>'+
-  '<div>'+req.exam+'</div>'+
-  '<div style="margin-top:6px;font-size:11px">Ido-Geiko: '+req.ido+(req.min?'&nbsp;&nbsp;<span style=\"color:var(--gold)\">min. '+req.min+' golpes</span>':'')+'</div>'+
+  '<div class="req-box"><strong>Faixa '+beltName+'</strong>'+
+  (req.foco?'<div style="color:var(--text);font-size:var(--fs-sm);line-height:1.6;margin-bottom:4px;font-style:italic">'+req.foco+'</div>':'')+
+  '<div class="req-section"><span class="req-section-lbl">Requisitos do exame</span>'+req.exam+'</div>'+
+  '<div class="req-section"><span class="req-section-lbl">Sugestão de treino — ido-geiko</span>'+req.ido+(req.min?'&nbsp;·&nbsp;<span style="color:var(--gold);font-weight:600">mínimo de '+req.min+' golpes</span>':'')+'</div>'+
   '</div>';
 document.getElementById('ido-out').innerHTML='';
 const _sl=document.getElementById('ido-nblocks');
@@ -2815,7 +2913,7 @@ function _renrakuCat(r){
 function generateIdo(){
 const beltIdx=Object.keys(BELT_REQ).indexOf(currentIdoBelt);
 const pool=RENRAKU.filter(r=>Object.keys(BELT_REQ).indexOf(r.belt)<=beltIdx);
-if(!pool.length){document.getElementById('ido-out').innerHTML='<div style="color:var(--text2);font-size:13px">Sem renraku disponíveis.</div>';return;}
+if(!pool.length){document.getElementById('ido-out').innerHTML='<div style="color:var(--text2);font-size:var(--fs-base);padding:16px;text-align:center;background:var(--bg3);border-radius:8px">Ainda não há renraku canonizado para esta faixa.</div>';return;}
 const _sl=document.getElementById('ido-nblocks');
 let nBlocks=_sl?Math.max(3,Math.min(12,parseInt(_sl.value,10)||4)):4;
 const req=BELT_REQ[currentIdoBelt];
@@ -2860,7 +2958,7 @@ const LBLS=['【Aquecimento】','【Desenvolvimento】','【Ritmo】','【Pico�
   '【Variação】','【Aceleração】','【Potência】','【Técnica】','【Explosão】',
   '【Transição】','【Consolidação】','【Finalização】','【Kime】','【Zanshin】'];
 const out=document.getElementById('ido-out');
-out.innerHTML='<div class="s-block" style="text-align:center;letter-spacing:.15em;font-size:15px;font-weight:700;color:var(--gold)">YOI!</div>';
+out.innerHTML='<div class="s-block" style="text-align:center;letter-spacing:.18em;font-size:var(--fs-lg);font-weight:700;color:var(--gold);border-left-color:var(--gold)">YOI!&emsp;<span style="font-size:var(--fs-xs);opacity:.7;font-weight:400;letter-spacing:.06em">— posição de prontidão</span></div>';
 let rendered=0;
 let cntTe=0,cntGeri=0,cntMisto=0;
 blocks.forEach((r,i)=>{
@@ -2869,39 +2967,43 @@ blocks.forEach((r,i)=>{
   if(cat==='geri')cntGeri++;else if(cat==='te')cntTe++;else cntMisto++;
   const div=document.createElement('div');div.className='s-block';
   const catPill=cat==='geri'
-    ?'<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(68,136,221,.15);color:#4488dd;margin-left:6px">pé</span>'
+    ?'<span style="font-size:var(--fs-micro);padding:2px 7px;border-radius:3px;background:rgba(68,136,221,.15);color:#4488dd;margin-left:8px;letter-spacing:.04em;font-weight:600">pé</span>'
     :cat==='te'
-    ?'<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(224,96,96,.15);color:#e06060;margin-left:6px">mão</span>'
-    :'<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(136,102,238,.15);color:#8866ee;margin-left:6px">misto</span>';
+    ?'<span style="font-size:var(--fs-micro);padding:2px 7px;border-radius:3px;background:rgba(224,96,96,.15);color:#e06060;margin-left:8px;letter-spacing:.04em;font-weight:600">mão</span>'
+    :'<span style="font-size:var(--fs-micro);padding:2px 7px;border-radius:3px;background:rgba(136,102,238,.15);color:#8866ee;margin-left:8px;letter-spacing:.04em;font-weight:600">misto</span>';
   div.innerHTML='<div class="sb-label">'+(LBLS[i]||`【Bloco ${i+1}】`)+'</div>'+
     '<div class="sb-name" style="color:'+(BS[r.belt]||'#888')+'">'+r.name+catPill+'</div>'+
-    r.steps.map(s=>'<div style="font-size:12px;color:var(--text2);margin:2px 0;line-height:1.5">'+s+'</div>').join('')+
-    '<div class="sb-note" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">'+r.note+'</div>';
+    r.steps.map(s=>'<div style="font-size:var(--fs-sm);color:var(--text2);margin:3px 0;line-height:1.55">'+s+'</div>').join('')+
+    '<div class="sb-note" style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">'+r.note+'</div>';
   out.appendChild(div);
 });
-const kiai=document.createElement('div');kiai.className='s-kiai';kiai.textContent='KIAI! — YAME! NAORE! — OSU!';out.appendChild(kiai);
+const kiai=document.createElement('div');kiai.className='s-kiai';
+kiai.innerHTML='KIAI!&emsp;YAME!&emsp;NAORE!&emsp;<span style="opacity:.7">OSU!</span>';
+kiai.setAttribute('aria-label','Encerramento: Kiai, Yame, Naore, Osu');
+out.appendChild(kiai);
 const pass=minGoals===0||rendered>=minGoals;
-const badge=minGoals>0?'&nbsp;<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:'+(pass?'#33aa6620':'#cc444420')+';color:'+(pass?'#33aa66':'#cc4444')+';border:1px solid '+(pass?'#33aa6660':'#cc444460')+'">'+(pass?'✓ APROVADO':'✗ INCOMPLETO')+'</span>':'';
+const badge=minGoals>0?'&nbsp;<span style="display:inline-block;padding:3px 10px;border-radius:4px;font-size:var(--fs-micro);font-weight:700;letter-spacing:.08em;background:'+(pass?'#33aa6620':'#cc444420')+';color:'+(pass?'#33aa66':'#cc4444')+';border:1px solid '+(pass?'#33aa6660':'#cc444460')+'">'+(pass?'✓ atinge o mínimo':'✗ abaixo do mínimo')+'</span>':'';
 const tot=document.createElement('div');tot.className='s-total';
 const distParts=[];
-if(cntGeri)distParts.push('<span style="color:#4488dd">pé×'+cntGeri+'</span>');
-if(cntTe)distParts.push('<span style="color:#e06060">mão×'+cntTe+'</span>');
-if(cntMisto)distParts.push('<span style="color:#8866ee">misto×'+cntMisto+'</span>');
+if(cntGeri)distParts.push('<span style="color:#4488dd">pé × '+cntGeri+'</span>');
+if(cntTe)distParts.push('<span style="color:#e06060">mão × '+cntTe+'</span>');
+if(cntMisto)distParts.push('<span style="color:#8866ee">misto × '+cntMisto+'</span>');
 const pct=minGoals>0?Math.min(100,Math.round(rendered/minGoals*100)):100;
-const progressBar=minGoals>0?`<div style="margin-top:8px;background:var(--bg3);border-radius:6px;height:6px;overflow:hidden;border:1px solid var(--border)">
+const progressBar=minGoals>0?`<div style="margin-top:10px;background:var(--bg3);border-radius:6px;height:7px;overflow:hidden;border:1px solid var(--border)" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${pct}% do mínimo de golpes">
   <div style="height:100%;width:${pct}%;background:${pass?'#33aa66':'var(--gold)'};border-radius:6px;transition:width .4s"></div></div>
-  <div style="font-size:9px;color:var(--text2);margin-top:3px;letter-spacing:.04em">${pct}% do mínimo (${minGoals} golpes)</div>`:'';
-tot.innerHTML='Total: <strong>'+rendered+'</strong> golpes'+(minGoals>0?' de mín. <strong>'+minGoals+'</strong>':'')+badge
-  +(distParts.length?'&nbsp;&nbsp;<span style="opacity:.6;font-size:10px">'+distParts.join(' · ')+'</span>':'')+progressBar;
+  <div style="font-size:var(--fs-micro);color:var(--text2);margin-top:5px;letter-spacing:.04em">${pct}% do mínimo · ${rendered} de ${minGoals} golpes</div>`:'';
+tot.innerHTML='<strong>'+rendered+'</strong> golpes no total'+(minGoals>0?' (mínimo da faixa: <strong>'+minGoals+'</strong>)':'')+badge
+  +(distParts.length?'&nbsp;&nbsp;<span style="opacity:.7;font-size:var(--fs-xs)">'+distParts.join(' · ')+'</span>':'')+progressBar;
 out.appendChild(tot);
 const copyBtn=document.createElement('button');
-copyBtn.style.cssText='margin-top:10px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);cursor:pointer;border-radius:6px;padding:5px 14px;font-size:11px;letter-spacing:.04em;transition:all .2s';
+copyBtn.type='button';
+copyBtn.style.cssText='margin-top:12px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);cursor:pointer;border-radius:6px;padding:7px 16px;font-size:var(--fs-xs);letter-spacing:.04em;transition:all .2s;font-family:inherit';
 copyBtn.textContent='⎘ Copiar sequência';
 copyBtn.onclick=()=>{
   const txt=[...out.querySelectorAll('.s-block,.s-kiai')].map(el=>el.innerText).join('\n\n');
   navigator.clipboard.writeText(txt).then(()=>{
-    copyBtn.textContent='✓ Copiado!';copyBtn.style.color='#33aa66';
-    setTimeout(()=>{copyBtn.textContent='⎘ Copiar sequência';copyBtn.style.color='';},2000);
+    copyBtn.textContent='✓ Copiada!';copyBtn.style.color='#33aa66';copyBtn.style.borderColor='#33aa6660';
+    setTimeout(()=>{copyBtn.textContent='⎘ Copiar sequência';copyBtn.style.color='';copyBtn.style.borderColor='';},2000);
   });
 };
 out.appendChild(copyBtn);
@@ -3003,7 +3105,7 @@ function updateConstrutor(){
   const matches=document.getElementById('const-matches');
 
   if(!acao){
-    result.innerHTML='<span class="const-empty">Selecione uma ação para começar</span>';
+    result.innerHTML='<span class="const-empty">Comece escolhendo uma ação acima — o nome canônico aparecerá aqui.</span>';
     matches.innerHTML='';return;
   }
 
@@ -3035,12 +3137,12 @@ function updateConstrutor(){
   const axHtml=axes.map(a=>`<span class="const-axis ${a.state}" title="${a.pt} · ${a.state==='present'?'no nome':a.state==='implied'?'implícito':'ausente/padrão'}">${a.label}</span>`).join('');
 
   const elisionMsg={
-    tsuki:'<strong>Tsuki:</strong> weapon + target + action. Direção <em>mae</em> é elidida (padrão para socos lineares).',
-    uchi:'<strong>Uchi:</strong> weapon + target/direction + action.',
-    geri:'<strong>Geri:</strong> direction + action. Arma de pé (chusoku/sokuto/kakato) é elidida — padrão implícito pelo tipo.',
-    keage:'<strong>Keage:</strong> direction + action. Mesmo princípio do geri.',
-    uke:'<strong>Uke:</strong> direction + target + action. Arma de mão elidida — o antebraço é a arma por convenção defensiva.',
-    barai:'<strong>Barai:</strong> target + action. Direção <em>mae</em> elidida se frontal.',
+    tsuki:'<strong>Tsuki:</strong> arma · alvo · ação. Direção <em>mae</em> é elidida — o soco linear frontal é o padrão implícito.',
+    uchi:'<strong>Uchi:</strong> arma · alvo/direção · ação. A batida circular ou diagonal conserva a arma no nome porque varia.',
+    geri:'<strong>Geri:</strong> direção · ação. A arma de pé (chusoku, sokuto, kakato) é elidida — o tipo de chute determina a arma por convenção.',
+    keage:'<strong>Keage:</strong> direção · ação. Mesmo princípio do geri: a arma se infere pelo movimento de elevação.',
+    uke:'<strong>Uke:</strong> direção · alvo · ação. O antebraço como arma defensiva é convenção universal — elidido por isso.',
+    barai:'<strong>Barai:</strong> alvo · ação. Direção <em>mae</em> elidida quando a varredura é frontal.',
   }[acao]||'';
 
   result.innerHTML=`
@@ -3051,8 +3153,8 @@ function updateConstrutor(){
 
   // Corpus matches
   const found=findCorpusMatch(acao,bukim,bukipe,dir,alvo);
-  if(!found.length){matches.innerHTML='<div style="font-size:12px;color:var(--text2);opacity:.6">Nenhuma técnica no corpus com estes componentes.</div>';return;}
-  matches.innerHTML='<div class="const-matches-title">No corpus</div>';
+  if(!found.length){matches.innerHTML='<div style="font-size:12px;color:var(--text2);opacity:.6">Nenhuma técnica do corpus canônico reúne estes componentes — combinação inexistente ou ainda não canonizada.</div>';return;}
+  matches.innerHTML='<div class="const-matches-title">Encontrado no corpus</div>';
   found.forEach(({t,hits,exact})=>{
     const scoreLabel=exact?'✓ exato':`${hits}/${[acao,bukim,bukipe,dir,alvo].filter(Boolean).length} eixos`;
     const d=document.createElement('div');d.className='const-match';
@@ -3457,9 +3559,14 @@ document.getElementById('det-techs').parentNode.appendChild(leg);
 // ===== NAVIGATION =====
 function switchTab(tab){
 document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+document.querySelectorAll('.nav-btn').forEach(b=>{
+  b.classList.remove('active');
+  b.removeAttribute('aria-current');
+  b.setAttribute('aria-selected','false');
+});
 document.getElementById('p-'+tab).classList.add('active');
-document.querySelector('[data-tab="'+tab+'"]').classList.add('active');
+const tabBtn=document.querySelector('[data-tab="'+tab+'"]');
+if(tabBtn){tabBtn.classList.add('active');tabBtn.setAttribute('aria-current','page');tabBtn.setAttribute('aria-selected','true');}
 }
 
 document.querySelectorAll('.nav-btn').forEach(btn=>{
@@ -3521,7 +3628,7 @@ const _kata=TECHS.filter(t=>t.kataOnly);
 const _og1=document.createElement('optgroup');_og1.label='Kihon ('+_kihon.length+')';
 _kihon.forEach(t=>{const o=document.createElement('option');o.value=TECHS.indexOf(t);o.textContent=t.name;_og1.appendChild(o);});
 sel.appendChild(_og1);
-const _og2=document.createElement('optgroup');_og2.label='Kata only ('+_kata.length+')';
+const _og2=document.createElement('optgroup');_og2.label='Só em kata ('+_kata.length+')';
 _kata.forEach(t=>{const o=document.createElement('option');o.value=TECHS.indexOf(t);o.textContent=t.name;_og2.appendChild(o);});
 sel.appendChild(_og2);
 const formulaDiv=document.createElement('div');
@@ -3994,7 +4101,7 @@ const progData=[
    desc:'Tsuki no Kata é um kata de socos. O que não está presente é a mensagem pedagógica.',
    kata:'Tsuki no Kata',example:'Nenhum chute — o silêncio de Tsuki no Kata é o seu conteúdo.'},
   {belt:'verde',beltKey:'verde',sectionNum:'VI',concept:'A Gramática do Silêncio',
-   desc:'"Gyaku" implica "oposto". As elisions ocultam eixos que o praticante já internalizou.',
+   desc:'"Gyaku" implica "oposto". As elisões ocultam eixos que o praticante já internalizou — silêncio como sinal de domínio.',
    kata:'Gekisai Dai',example:'Gyaku Tsuki — Gyaku (implica lado oposto) está explícito; mae está oculto.'},
   {belt:'marrom',beltKey:'marrom',sectionNum:'VIII',concept:'Eixos Implícitos',
    desc:'Tensho: todos os uke são com antebraço (ude), nunca mencionado. O silêncio ativo.',
@@ -4011,7 +4118,7 @@ progData.forEach(({belt,beltKey,sectionNum,concept,desc,kata,example})=>{
   card.innerHTML=`
     <div class="prog-belt" style="color:${col};border:1px solid ${col}44;background:${col}15">${belt.toUpperCase()}</div>
     <div class="prog-concept">${concept}</div>
-    <div class="prog-section-link" data-sec="${sectionNum}">→ Secção ${sectionNum}</div>
+    <div class="prog-section-link" data-sec="${sectionNum}">→ Seção ${sectionNum}</div>
     <div style="font-size:11px;color:var(--text2);margin-top:6px;line-height:1.6">${desc}</div>
     <div class="prog-kata" style="margin-top:5px"><span style="opacity:.5;font-size:9px">KATA·</span> ${kata}</div>
     <div class="prog-example">${example}</div>`;
@@ -4195,9 +4302,10 @@ function initAutoDemo(){
   if(!container||document.getElementById('demo-bar'))return;
   const bar=document.createElement('div');bar.className='demo-bar';bar.id='demo-bar';
   bar.innerHTML=
-    '<button class="demo-btn" id="demo-play" onclick="toggleDemo()">▶ Apresentação</button>'+
-    '<select class="demo-speed" id="demo-speed"><option value="3000">Lento 3s</option><option value="2000" selected>Médio 2s</option><option value="1000">Rápido 1s</option></select>'+
-    '<span class="demo-prog" id="demo-prog">—</span>';
+    '<button class="demo-btn" id="demo-play" onclick="toggleDemo()" type="button" aria-label="Iniciar apresentação automática das técnicas">▶ Apresentação</button>'+
+    '<label for="demo-speed" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Velocidade da apresentação</label>'+
+    '<select class="demo-speed" id="demo-speed" aria-label="Velocidade"><option value="3000">Lento · 3s</option><option value="2000" selected>Médio · 2s</option><option value="1000">Rápido · 1s</option></select>'+
+    '<span class="demo-prog" id="demo-prog" aria-live="polite" aria-label="Progresso">—</span>';
   document.getElementById('const-form').after(bar);
 }
 
@@ -4207,8 +4315,9 @@ function toggleDemo(){
 
 function startDemo(){
   _demoRunning=true;
-  document.getElementById('demo-play').textContent='⏸ Pausar';
-  document.getElementById('demo-play').classList.add('active');
+  const btn=document.getElementById('demo-play');
+  btn.textContent='⏸ Pausar';btn.setAttribute('aria-label','Pausar apresentação');
+  btn.classList.add('active');
   const speed=+(document.getElementById('demo-speed')?.value||2000);
   _demoTimer=setInterval(advanceDemo,speed);
   advanceDemo();
@@ -4217,8 +4326,9 @@ function startDemo(){
 function stopDemo(){
   _demoRunning=false;
   clearInterval(_demoTimer);_demoTimer=null;
-  document.getElementById('demo-play').textContent='▶ Apresentação';
-  document.getElementById('demo-play').classList.remove('active');
+  const btn=document.getElementById('demo-play');
+  btn.textContent='▶ Apresentação';btn.setAttribute('aria-label','Iniciar apresentação automática das técnicas');
+  btn.classList.remove('active');
 }
 
 function advanceDemo(){
@@ -4268,7 +4378,7 @@ function kataTimerToggle(btn){
     if(remaining<=0){
       clearInterval(iv);delete _kataTimers[key];
       btn.textContent='⏱ timer';btn.style.color='';btn.style.borderColor='';
-      if(disp)disp.textContent='✓ pronto';
+      if(disp)disp.textContent='✓ yame';
       speak('Yame',undefined);
     }
   },1000);
