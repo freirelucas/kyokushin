@@ -518,19 +518,75 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
 .sil-silent{background:rgba(200,160,76,.12);color:var(--gold);border:1px solid rgba(200,160,76,.3)}
 .sil-invalid{background:#e8505022;color:#e85050;border:1px solid #e8505044}
 .sil-kataonly{background:#8844dd22;color:#aa66ff;border:1px solid #8844dd44}
+/* HIERARQUIA VISUAL */
+h2{color:var(--text)!important}
+.panel-inner h3{color:var(--gold)}
+/* MOBILE BOTTOM SHEET */
+@media(max-width:680px){
+  #detail{height:48vh;min-height:160px;max-height:82vh;right:0;left:0;bottom:56px;top:auto;width:100%;border-left:none;border-top:1px solid var(--border);border-radius:14px 14px 0 0;transform:translateY(100%)}
+  #detail.open{transform:translateY(0)}
+  #detail h3{padding-top:12px}
+}
+/* MAIS MENU (mobile) */
+#nav-mais-btn{display:none}
+#mais-menu{display:none;position:fixed;bottom:56px;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);border-radius:14px 14px 0 0;padding:6px 4px 10px;z-index:100;box-shadow:0 -6px 30px #0009}
+#mais-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99}
+@media(max-width:680px){
+  #nav-mais-btn{display:flex}
+  .nav-btn.nav-secondary{display:none}
+  #mais-menu.open{display:block}
+  #mais-menu .nav-btn{flex-direction:row!important;font-size:var(--fs-base)!important;padding:12px 18px!important;min-width:0!important;flex:none!important;text-align:left!important;justify-content:flex-start!important;border-radius:8px!important;letter-spacing:.01em!important;border:none!important;gap:14px!important;width:100%}
+  #mais-overlay.open{display:block}
+}
+/* HELP TRIGGER BUTTON */
+#help-trigger{position:absolute;bottom:56px;right:10px;z-index:10;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;color:var(--text3);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .18s;font-family:inherit;font-weight:700}
+#help-trigger:hover,#help-trigger:focus-visible{color:var(--text);border-color:rgba(201,168,76,.5);box-shadow:var(--focus-ring)}
+/* HELP — user paths */
+.help-paths{margin-top:16px;border-top:1px solid var(--border);padding-top:14px}
+.help-path-title{font-size:var(--fs-micro);color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
+.help-path{background:var(--bg3);border-radius:8px;padding:11px 13px;margin-bottom:8px;cursor:pointer;border-left:3px solid var(--border);transition:border-color .18s}
+.help-path:hover{border-left-color:var(--gold)}
+.help-path-role{font-size:var(--fs-xs);font-weight:700;color:var(--text);margin-bottom:3px}
+.help-path-trail{font-size:var(--fs-micro);color:var(--text2);line-height:1.65}
+/* BODYMAP BUTTON */
+.mt-btn.btn-bodymap{margin-left:6px;border-color:rgba(68,170,102,.3)}
+.mt-btn.btn-bodymap.on{background:rgba(68,170,102,.15);color:#44aa66;border-color:rgba(68,170,102,.5)}
+/* DICT — construtor link */
+.dc-const-link{display:inline-block;margin-top:10px;font-size:var(--fs-xs);color:var(--text3);cursor:pointer;padding:4px 10px;border:1px solid var(--border);border-radius:6px;transition:all .15s;margin-left:6px;font-family:inherit;background:none}
+.dc-const-link:hover{color:var(--gold);border-color:rgba(201,168,76,.4)}
+/* MATH — SVGs responsivos (scroll horizontal em mobile) */
+.math-s{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.math-s svg{min-width:300px}
 /* ===== BELT FILTER INDICATOR ===== */
 #belt-bar .bb-btn.belt-filtering{box-shadow:0 0 0 2px currentColor;opacity:1}
 </style></head><body>
 <div id="help-overlay" role="dialog" aria-modal="true" aria-labelledby="help-title" aria-hidden="true">
   <div class="help-box">
-    <h3 id="help-title">Atalhos do teclado</h3>
-    <div class="hk-row"><span class="hk-key">Esc</span><span class="hk-desc">Fechar painel ou esta ajuda</span></div>
-    <div class="hk-row"><span class="hk-key">?</span><span class="hk-desc">Abrir ou fechar esta ajuda</span></div>
-    <div class="hk-row"><span class="hk-key">→</span><span class="hk-desc">Próxima técnica (com painel aberto)</span></div>
-    <div class="hk-row"><span class="hk-key">←</span><span class="hk-desc">Técnica anterior (com painel aberto)</span></div>
-    <div class="hk-row"><span class="hk-key">↑ ↓</span><span class="hk-desc">Navegar resultados da busca</span></div>
-    <div class="hk-row"><span class="hk-key">Enter</span><span class="hk-desc">Abrir o item destacado</span></div>
-    <button class="help-close" id="help-close" type="button">Esc ou ? para fechar</button>
+    <h3 id="help-title">Comece aqui</h3>
+    <div class="help-paths">
+      <div class="help-path-title">Escolha seu perfil</div>
+      <div class="help-path" onclick="helpPath(['dicionario','constelacao','ido'])" tabindex="0" role="button" aria-label="Trilha para iniciantes" onkeydown="if(event.key==='Enter')helpPath(['dicionario','constelacao','ido'])">
+        <div class="help-path-role">🥋 Faixa branca / iniciante</div>
+        <div class="help-path-trail">Dicionário → Constelação (Sólidos) → Ido-Geiko</div>
+      </div>
+      <div class="help-path" onclick="helpPath(['ido','kata','construtor'])" tabindex="0" role="button" aria-label="Trilha para professores" onkeydown="if(event.key==='Enter')helpPath(['ido','kata','construtor'])">
+        <div class="help-path-role">🎓 Professor / preparando aula</div>
+        <div class="help-path-trail">Ido-Geiko → Kata → Construtor</div>
+      </div>
+      <div class="help-path" onclick="helpPath(['math','gramatica','construtor'])" tabindex="0" role="button" aria-label="Trilha para avançados" onkeydown="if(event.key==='Enter')helpPath(['math','gramatica','construtor'])">
+        <div class="help-path-role">⬛ Faixa avançada / curiosidade técnica</div>
+        <div class="help-path-trail">Matemática → Gramática → Construtor</div>
+      </div>
+    </div>
+    <div class="help-paths">
+      <div class="help-path-title">Atalhos do teclado</div>
+      <div class="hk-row"><span class="hk-key">Esc</span><span class="hk-desc">Fechar painel ou esta ajuda</span></div>
+      <div class="hk-row"><span class="hk-key">?</span><span class="hk-desc">Abrir ou fechar esta ajuda</span></div>
+      <div class="hk-row"><span class="hk-key">→ ←</span><span class="hk-desc">Próxima / técnica anterior</span></div>
+      <div class="hk-row"><span class="hk-key">↑ ↓</span><span class="hk-desc">Navegar resultados da busca</span></div>
+      <div class="hk-row"><span class="hk-key">Enter</span><span class="hk-desc">Abrir o item destacado</span></div>
+    </div>
+    <button class="help-close" id="help-close" type="button">Fechar</button>
   </div>
 </div>
 <div id="app">
@@ -548,12 +604,13 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
   <nav class="sb-nav" role="tablist" aria-label="Seções do atlas">
     <button class="nav-btn active" data-tab="constelacao" id="tab-constelacao" role="tab" aria-current="page" aria-selected="true" aria-controls="p-constelacao" type="button"><span class="ic" aria-hidden="true">✦</span>Constelação</button>
     <button class="nav-btn" data-tab="dicionario" id="tab-dicionario" role="tab" aria-selected="false" aria-controls="p-dicionario" type="button"><span class="ic" aria-hidden="true">≡</span>Dicionário</button>
+    <button class="nav-btn" data-tab="construtor" id="tab-construtor" role="tab" aria-selected="false" aria-controls="p-construtor" type="button"><span class="ic" aria-hidden="true">⌨</span>Construtor</button>
     <button class="nav-btn" data-tab="kata" id="tab-kata" role="tab" aria-selected="false" aria-controls="p-kata" type="button"><span class="ic" aria-hidden="true">◈</span>Kata</button>
     <button class="nav-btn" data-tab="ido" id="tab-ido" role="tab" aria-selected="false" aria-controls="p-ido" type="button"><span class="ic" aria-hidden="true">↻</span>Ido-Geiko</button>
-    <button class="nav-btn" data-tab="math" id="tab-math" role="tab" aria-selected="false" aria-controls="p-math" type="button"><span class="ic" aria-hidden="true">∑</span>Matemática</button>
-    <button class="nav-btn" data-tab="fontes" id="tab-fontes" role="tab" aria-selected="false" aria-controls="p-fontes" type="button"><span class="ic" aria-hidden="true">∂</span>Fontes</button>
-    <button class="nav-btn" data-tab="gramatica" id="tab-gramatica" role="tab" aria-selected="false" aria-controls="p-gramatica" type="button"><span class="ic" aria-hidden="true">λ</span>Gramática</button>
-    <button class="nav-btn" data-tab="construtor" id="tab-construtor" role="tab" aria-selected="false" aria-controls="p-construtor" type="button"><span class="ic" aria-hidden="true">⌨</span>Construtor</button>
+    <button class="nav-btn nav-secondary" id="nav-mais-btn" data-tab="" type="button" onclick="toggleMaisMenu()" aria-haspopup="true" aria-expanded="false" aria-label="Mais seções"><span class="ic" aria-hidden="true">···</span>Mais</button>
+    <button class="nav-btn nav-secondary" data-tab="math" id="tab-math" role="tab" aria-selected="false" aria-controls="p-math" type="button"><span class="ic" aria-hidden="true">∑</span>Matemática</button>
+    <button class="nav-btn nav-secondary" data-tab="fontes" id="tab-fontes" role="tab" aria-selected="false" aria-controls="p-fontes" type="button"><span class="ic" aria-hidden="true">∂</span>Fontes</button>
+    <button class="nav-btn nav-secondary" data-tab="gramatica" id="tab-gramatica" role="tab" aria-selected="false" aria-controls="p-gramatica" type="button"><span class="ic" aria-hidden="true">λ</span>Gramática</button>
   </nav>
   <div id="nav-search-wrap">
     <label for="nav-search" class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Buscar no atlas</label>
@@ -562,6 +619,12 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
   </div>
   <div class="sb-foot"><span style="font-size:16px;color:var(--gold);opacity:.85;margin-right:7px;vertical-align:middle" title="極真 — Kyokushin: a Verdade Última" aria-hidden="true">極真</span>CBKKO · IKO1 Honbu</div>
 </aside>
+<div id="mais-overlay" onclick="closeMaisMenu()" aria-hidden="true"></div>
+<div id="mais-menu" role="dialog" aria-label="Mais seções" aria-hidden="true">
+  <button class="nav-btn" data-tab="math" id="tab-math-mais" type="button" onclick="switchTabFromMais('math')"><span class="ic" aria-hidden="true">∑</span>Matemática</button>
+  <button class="nav-btn" data-tab="fontes" id="tab-fontes-mais" type="button" onclick="switchTabFromMais('fontes')"><span class="ic" aria-hidden="true">∂</span>Fontes</button>
+  <button class="nav-btn" data-tab="gramatica" id="tab-gramatica-mais" type="button" onclick="switchTabFromMais('gramatica')"><span class="ic" aria-hidden="true">λ</span>Gramática</button>
+</div>
 <div id="main">
   <div class="panel active" id="p-constelacao">
     <div id="cv-wrap">
@@ -575,8 +638,10 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
           <button class="mt-btn on" id="mt-solidos" onclick="setMandalMode('solidos')" type="button" aria-pressed="true" title="Cada nó como sólido platônico do seu eixo">◈ Sólidos</button>
           <button class="mt-btn" id="mt-palavras" onclick="setMandalMode('palavras')" type="button" aria-pressed="false" title="Cada técnica como polígono ligando seus nós">◇ Palavras</button>
           <button class="mt-btn" id="mt-implicitos" onclick="setMandalMode('implicitos')" type="button" aria-pressed="false" title="Mostra também eixos implícitos como nós fantasma">◌ Implícitos</button>
+          <button class="mt-btn btn-bodymap" id="mt-bodymap" onclick="toggleBodyMap()" type="button" aria-pressed="false" title="Mapa corporal — filtrar constelação por zona de ataque">⊡ Corpo</button>
         </div>
       </div>
+      <button id="help-trigger" type="button" aria-label="Abrir ajuda e trilhas de aprendizagem" onclick="document.getElementById('help-overlay').classList.toggle('open')">?</button>
       <svg id="cv" role="img" aria-label="Mapa da constelação de técnicas Kyokushin"></svg>
       <div id="tip" role="tooltip" aria-hidden="true"></div>
       <aside id="detail" aria-label="Detalhe da técnica ou nó">
@@ -662,6 +727,12 @@ const BS={branca:'#8899bb',laranja:'#cc7722',azul:'#4488ee',amarela:'#ddaa22',ve
 const BELT_ORDER=['branca','laranja','azul','amarela','verde','marrom','shodan'];
 let activeBelt='all';
 let cvMode='mandala';
+
+// ===== PERSISTÊNCIA LOCAL =====
+const _LS={
+  save(k,v){try{localStorage.setItem('ak:'+k,JSON.stringify(v))}catch(e){}},
+  get(k,def){try{const v=localStorage.getItem('ak:'+k);return v!=null?JSON.parse(v):def}catch(e){return def}}
+};
 
 const NODES=[
 {id:'tsuki',label:'Tsuki',pt:'soco linear',type:'acao',
@@ -2493,6 +2564,7 @@ function renderKaratekaPanel(){
 const det=document.getElementById('detail');
 det.classList.add('open','bodymap');
 const old=document.getElementById('karateka-wrap');if(old)old.remove();
+const bmbtn=document.getElementById('mt-bodymap');if(bmbtn){bmbtn.classList.add('on');bmbtn.setAttribute('aria-pressed','true');}
 const wrap=document.createElement('div');
 wrap.id='karateka-wrap';
 const title=document.createElement('h4');
@@ -2605,6 +2677,7 @@ function _closeDetail(){
 const det=document.getElementById('detail');
 det.classList.remove('open','bodymap');
 const kw=document.getElementById('karateka-wrap');if(kw)kw.remove();
+const bmbtn=document.getElementById('mt-bodymap');if(bmbtn){bmbtn.classList.remove('on');bmbtn.setAttribute('aria-pressed','false');}
 const svg=document.getElementById('cv');
 svg.querySelectorAll('[data-ti]').forEach(el=>{
   el.style.strokeDasharray='';el.style.strokeDashoffset='';el.style.transition='';
@@ -2675,7 +2748,7 @@ const beltLbl={all:'Todas as faixas',branca:'Branca',laranja:'Laranja',azul:'Azu
   btn.type='button';
   btn.setAttribute('aria-pressed',active?'true':'false');
   btn.textContent=beltLbl[b]||b;
-  btn.onclick=()=>{dictFilters.belt=b;initDict()};
+  btn.onclick=()=>{dictFilters.belt=b;_LS.save('dictBelt',b);initDict()};
   fs.appendChild(btn);
 });
 const sep=document.createElement('span');
@@ -2690,7 +2763,7 @@ const actionLbl={'':'Todas as ações',tsuki:'Tsuki · socos',uchi:'Uchi · perc
   btn.type='button';
   btn.setAttribute('aria-pressed',active?'true':'false');
   btn.textContent=actionLbl[a]||a;
-  btn.onclick=()=>{dictFilters.action=key;initDict()};
+  btn.onclick=()=>{dictFilters.action=key;_LS.save('dictAction',key);initDict()};
   fs.appendChild(btn);
 });
 renderDict();
@@ -2736,6 +2809,24 @@ TECHS.filter(t=>{
   btn.className='dc-const-btn';btn.type='button';btn.textContent='✦ Ver na constelação';
   btn.onclick=(e)=>{e.stopPropagation();switchTab('constelacao');requestAnimationFrame(()=>showTechDetail(t));};
   div.querySelector('.dc-exp').appendChild(btn);
+  const clink=document.createElement('button');
+  clink.className='dc-const-link';clink.type='button';clink.textContent='⌨ Montar no Construtor';
+  clink.onclick=(e)=>{
+    e.stopPropagation();
+    switchTab('construtor');
+    requestAnimationFrame(()=>{
+      const setVal=(id,val)=>{const el=document.getElementById(id);if(el){el.value=val||'';el.disabled=false;}};
+      setVal('cs-acao',t.action);
+      const bm=t.nodes.find(n=>NMAP[n]?.type==='buki_mao');
+      const bp=t.nodes.find(n=>NMAP[n]?.type==='buki_pe');
+      const dir=t.nodes.find(n=>NMAP[n]?.type==='direcao');
+      const alvo=t.nodes.find(n=>NMAP[n]?.type==='alvo');
+      setVal('cs-bukim',bm||'');setVal('cs-bukipe',bp||'');
+      setVal('cs-dir',dir||'');setVal('cs-alvo',alvo||'');
+      if(typeof updateConstrutor==='function')updateConstrutor();
+    });
+  };
+  div.querySelector('.dc-exp').appendChild(clink);
   grid.appendChild(div);
 });
 const countEl=document.getElementById('dict-count');
@@ -2780,7 +2871,7 @@ const beltLbl={all:'Todas',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela
   btn.type='button';
   btn.setAttribute('aria-pressed',active?'true':'false');
   btn.textContent=beltLbl[b]||b;
-  btn.onclick=()=>{kataFilter=b;renderKata();initKata();};
+  btn.onclick=()=>{kataFilter=b;_LS.save('kataFilter',b);renderKata();initKata();};
   fs.appendChild(btn);
 });
 const sep=document.createElement('span');
@@ -2875,7 +2966,7 @@ Object.keys(BELT_REQ).forEach(b=>{
   btn.setAttribute('role','tab');
   btn.setAttribute('aria-pressed',b===currentIdoBelt?'true':'false');
   btn.textContent=beltLabels[b]||b;
-  btn.onclick=()=>{currentIdoBelt=b;initIdo()};
+  btn.onclick=()=>{currentIdoBelt=b;_LS.save('idoBelt',b);initIdo()};
   tabs.appendChild(btn);
 });
 const req=BELT_REQ[currentIdoBelt];
@@ -3248,7 +3339,7 @@ ${(()=>{
 <text x="${x+w+6}" y="${y+16}" font-size="10" fill="${col}">${pct}</text>`;
   }).join('');
 })()}
-<text x="210" y="126" text-anchor="middle" font-size="9" fill="#556677">escala √ — proporcional à "área" de possibilidades</text>
+<text x="210" y="126" text-anchor="middle" font-size="11" fill="#556677">escala √ — proporcional à "área" de possibilidades</text>
 </svg>
 <div class="insight"><strong>${_canonPct}% canonizado.</strong> Cada técnica do kihon representa ~${Math.round(_theoretical/54)} possibilidades não canonizadas. O silêncio é tão informativo quanto a escolha.</div>
 </div>
@@ -3267,7 +3358,7 @@ ${(()=>{
     out+=donutArc(cx,cy,r,a,a2,col,sw);
     a=a2;
   });
-  return out+'<text x="60" y="55" text-anchor="middle" font-size="13" font-weight="700" fill="#e8e8ee">82%</text><text x="60" y="70" text-anchor="middle" font-size="9" fill="#7788aa">válidos</text>';
+  return out+'<text x="60" y="55" text-anchor="middle" font-size="13" font-weight="700" fill="#e8e8ee">82%</text><text x="60" y="70" text-anchor="middle" font-size="11" fill="#7788aa">válidos</text>';
 })()}
 </svg>
 <div style="font-size:11px;color:var(--text2);line-height:1.8">
@@ -3303,15 +3394,15 @@ ${(()=>{
   const maxLog=Math.log10(1370880);const minLog=Math.log10(480);
   const spts=sess.map((v,i)=>[ox+i*(W/(n-1)),oy+H-((Math.log10(v)-minLog)/(maxLog-minLog))*H]);
   // Belt labels
-  const labs=belts.map((b,i)=>`<text x="${(ox+i*(W/(n-1))).toFixed(0)}" y="${oy+H+14}" text-anchor="middle" font-size="9" fill="#556677">${b}</text>`).join('');
+  const labs=belts.map((b,i)=>`<text x="${(ox+i*(W/(n-1))).toFixed(0)}" y="${oy+H+14}" text-anchor="middle" font-size="11" fill="#556677">${b}</text>`).join('');
   // Axis labels
-  const axL=`<text x="2" y="${oy+H/2}" text-anchor="middle" font-size="9" fill="#8899bb" transform="rotate(-90,8,${oy+H/2})">vocab</text>`;
-  const axR=`<text x="415" y="${oy+H/2}" text-anchor="middle" font-size="9" fill="#c9a84c" transform="rotate(90,415,${oy+H/2})">sessões</text>`;
+  const axL=`<text x="2" y="${oy+H/2}" text-anchor="middle" font-size="11" fill="#8899bb" transform="rotate(-90,8,${oy+H/2})">vocab</text>`;
+  const axR=`<text x="415" y="${oy+H/2}" text-anchor="middle" font-size="11" fill="#c9a84c" transform="rotate(90,415,${oy+H/2})">sessões</text>`;
   return sparkline(vpts,'#8899bb',true)+sparkline(spts,'#c9a84c',true)+labs+axL+axR
-    +`<text x="${ox}" y="${oy-2}" font-size="8" fill="#8899bb">31 téc.</text>`
-    +`<text x="${ox+W}" y="${oy-2}" text-anchor="end" font-size="8" fill="#8899bb">54 téc.</text>`
-    +`<text x="${ox}" y="${oy+H+28}" font-size="8" fill="#c9a84c">480 sessões</text>`
-    +`<text x="${ox+W}" y="${oy+H+28}" text-anchor="end" font-size="8" fill="#c9a84c">1,37M sessões</text>`;
+    +`<text x="${ox}" y="${oy-2}" font-size="11" fill="#8899bb">31 téc.</text>`
+    +`<text x="${ox+W}" y="${oy-2}" text-anchor="end" font-size="11" fill="#8899bb">54 téc.</text>`
+    +`<text x="${ox}" y="${oy+H+28}" font-size="11" fill="#c9a84c">480 sessões</text>`
+    +`<text x="${ox+W}" y="${oy+H+28}" text-anchor="end" font-size="11" fill="#c9a84c">1,37M sessões</text>`;
 })()}
 </svg>
 <div class="insight"><strong>Paradoxo:</strong> Verde = Amarela em pool técnico (47 cada). Mas as sessões são idênticas (38.000). O exame de verde não adiciona vocabulário — adiciona profundidade: footwork, kumite, kata longos. H(vocab) cresce 16%; H(sessões) cresce 3.450×.</div>
@@ -3332,7 +3423,7 @@ ${(()=>{
       +`<text x="${ox+w+5}" y="${y+11}" font-size="10" fill="#c9a84c">${n} opções</text>`;
   }).join('')
   +`<text x="${ox}" y="98" font-size="10" fill="#e8d5a3" font-weight="600">24×20×17×14×12 = 1.370.880 sessões distintas</text>`
-  +`<text x="${ox}" y="110" font-size="9" fill="#7788aa">≈ 137.000 são "boas sessões" (10% com equilíbrio jodan/chudan/gedan + mão/pé)</text>`;
+  +`<text x="${ox}" y="110" font-size="11" fill="#7788aa">≈ 137.000 são "boas sessões" (10% com equilíbrio jodan/chudan/gedan + mão/pé)</text>`;
 })()}
 </svg>
 </div>
@@ -3352,15 +3443,15 @@ ${(()=>{
     const y=ly(Math.pow(10,e));
     const label=e<7?'10'+String.fromCharCode(0x2070+e):'10⁷';
     return `<line x1="${ox}" y1="${y.toFixed(0)}" x2="${ox+W}" y2="${y.toFixed(0)}" stroke="#1e1e30" stroke-width="1"/>`
-      +`<text x="${ox-4}" y="${(y+4).toFixed(0)}" text-anchor="end" font-size="8" fill="#445566">${label}</text>`;
+      +`<text x="${ox-4}" y="${(y+4).toFixed(0)}" text-anchor="end" font-size="11" fill="#445566">${label}</text>`;
   }).join('');
   const labels=data.map(([l,v,col],i)=>{
     const x=ox+i*(W/(n-1));const y=ly(v);
     return `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="4" fill="${col}"/>`
-      +`<text x="${x.toFixed(0)}" y="${oy+H+14}" text-anchor="middle" font-size="9" fill="${col}">${l.slice(0,2)}</text>`;
+      +`<text x="${x.toFixed(0)}" y="${oy+H+14}" text-anchor="middle" font-size="11" fill="${col}">${l.slice(0,2)}</text>`;
   }).join('');
   return grid+sparkline(pts,'#c9a84c',true)+labels
-    +`<text x="${ox+W}" y="${ly(1370880)-8}" text-anchor="end" font-size="9" fill="#e8d5a3">Shodan: ×31× Amarela</text>`;
+    +`<text x="${ox+W}" y="${ly(1370880)-8}" text-anchor="end" font-size="11" fill="#e8d5a3">Shodan: ×31× Amarela</text>`;
 })()}
 </svg>
 <div class="insight"><strong>Verde = Amarela:</strong> mesmo pool (47), mesmas sessões (38.000). O salto para Shodan (1,37M) é qualitativo — o sistema passa de vocabulário a navegação.</div>
@@ -3376,8 +3467,8 @@ ${(()=>{
   return cats.map(([l,n,col])=>{
     const w=Math.round((n/total)*W);
     const out=`<rect x="${x}" y="0" width="${w}" height="${H}" fill="${col}" opacity=".7" rx="2"/>`
-      +`<text x="${x+w/2}" y="13" text-anchor="middle" font-size="9" fill="#0b0b10" font-weight="600">${n}</text>`
-      +`<text x="${x+w/2}" y="32" text-anchor="middle" font-size="9" fill="${col}">${l}</text>`;
+      +`<text x="${x+w/2}" y="13" text-anchor="middle" font-size="11" fill="#0b0b10" font-weight="600">${n}</text>`
+      +`<text x="${x+w/2}" y="32" text-anchor="middle" font-size="11" fill="${col}">${l}</text>`;
     x+=w+2;return out;
   }).join('');
 })()}
@@ -3503,8 +3594,11 @@ ORDER.forEach(type=>{
 
 function setMode(mode){
 cvMode=mode;
+_LS.save('cvMode',mode);
 document.getElementById('mode-mandala').classList.toggle('on',mode==='mandala');
+document.getElementById('mode-mandala').setAttribute('aria-pressed',mode==='mandala'?'true':'false');
 document.getElementById('mode-chord').classList.toggle('on',mode==='chord');
+document.getElementById('mode-chord').setAttribute('aria-pressed',mode==='chord'?'true':'false');
 initConstellation();
 initBeltBar();
 renderKaratekaPanel();
@@ -3558,6 +3652,7 @@ document.getElementById('det-techs').parentNode.appendChild(leg);
 
 // ===== NAVIGATION =====
 function switchTab(tab){
+if(!document.getElementById('p-'+tab))return;
 document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
 document.querySelectorAll('.nav-btn').forEach(b=>{
   b.classList.remove('active');
@@ -3565,13 +3660,55 @@ document.querySelectorAll('.nav-btn').forEach(b=>{
   b.setAttribute('aria-selected','false');
 });
 document.getElementById('p-'+tab).classList.add('active');
-const tabBtn=document.querySelector('[data-tab="'+tab+'"]');
-if(tabBtn){tabBtn.classList.add('active');tabBtn.setAttribute('aria-current','page');tabBtn.setAttribute('aria-selected','true');}
+document.querySelectorAll('[data-tab="'+tab+'"]').forEach(btn=>{
+  btn.classList.add('active');
+  btn.setAttribute('aria-current','page');
+  btn.setAttribute('aria-selected','true');
+});
+try{history.replaceState(null,'','#'+tab)}catch(e){}
+_LS.save('tab',tab);
 }
 
-document.querySelectorAll('.nav-btn').forEach(btn=>{
-btn.onclick=()=>switchTab(btn.dataset.tab);
+document.querySelectorAll('.nav-btn:not(#mais-menu .nav-btn)').forEach(btn=>{
+if(btn.dataset.tab)btn.onclick=()=>switchTab(btn.dataset.tab);
 });
+
+// ===== MAIS MENU =====
+function toggleMaisMenu(){
+const m=document.getElementById('mais-menu');
+const o=document.getElementById('mais-overlay');
+const btn=document.getElementById('nav-mais-btn');
+const open=m.classList.toggle('open');
+o.classList.toggle('open',open);
+if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+if(m)m.setAttribute('aria-hidden',open?'false':'true');
+}
+function closeMaisMenu(){
+document.getElementById('mais-menu')?.classList.remove('open');
+document.getElementById('mais-overlay')?.classList.remove('open');
+document.getElementById('nav-mais-btn')?.setAttribute('aria-expanded','false');
+document.getElementById('mais-menu')?.setAttribute('aria-hidden','true');
+}
+function switchTabFromMais(tab){closeMaisMenu();switchTab(tab);}
+
+// ===== HELP PATHS =====
+function helpPath(tabs){
+document.getElementById('help-overlay').classList.remove('open');
+switchTab(tabs[0]);
+}
+
+// ===== BODY MAP TOGGLE =====
+function toggleBodyMap(){
+const det=document.getElementById('detail');
+const btn=document.getElementById('mt-bodymap');
+if(det.classList.contains('bodymap')){
+  _closeDetail();
+  if(btn){btn.classList.remove('on');btn.setAttribute('aria-pressed','false');}
+}else{
+  renderKaratekaPanel();
+  if(btn){btn.classList.add('on');btn.setAttribute('aria-pressed','true');}
+}
+}
 
 // ===== GRAMÁTICA =====
 function renderGramatica(){
@@ -4303,7 +4440,9 @@ function initAutoDemo(){
   const bar=document.createElement('div');bar.className='demo-bar';bar.id='demo-bar';
   bar.innerHTML=
     '<button class="demo-btn" id="demo-play" onclick="toggleDemo()" type="button" aria-label="Iniciar apresentação automática das técnicas">▶ Apresentação</button>'+
-    '<label for="demo-speed" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Velocidade da apresentação</label>'+
+    '<label for="demo-mode" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Ordem</label>'+
+    '<select class="demo-speed" id="demo-mode" aria-label="Ordem de apresentação"><option value="all">Sequencial</option><option value="belt">Por faixa</option><option value="action">Por ação</option><option value="alvo">Por alvo</option></select>'+
+    '<label for="demo-speed" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Velocidade</label>'+
     '<select class="demo-speed" id="demo-speed" aria-label="Velocidade"><option value="3000">Lento · 3s</option><option value="2000" selected>Médio · 2s</option><option value="1000">Rápido · 1s</option></select>'+
     '<span class="demo-prog" id="demo-prog" aria-live="polite" aria-label="Progresso">—</span>';
   document.getElementById('const-form').after(bar);
@@ -4331,10 +4470,18 @@ function stopDemo(){
   btn.classList.remove('active');
 }
 
+function _getDemoSequence(){
+  const mode=document.getElementById('demo-mode')?.value||'all';
+  if(mode==='belt')return BELT_ORDER.flatMap(b=>TECHS.filter(t=>t.belt===b));
+  if(mode==='action')return ['tsuki','uchi','geri','uke','barai','keage'].flatMap(a=>TECHS.filter(t=>t.action===a));
+  if(mode==='alvo')return ['jodan','chudan','gedan','gammen','hizo','kansetsu'].flatMap(alvo=>TECHS.filter(t=>t.nodes.includes(alvo)));
+  return TECHS;
+}
 function advanceDemo(){
-  const t=TECHS[_demoIdx%TECHS.length];_demoIdx++;
+  const seq=_getDemoSequence();
+  const t=seq[_demoIdx%seq.length];_demoIdx++;
   const prog=document.getElementById('demo-prog');
-  if(prog)prog.textContent=(_demoIdx%TECHS.length||TECHS.length)+'/'+TECHS.length;
+  if(prog)prog.textContent=(_demoIdx%seq.length||seq.length)+'/'+seq.length;
   // Populate selectors
   const setVal=(id,val)=>{const el=document.getElementById(id);if(el){el.value=val||'';el.disabled=false;}};
   setVal('cs-acao',t.action);
@@ -4401,17 +4548,39 @@ function setCvBeltFilter(belt){
 
 function setMandalMode(mode){
   cvMandalMode=mode;
+  _LS.save('cvSubMode',mode);
   ['solidos','palavras','implicitos'].forEach(m=>{
-    document.getElementById('mt-'+m)?.classList.toggle('on',m===mode);
+    const btn=document.getElementById('mt-'+m);
+    btn?.classList.toggle('on',m===mode);
+    btn?.setAttribute('aria-pressed',m===mode?'true':'false');
   });
   initConstellation();
 }
 
 function init(){
+// Restore persisted state before rendering
+const savedTab=location.hash.slice(1)||_LS.get('tab','constelacao');
+const validTabs=['constelacao','dicionario','construtor','kata','ido','math','fontes','gramatica'];
+const startTab=validTabs.includes(savedTab)?savedTab:'constelacao';
+cvMode=_LS.get('cvMode','mandala');
+cvMandalMode=_LS.get('cvSubMode','solidos');
+dictFilters.belt=_LS.get('dictBelt','all');
+dictFilters.action=_LS.get('dictAction','all');
+kataFilter=_LS.get('kataFilter','all');
+currentIdoBelt=_LS.get('idoBelt','branca');
+
 requestAnimationFrame(()=>requestAnimationFrame(()=>{
   initConstellation();
   initBeltBar();
-  renderKaratekaPanel();
+  // Sync mode buttons to restored state
+  ['solidos','palavras','implicitos'].forEach(m=>{
+    const btn=document.getElementById('mt-'+m);
+    btn?.classList.toggle('on',m===cvMandalMode);
+    btn?.setAttribute('aria-pressed',m===cvMandalMode?'true':'false');
+  });
+  document.getElementById('mode-mandala')?.classList.toggle('on',cvMode==='mandala');
+  document.getElementById('mode-chord')?.classList.toggle('on',cvMode==='chord');
+  if(startTab!=='constelacao')renderKaratekaPanel();
 }));
 initDict();
 initKata();renderKata();
@@ -4422,6 +4591,7 @@ renderGramatica();
 initConstrutor();
 initAutoDemo();
 initSearch();
+if(startTab!=='constelacao')switchTab(startTab);
 }
 init();
 </script></body></html>
