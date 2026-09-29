@@ -471,7 +471,59 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
   .kc-step-item.sub{color:#555}
   .kc-emb svg{display:none}
   #kata-filters{display:none!important}
+  body.print-exam #p-kata{display:none!important}
+  body.print-exam #p-exame{display:block!important;position:static;overflow:visible}
+  body.print-exam .ex-actions,body.print-exam #exam-belts,body.print-exam #exam-sim{display:none!important}
+  body.print-exam .ex-item,body.print-exam .ex-chip{background:#fff!important;border-color:#ccc!important;break-inside:avoid}
+  body.print-exam .ex-item *,body.print-exam .ex-chip *,body.print-exam .req-box,body.print-exam h2,body.print-exam h3{color:#111!important}
 }
+/* ===== EXAME ===== */
+.ex-note{font-size:var(--fs-xs);color:var(--text3);line-height:1.6;margin:-6px 0 16px;max-width:70ch}
+.ex-prog{display:flex;align-items:center;gap:12px;margin:0 0 18px}
+.ex-prog-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.ex-prog-fill{height:100%;border-radius:4px;transition:width .25s}
+.ex-prog-val{font-size:var(--fs-sm);color:var(--text);font-variant-numeric:tabular-nums;min-width:120px;text-align:right}
+.ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.ex-actions .gen-btn{margin-bottom:0}
+.ex-btn2{background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;
+  font-size:var(--fs-sm);cursor:pointer;font-family:inherit;transition:all .18s}
+.ex-btn2:hover{color:var(--text);border-color:rgba(201,168,76,.5)}
+.ex-sec{margin-bottom:28px}
+.ex-sec h3{font-size:var(--fs-md);font-weight:700;margin-bottom:4px;letter-spacing:.04em;display:flex;align-items:baseline;gap:10px}
+.ex-sec h3 .ex-count{font-size:var(--fs-xs);color:var(--text2);font-weight:500;font-variant-numeric:tabular-nums}
+.ex-sec-sub{font-size:var(--fs-xs);color:var(--text2);margin-bottom:10px;line-height:1.55}
+.ex-list{display:flex;flex-direction:column;gap:6px}
+.ex-item{display:flex;align-items:flex-start;gap:11px;background:var(--bg3);border:1px solid var(--border);
+  border-left:3px solid;border-radius:8px;padding:10px 12px}
+.ex-item input,.ex-chip input{accent-color:var(--gold);width:18px;height:18px;margin-top:1px;flex-shrink:0;cursor:pointer}
+.ex-body{flex:1;min-width:0}
+.ex-name{font-size:var(--fs-base);font-weight:600;cursor:pointer;letter-spacing:.01em}
+.ex-item.done .ex-name,.ex-chip.done .ex-name{color:var(--text2)}
+.ex-item.done{opacity:.75}
+.ex-new{display:inline-block;font-size:var(--fs-micro);padding:1px 7px;border-radius:4px;margin-left:6px;
+  letter-spacing:.06em;text-transform:uppercase;font-weight:700;vertical-align:1px}
+.ex-meta{font-size:var(--fs-xs);color:var(--text2);line-height:1.55;margin-top:3px}
+.ex-link{background:none;border:none;color:var(--gold);cursor:pointer;font-size:var(--fs-xs);padding:2px 0;font-family:inherit}
+.ex-link:hover{text-decoration:underline}
+.ex-body details{margin-top:6px}
+.ex-body summary{font-size:var(--fs-xs);color:var(--gold);cursor:pointer;width:max-content}
+.ex-steps{font-size:var(--fs-xs);color:var(--text2);line-height:1.6;margin-top:6px;padding-left:4px}
+.ex-steps div{padding:2px 0}
+.ex-grp{font-size:var(--fs-micro);color:var(--text3);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin:12px 0 6px}
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.ex-chip{display:flex;align-items:flex-start;gap:9px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 10px}
+.ex-chip .ex-name{font-size:var(--fs-sm)}
+.ex-chip .ex-meta{margin-top:1px}
+.ex-plan{counter-reset:ex;display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.ex-plan li{list-style:none;background:var(--bg3);border-radius:8px;padding:10px 12px 10px 40px;position:relative;
+  font-size:var(--fs-sm);color:var(--text2);line-height:1.6}
+.ex-plan li::before{counter-increment:ex;content:counter(ex);position:absolute;left:12px;top:10px;width:20px;height:20px;
+  border-radius:50%;background:var(--gold2);color:var(--gold);font-size:var(--fs-xs);font-weight:700;display:flex;align-items:center;justify-content:center}
+.ex-plan li b{color:var(--text)}
+#exam-sim{margin-bottom:24px}
+#exam-sim:empty{display:none}
+.ex-sim-q{font-size:var(--fs-sm);color:var(--text);line-height:1.55}
+@media(max-width:680px){.ex-grid{grid-template-columns:1fr}.ex-prog-val{min-width:0}}
 /* ===== STEP TECH LINK ===== */
 .step-tech-link{color:var(--gold);cursor:pointer;
   text-decoration:underline dotted;text-underline-offset:2px;
@@ -569,6 +621,10 @@ h2{color:var(--text)!important}
         <div class="help-path-role">🥋 Faixa branca / iniciante</div>
         <div class="help-path-trail">Dicionário → Constelação (Sólidos) → Ido-Geiko</div>
       </div>
+      <div class="help-path" onclick="helpPath(['exame','kata','ido'])" tabindex="0" role="button" aria-label="Trilha para quem vai prestar exame de faixa" onkeydown="if(event.key==='Enter')helpPath(['exame','kata','ido'])">
+        <div class="help-path-role">🟩 Preparando exame de faixa</div>
+        <div class="help-path-trail">Exame (checklist + simulado) → Kata → Ido-Geiko</div>
+      </div>
       <div class="help-path" onclick="helpPath(['ido','kata','construtor'])" tabindex="0" role="button" aria-label="Trilha para professores" onkeydown="if(event.key==='Enter')helpPath(['ido','kata','construtor'])">
         <div class="help-path-role">🎓 Professor / preparando aula</div>
         <div class="help-path-trail">Ido-Geiko → Kata → Construtor</div>
@@ -607,6 +663,7 @@ h2{color:var(--text)!important}
     <button class="nav-btn" data-tab="construtor" id="tab-construtor" role="tab" aria-selected="false" aria-controls="p-construtor" type="button"><span class="ic" aria-hidden="true">⌨</span>Construtor</button>
     <button class="nav-btn" data-tab="kata" id="tab-kata" role="tab" aria-selected="false" aria-controls="p-kata" type="button"><span class="ic" aria-hidden="true">◈</span>Kata</button>
     <button class="nav-btn" data-tab="ido" id="tab-ido" role="tab" aria-selected="false" aria-controls="p-ido" type="button"><span class="ic" aria-hidden="true">↻</span>Ido-Geiko</button>
+    <button class="nav-btn" data-tab="exame" id="tab-exame" role="tab" aria-selected="false" aria-controls="p-exame" type="button"><span class="ic" aria-hidden="true">✓</span>Exame</button>
     <button class="nav-btn nav-secondary" id="nav-mais-btn" data-tab="" type="button" onclick="toggleMaisMenu()" aria-haspopup="true" aria-expanded="false" aria-label="Mais seções"><span class="ic" aria-hidden="true">···</span>Mais</button>
     <button class="nav-btn nav-secondary" data-tab="math" id="tab-math" role="tab" aria-selected="false" aria-controls="p-math" type="button"><span class="ic" aria-hidden="true">∑</span>Matemática</button>
     <button class="nav-btn nav-secondary" data-tab="fontes" id="tab-fontes" role="tab" aria-selected="false" aria-controls="p-fontes" type="button"><span class="ic" aria-hidden="true">∂</span>Fontes</button>
@@ -687,6 +744,14 @@ h2{color:var(--text)!important}
       </div>
       <button class="gen-btn" onclick="generateIdo()" type="button">Gerar sequência</button>
       <div id="ido-out" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="panel" id="p-exame" role="tabpanel" aria-labelledby="tab-exame">
+    <div class="panel-inner">
+      <h2>Preparação para exame</h2>
+      <p class="sub">Checklist do que será cobrado no exame de faixa: kata, renraku, footwork e kihon acumulados até a faixa escolhida. Marque o que já está sólido — o progresso fica salvo neste navegador. Use o simulado para treinar como se o examinador estivesse chamando as técnicas.</p>
+      <div class="ido-belts" id="exam-belts" role="group" aria-label="Faixa que você vai prestar exame"></div>
+      <div id="exam-root"></div>
     </div>
   </div>
   <div class="panel" id="p-math" role="tabpanel" aria-labelledby="tab-math">
@@ -3650,6 +3715,178 @@ leg.appendChild(grid);
 document.getElementById('det-techs').parentNode.appendChild(leg);
 }
 
+// ===== EXAME DE FAIXA =====
+let examBelt='verde';
+const EXAM_BELT_LBL={branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',shodan:'Shodan'};
+const _bIdx=b=>BELT_ORDER.indexOf(b);
+const _examDone=()=>_LS.get('examDone',{});
+const _pick=(arr,n)=>[...arr].sort(()=>Math.random()-.5).slice(0,n);
+
+// Tudo o que o exame da faixa `b` cobra: o que é novo nesta faixa + revisão das anteriores
+function examPool(b){
+const bi=_bIdx(b);
+const upTo=x=>_bIdx(x.belt)>=0&&_bIdx(x.belt)<=bi;
+const newFirst=(x,y)=>(y.belt===b)-(x.belt===b);
+const kata=KATA.filter(upTo).sort(newFirst);
+const kataNames=kata.map(k=>k.name);
+return{
+  kata,
+  renraku:RENRAKU.filter(upTo).sort(newFirst),
+  kihon:TECHS.filter(t=>!t.kataOnly&&upTo(t)),
+  kataTechs:TECHS.filter(t=>t.kataOnly&&(t.kataSrc||[]).some(s=>kataNames.includes(s))),
+};
+}
+
+function initExame(){
+const tabs=document.getElementById('exam-belts');if(!tabs)return;
+tabs.innerHTML='';
+Object.keys(BELT_REQ).forEach(b=>{
+  const btn=document.createElement('button');
+  btn.className='ib-tab'+(b===examBelt?' on':'');
+  btn.type='button';
+  btn.setAttribute('aria-pressed',b===examBelt?'true':'false');
+  btn.textContent=EXAM_BELT_LBL[b]||b;
+  btn.onclick=()=>{examBelt=b;_LS.save('examBelt',b);initExame();};
+  tabs.appendChild(btn);
+});
+renderExame();
+}
+
+function _examCheck(id,color,inner,cls){
+const done=_examDone()[id];
+return'<div class="'+cls+(done?' done':'')+'" style="border-left-color:'+color+'">'+
+  '<input type="checkbox" id="exc-'+id+'" data-exid="'+id+'"'+(done?' checked':'')+'>'+
+  '<div class="ex-body">'+inner.replace('%L','<label class="ex-name" for="exc-'+id+'">').replace('%/L','</label>')+'</div></div>';
+}
+
+function renderExame(){
+const root=document.getElementById('exam-root');if(!root)return;
+const b=examBelt,req=BELT_REQ[b],col=BS[b],lbl=EXAM_BELT_LBL[b];
+const P=examPool(b);
+const newTag=x=>x.belt===b?'<span class="ex-new" style="background:'+col+'22;color:'+col+'">novo</span>':'';
+const stepsHtml=steps=>'<div class="ex-steps">'+steps.map(s=>'<div>'+s.replace(/^\s+▶/,'▶')+'</div>').join('')+'</div>';
+
+let h='<div class="req-box" style="border-left:3px solid '+col+'"><strong>Exame para faixa '+lbl+'</strong>'+
+  (req.foco?'<div style="color:var(--text);font-style:italic;margin-bottom:4px">'+req.foco+'</div>':'')+
+  '<div class="req-section"><span class="req-section-lbl">Requisitos</span>'+req.exam+'</div>'+
+  '<div class="req-section"><span class="req-section-lbl">Ido-Geiko</span>'+req.ido+(req.min?' · <span style="color:var(--gold);font-weight:600">mínimo de '+req.min+' golpes</span>':'')+'</div></div>'+
+  '<p class="ex-note">Os requisitos variam entre dojos e organizações — confirme a lista oficial com o seu sensei. O exame costuma cobrar também tudo o que foi exigido nas faixas anteriores; por isso a revisão está incluída abaixo.</p>'+
+  '<div class="ex-prog"><div class="ex-prog-bar"><div class="ex-prog-fill" id="exam-fill" style="background:'+col+'"></div></div><span class="ex-prog-val" id="exam-prog-val"></span></div>'+
+  '<div class="ex-actions"><button class="gen-btn" type="button" onclick="examSimulado()">Sortear simulado</button>'+
+  '<button class="ex-btn2" type="button" onclick="examGoIdo()">Gerar ido-geiko da faixa</button>'+
+  '<button class="ex-btn2" type="button" onclick="examPrint()">Imprimir checklist</button>'+
+  '<button class="ex-btn2" type="button" onclick="examReset()">Limpar marcações</button></div>'+
+  '<div id="exam-sim" aria-live="polite"></div>';
+
+// Kata
+h+='<div class="ex-sec" data-exsec><h3>Kata <span class="ex-count"></span></h3>'+
+  '<div class="ex-sec-sub">Execute cada kata com contagem própria e sem hesitar entre as sequências. Os novos desta faixa vêm primeiro.</div><div class="ex-list">'+
+  P.kata.map(k=>_examCheck(k.id,BS[k.belt],
+    '%L'+k.name+'%/L'+newTag(k)+
+    '<div class="ex-meta">'+(EXAM_BELT_LBL[k.belt]||k.belt)+(k.time?' · ~'+k.time:'')+(k.techs&&k.techs.length?' · '+k.techs.join(', '):'')+'</div>'+
+    '<button class="ex-link" type="button" onclick="examOpenKata(\''+k.id+'\')">ver roteiro completo →</button>','ex-item')).join('')+
+  '</div></div>';
+
+// Renraku e footwork
+h+='<div class="ex-sec" data-exsec><h3>Renraku e deslocamento <span class="ex-count"></span></h3>'+
+  '<div class="ex-sec-sub">Combinações encadeadas. Na faixa '+lbl.toLowerCase()+', atenção especial ao footwork: distância e ângulo contam tanto quanto o golpe.</div><div class="ex-list">'+
+  P.renraku.map(r=>_examCheck(r.id,BS[r.belt]||col,
+    '%L'+r.name+'%/L'+newTag(r)+
+    '<div class="ex-meta">'+(r.cat==='ido'?'Footwork · ':'')+r.note+'</div>'+
+    '<details><summary>passo a passo</summary>'+stepsHtml(r.steps)+'</details>','ex-item')).join('')+
+  '</div></div>';
+
+// Kihon
+const groups=[['Tsuki — socos',t=>t.action==='tsuki'],['Uchi — golpes percussivos',t=>t.action==='uchi'],
+  ['Uke e Barai — defesas',t=>t.action==='uke'||t.action==='barai'],['Geri e Keage — chutes',t=>t.action==='geri'||t.action==='keage']];
+const chip=t=>_examCheck(t.id,BS[t.belt]||col,
+  '%L'+t.name+'%/L<div class="ex-meta">'+t.pt+' · <button class="ex-link" type="button" onclick="findAndShowTech(\''+t.name.replace(/'/g,"\\'")+'\')">ver</button></div>','ex-chip');
+h+='<div class="ex-sec" data-exsec><h3>Kihon <span class="ex-count"></span></h3>'+
+  '<div class="ex-sec-sub">Todo o vocabulário técnico acumulado até esta faixa. O examinador chama em japonês — saiba executar e traduzir cada nome.</div>'+
+  groups.map(([g,f])=>{const ts=P.kihon.filter(f);return ts.length?'<div class="ex-grp">'+g+'</div><div class="ex-grid">'+ts.map(chip).join('')+'</div>':'';}).join('')+
+  (P.kataTechs.length?'<div class="ex-grp">Técnicas que só aparecem nos kata exigidos</div><div class="ex-grid">'+P.kataTechs.map(chip).join('')+'</div>':'')+
+  '</div>';
+
+// Roteiro de estudo
+const nk=P.kata.filter(k=>k.belt===b),nr=P.renraku.filter(r=>r.belt===b);
+h+='<div class="ex-sec"><h3>Roteiro sugerido</h3><ol class="ex-plan">'+
+  '<li><b>Base.</b> Revise o kihon acima em '+(req.min?'blocos de '+req.min+' repetições':'blocos curtos')+', dizendo o nome em voz alta. Desmarque o que ainda sai sem convicção.</li>'+
+  (nk.length?'<li><b>Kata novos.</b> '+nk.map(k=>k.name).join(' e ')+': primeiro o embusen devagar, depois ritmo e kiai. Use o cronômetro da aba Kata.</li>':'')+
+  '<li><b>Revisão de kata.</b> Um ciclo completo dos kata anteriores por sessão — o exame costuma pedir qualquer um deles.</li>'+
+  (nr.length?'<li><b>Renraku e footwork.</b> '+nr.map(r=>r.name).join(' · ')+'. Grave-se ou treine com parceiro para checar a distância.</li>':'')+
+  '<li><b>Simulado.</b> Na última semana, sorteie simulados e execute sem pausas, com kiai e zanshin — como no dia do exame.</li></ol></div>';
+
+root.innerHTML=h;
+root.querySelectorAll('input[data-exid]').forEach(cb=>{
+  cb.onchange=()=>{
+    const d=_examDone();
+    if(cb.checked)d[cb.dataset.exid]=1;else delete d[cb.dataset.exid];
+    _LS.save('examDone',d);
+    cb.parentNode.classList.toggle('done',cb.checked);
+    _examProgress();
+  };
+});
+_examProgress();
+}
+
+function _examProgress(){
+const root=document.getElementById('exam-root');if(!root)return;
+root.querySelectorAll('[data-exsec]').forEach(sec=>{
+  const cbs=sec.querySelectorAll('input[data-exid]');
+  const n=[...cbs].filter(c=>c.checked).length;
+  sec.querySelector('.ex-count').textContent=n+'/'+cbs.length;
+});
+const all=root.querySelectorAll('input[data-exid]');
+const done=[...all].filter(c=>c.checked).length;
+const pct=all.length?Math.round(done/all.length*100):0;
+document.getElementById('exam-fill').style.width=pct+'%';
+document.getElementById('exam-prog-val').textContent=done+' de '+all.length+' · '+pct+'%';
+}
+
+function examSimulado(){
+const b=examBelt,P=examPool(b),req=BELT_REQ[b];
+const nk=P.kata.filter(k=>k.belt===b),ok=P.kata.filter(k=>k.belt!==b);
+const kata=[..._pick(nk,1),..._pick(ok,nk.length?1:2)];
+const nr=P.renraku.filter(r=>r.belt===b),or=P.renraku.filter(r=>r.belt!==b);
+const ren=[..._pick(nr,2),..._pick(or,Math.max(0,3-Math.min(2,nr.length)))];
+const kihon=_pick(P.kihon,6);
+const teoria=_pick(NODES.filter(n=>n.pt),4);
+const block=(label,body)=>'<div class="s-block"><div class="sb-label">'+label+'</div>'+body+'</div>';
+let h='<div class="script-out">'+
+  block('1 · Kihon — o examinador chama',kihon.map(t=>'<details><summary class="ex-sim-q" style="color:var(--text)">'+t.name+'</summary><div class="sb-note">'+t.pt+' — '+t.exec+'</div></details>').join(''))+
+  block('2 · Kata',kata.map(k=>'<div class="sb-name">'+k.name+(k.belt===b?' <span class="ex-new" style="background:'+BS[b]+'22;color:'+BS[b]+'">novo</span>':'')+'</div>').join('')+'<div class="sb-note">Anuncie o nome, execute com kiai nos pontos marcados e mantenha o zanshin no final.</div>')+
+  block('3 · Renraku / deslocamento',ren.map(r=>'<div class="sb-name">'+r.name+'</div><div class="sb-note">'+r.note+'</div>').join('<div style="height:8px"></div>'))+
+  (req.min?block('4 · Ido-Geiko','<div class="sb-name">Mínimo de '+req.min+' golpes</div><div class="sb-note">'+req.ido+'</div>'):'')+
+  block((req.min?'5':'4')+' · Teoria — responda antes de abrir',teoria.map(n=>'<details><summary class="ex-sim-q" style="color:var(--text)">O que significa <b>'+n.label+'</b>?</summary><div class="sb-note">'+n.pt+'</div></details>').join(''))+
+  '<div class="s-kiai">OSU!</div></div>';
+const out=document.getElementById('exam-sim');
+out.innerHTML=h;
+out.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function examOpenKata(id){
+const k=KATA.find(x=>x.id===id);if(!k)return;
+kataFilter=k.belt;initKata();renderKata();switchTab('kata');
+const card=[...document.querySelectorAll('#kata-grid .kc')].find(c=>c.querySelector('.kc-name')?.textContent===k.name);
+if(card){card.classList.add('open');card.setAttribute('aria-expanded','true');card.scrollIntoView({block:'start'});}
+}
+
+function examGoIdo(){
+currentIdoBelt=examBelt;_LS.save('idoBelt',examBelt);initIdo();switchTab('ido');generateIdo();
+}
+
+function examPrint(){
+document.body.classList.add('print-exam');
+const done=()=>{document.body.classList.remove('print-exam');window.removeEventListener('afterprint',done);};
+window.addEventListener('afterprint',done);
+window.print();
+}
+
+function examReset(){
+if(!confirm('Limpar todas as marcações de progresso do exame?'))return;
+_LS.save('examDone',{});renderExame();
+}
+
 // ===== NAVIGATION =====
 function switchTab(tab){
 if(!document.getElementById('p-'+tab))return;
@@ -4560,7 +4797,7 @@ function setMandalMode(mode){
 function init(){
 // Restore persisted state before rendering
 const savedTab=location.hash.slice(1)||_LS.get('tab','constelacao');
-const validTabs=['constelacao','dicionario','construtor','kata','ido','math','fontes','gramatica'];
+const validTabs=['constelacao','dicionario','construtor','kata','ido','exame','math','fontes','gramatica'];
 const startTab=validTabs.includes(savedTab)?savedTab:'constelacao';
 cvMode=_LS.get('cvMode','mandala');
 cvMandalMode=_LS.get('cvSubMode','solidos');
@@ -4568,6 +4805,7 @@ dictFilters.belt=_LS.get('dictBelt','all');
 dictFilters.action=_LS.get('dictAction','all');
 kataFilter=_LS.get('kataFilter','all');
 currentIdoBelt=_LS.get('idoBelt','branca');
+examBelt=_LS.get('examBelt','verde');
 
 requestAnimationFrame(()=>requestAnimationFrame(()=>{
   initConstellation();
@@ -4585,6 +4823,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
 initDict();
 initKata();renderKata();
 initIdo();
+initExame();
 renderMath();
 renderFontes();
 renderGramatica();
