@@ -473,18 +473,74 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
   #kata-filters{display:none!important}
   body.print-exam #p-kata{display:none!important}
   body.print-exam #p-exame{display:block!important;position:static;overflow:visible}
-  body.print-exam .ex-actions,body.print-exam #exam-belts,body.print-exam #exam-sim{display:none!important}
+  body.print-exam .ex-actions,body.print-exam #exam-belts,body.print-exam .ex-sticky,body.print-exam .ex-mybelt,
+  body.print-exam .mybelt-chip,body.print-exam .ex-link,body.print-exam dialog,body.print-exam .ex-review>button{display:none!important}
   body.print-exam .ex-item,body.print-exam .ex-chip{background:#fff!important;border-color:#ccc!important;break-inside:avoid}
   body.print-exam .ex-item *,body.print-exam .ex-chip *,body.print-exam .req-box,body.print-exam h2,body.print-exam h3{color:#111!important}
 }
 /* ===== EXAME ===== */
 .ex-note{font-size:var(--fs-xs);color:var(--text3);line-height:1.6;margin:-6px 0 16px;max-width:70ch}
-.ex-prog{display:flex;align-items:center;gap:12px;margin:0 0 18px}
-.ex-prog-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.ex-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ex-mybelt{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:var(--gold2);
+  border:1px solid rgba(201,168,76,.35);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:var(--fs-sm);color:var(--text2);line-height:1.55}
+.ex-mybelt b{color:var(--text)}
+.ex-mybelt .gen-btn,.ex-mybelt .ex-btn2{margin:0;flex-shrink:0}
+/* Barra fixa de progresso: acompanha a rolagem do painel */
+.ex-sticky{position:sticky;top:0;z-index:4;display:flex;align-items:center;gap:14px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:0 0 12px;box-shadow:0 6px 16px -8px #000c}
+.ex-prog-main{flex:1;min-width:0}
+.ex-prog-lbl{display:flex;justify-content:space-between;gap:8px;font-size:var(--fs-xs);color:var(--text2);margin-bottom:5px;font-weight:600;letter-spacing:.03em}
+.ex-prog-lbl #exam-prog-val{color:var(--text);font-variant-numeric:tabular-nums}
+.ex-prog-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
 .ex-prog-fill{height:100%;border-radius:4px;transition:width .25s}
-.ex-prog-val{font-size:var(--fs-sm);color:var(--text);font-variant-numeric:tabular-nums;min-width:120px;text-align:right}
+.ex-prog-rev{font-size:var(--fs-micro);color:var(--text3);margin-top:4px;font-variant-numeric:tabular-nums}
+.ex-sim-btn{margin:0!important;padding:10px 18px;flex-shrink:0}
 .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.ex-actions .gen-btn{margin-bottom:0}
+.ex-part{margin-bottom:26px}
+.ex-part-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:2px solid var(--border);
+  padding:6px 0 8px;margin-bottom:14px}
+.ex-part-t{font-size:var(--fs-lg);font-weight:700;color:var(--text);letter-spacing:.02em}
+.ex-part-n{font-size:var(--fs-xs);color:var(--text2);font-variant-numeric:tabular-nums}
+.ex-review{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px 14px 2px}
+.ex-review>summary{cursor:pointer;list-style:none;margin-bottom:0;border-bottom:none;min-height:44px;align-items:center}
+.ex-review>summary::-webkit-details-marker{display:none}
+.ex-review>summary .ex-part-t::before{content:'▸ ';color:var(--gold)}
+.ex-review[open]>summary .ex-part-t::before{content:'▾ '}
+.ex-review[open]>summary{border-bottom:1px solid var(--border)}
+/* Minha faixa */
+.mybelt-chip{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin:10px 8px 0;padding:8px 11px;background:var(--bg3);
+  border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .18s}
+.mybelt-chip:hover{border-color:rgba(201,168,76,.5)}
+.mybelt-chip .mb-lbl{font-size:var(--fs-micro);color:var(--text3);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.mybelt-chip .mb-val{display:flex;align-items:center;gap:6px;font-size:var(--fs-sm);font-weight:600}
+.mb-dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex-shrink:0;box-shadow:inset 0 0 0 1px #0004}
+.mb-dot.mb-empty{background:transparent!important;border:1.5px dashed var(--text3)}
+.mb-arrow{color:var(--text3);font-weight:400}
+.mybelt-chip-inline{display:none;margin:0 0 6px}
+.mb-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mb-opt{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;
+  background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;min-height:52px;cursor:pointer;color:var(--text);font-family:inherit}
+.mb-opt .mb-dot{grid-row:1/3;width:16px;height:16px}
+.mb-opt-name{font-size:var(--fs-base);font-weight:600}
+.mb-opt-next{font-size:var(--fs-xs);color:var(--text2)}
+.mb-opt:hover{border-color:rgba(201,168,76,.5)}
+.mb-opt.on{border-color:var(--gold);background:var(--gold2)}
+/* Diálogos */
+.ak-dlg{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:20px;
+  width:min(460px,calc(100vw - 32px));max-height:86vh;box-shadow:0 20px 60px #000c;margin:auto}
+.ak-dlg-wide{width:min(640px,calc(100vw - 32px));display:none;flex-direction:column}
+.ak-dlg-wide[open]{display:flex}
+.ak-dlg::backdrop{background:rgba(5,5,10,.72)}
+.ak-dlg-hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.ak-dlg-hdr h3{font-size:var(--fs-lg);color:var(--gold);font-weight:700}
+.ak-dlg-x{background:none;border:none;color:var(--text2);font-size:18px;cursor:pointer;width:44px;height:44px;border-radius:8px;flex-shrink:0}
+.ak-dlg-x:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.ak-dlg-sub{font-size:var(--fs-sm);color:var(--text2);line-height:1.6;margin-bottom:14px}
+.ak-dlg-body{overflow-y:auto;flex:1;min-height:0;margin:0 -4px;padding:0 4px}
+.ak-dlg-foot{display:flex;gap:8px;padding-top:14px;flex-wrap:wrap}
+.ak-dlg-foot .gen-btn{margin:0}
+.ak-dlg details{margin:3px 0}
+.ak-dlg summary{cursor:pointer;padding:6px 0;min-height:32px}
 .ex-btn2{background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;
   font-size:var(--fs-sm);cursor:pointer;font-family:inherit;transition:all .18s}
 .ex-btn2:hover{color:var(--text);border-color:rgba(201,168,76,.5)}
@@ -493,37 +549,50 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
 .ex-sec h3 .ex-count{font-size:var(--fs-xs);color:var(--text2);font-weight:500;font-variant-numeric:tabular-nums}
 .ex-sec-sub{font-size:var(--fs-xs);color:var(--text2);margin-bottom:10px;line-height:1.55}
 .ex-list{display:flex;flex-direction:column;gap:6px}
-.ex-item{display:flex;align-items:flex-start;gap:11px;background:var(--bg3);border:1px solid var(--border);
+.ex-item{display:flex;align-items:flex-start;gap:11px;min-height:48px;background:var(--bg3);border:1px solid var(--border);
   border-left:3px solid;border-radius:8px;padding:10px 12px}
-.ex-item input,.ex-chip input{accent-color:var(--gold);width:18px;height:18px;margin-top:1px;flex-shrink:0;cursor:pointer}
+.ex-item input,.ex-chip input{accent-color:var(--gold);width:24px;height:24px;margin-top:0;flex-shrink:0;cursor:pointer}
 .ex-body{flex:1;min-width:0}
-.ex-name{font-size:var(--fs-base);font-weight:600;cursor:pointer;letter-spacing:.01em}
+.ex-name{font-size:var(--fs-base);font-weight:600;cursor:pointer;letter-spacing:.01em;display:inline-block;padding:1px 0}
 .ex-item.done .ex-name,.ex-chip.done .ex-name{color:var(--text2)}
 .ex-item.done{opacity:.75}
 .ex-new{display:inline-block;font-size:var(--fs-micro);padding:1px 7px;border-radius:4px;margin-left:6px;
   letter-spacing:.06em;text-transform:uppercase;font-weight:700;vertical-align:1px}
 .ex-meta{font-size:var(--fs-xs);color:var(--text2);line-height:1.55;margin-top:3px}
-.ex-link{background:none;border:none;color:var(--gold);cursor:pointer;font-size:var(--fs-xs);padding:2px 0;font-family:inherit}
+.ex-link{background:none;border:none;color:var(--gold);cursor:pointer;font-size:var(--fs-xs);padding:6px 0;min-height:32px;font-family:inherit}
 .ex-link:hover{text-decoration:underline}
 .ex-body details{margin-top:6px}
-.ex-body summary{font-size:var(--fs-xs);color:var(--gold);cursor:pointer;width:max-content}
+.ex-body summary{font-size:var(--fs-xs);color:var(--gold);cursor:pointer;width:max-content;padding:6px 0;min-height:32px}
 .ex-steps{font-size:var(--fs-xs);color:var(--text2);line-height:1.6;margin-top:6px;padding-left:4px}
 .ex-steps div{padding:2px 0}
 .ex-grp{font-size:var(--fs-micro);color:var(--text3);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin:12px 0 6px}
 .ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
-.ex-chip{display:flex;align-items:flex-start;gap:9px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 10px}
+.ex-chip{display:flex;align-items:center;gap:9px;min-height:52px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 10px}
 .ex-chip .ex-name{font-size:var(--fs-sm)}
 .ex-chip .ex-meta{margin-top:1px}
+.ex-chip>.ex-body{display:flex;align-items:center;gap:6px}
+.ex-chip>.ex-body>.ex-link{margin-left:auto;min-width:36px;min-height:36px;font-size:var(--fs-md);border-radius:6px;padding:0}
+.ex-chip>.ex-body>.ex-link:hover{background:var(--gold2);text-decoration:none}
+.ex-chip-txt{min-width:0}
 .ex-plan{counter-reset:ex;display:flex;flex-direction:column;gap:6px;margin-top:6px}
 .ex-plan li{list-style:none;background:var(--bg3);border-radius:8px;padding:10px 12px 10px 40px;position:relative;
   font-size:var(--fs-sm);color:var(--text2);line-height:1.6}
 .ex-plan li::before{counter-increment:ex;content:counter(ex);position:absolute;left:12px;top:10px;width:20px;height:20px;
   border-radius:50%;background:var(--gold2);color:var(--gold);font-size:var(--fs-xs);font-weight:700;display:flex;align-items:center;justify-content:center}
 .ex-plan li b{color:var(--text)}
-#exam-sim{margin-bottom:24px}
-#exam-sim:empty{display:none}
 .ex-sim-q{font-size:var(--fs-sm);color:var(--text);line-height:1.55}
-@media(max-width:680px){.ex-grid{grid-template-columns:1fr}.ex-prog-val{min-width:0}}
+@media(max-width:680px){
+  .ex-grid{grid-template-columns:1fr}
+  .ex-item input,.ex-chip input{width:24px;height:24px}
+  .ex-link,.ex-body summary{min-height:44px}
+  .ex-chip>.ex-body>.ex-link{min-width:44px;min-height:44px}
+  .ex-sticky{top:0;border-radius:0 0 10px 10px;margin-left:-16px;margin-right:-16px;border-left:none;border-right:none;border-top:none}
+  #sidebar>.mybelt-chip{display:none}
+  .mybelt-chip-inline{display:flex}
+  .mybelt-chip-menu{margin:0 0 6px!important;width:100%}
+  .mb-opts{grid-template-columns:1fr}
+  .ak-dlg{max-height:calc(100vh - 80px)}
+}
 /* ===== STEP TECH LINK ===== */
 .step-tech-link{color:var(--gold);cursor:pointer;
   text-decoration:underline dotted;text-underline-offset:2px;
@@ -657,6 +726,7 @@ h2{color:var(--text)!important}
     </svg>
     <div class="sb-t"><span class="t1">ATLAS</span><span class="t2">KYOKUSHIN</span></div>
   </div>
+  <button class="mybelt-chip" data-mybelt-chip type="button" onclick="openMyBeltDialog()"></button>
   <nav class="sb-nav" role="tablist" aria-label="Seções do atlas">
     <button class="nav-btn active" data-tab="constelacao" id="tab-constelacao" role="tab" aria-current="page" aria-selected="true" aria-controls="p-constelacao" type="button"><span class="ic" aria-hidden="true">✦</span>Constelação</button>
     <button class="nav-btn" data-tab="dicionario" id="tab-dicionario" role="tab" aria-selected="false" aria-controls="p-dicionario" type="button"><span class="ic" aria-hidden="true">≡</span>Dicionário</button>
@@ -678,6 +748,7 @@ h2{color:var(--text)!important}
 </aside>
 <div id="mais-overlay" onclick="closeMaisMenu()" aria-hidden="true"></div>
 <div id="mais-menu" role="dialog" aria-label="Mais seções" aria-hidden="true">
+  <button class="nav-btn mybelt-chip mybelt-chip-menu" data-mybelt-chip type="button" onclick="openMyBeltDialog()"></button>
   <button class="nav-btn" data-tab="math" id="tab-math-mais" type="button" onclick="switchTabFromMais('math')"><span class="ic" aria-hidden="true">∑</span>Matemática</button>
   <button class="nav-btn" data-tab="fontes" id="tab-fontes-mais" type="button" onclick="switchTabFromMais('fontes')"><span class="ic" aria-hidden="true">∂</span>Fontes</button>
   <button class="nav-btn" data-tab="gramatica" id="tab-gramatica-mais" type="button" onclick="switchTabFromMais('gramatica')"><span class="ic" aria-hidden="true">λ</span>Gramática</button>
@@ -748,8 +819,8 @@ h2{color:var(--text)!important}
   </div>
   <div class="panel" id="p-exame" role="tabpanel" aria-labelledby="tab-exame">
     <div class="panel-inner">
-      <h2>Preparação para exame</h2>
-      <p class="sub">Checklist do que será cobrado no exame de faixa: kata, renraku, footwork e kihon acumulados até a faixa escolhida. Marque o que já está sólido — o progresso fica salvo neste navegador. Use o simulado para treinar como se o examinador estivesse chamando as técnicas.</p>
+      <div class="ex-head"><h2>Preparação para exame</h2><button class="mybelt-chip mybelt-chip-inline" data-mybelt-chip type="button" onclick="openMyBeltDialog()"></button></div>
+      <p class="sub">O que o exame cobra, com o que é novo nesta faixa em destaque. Marque o que já está sólido — o progresso fica salvo neste navegador.</p>
       <div class="ido-belts" id="exam-belts" role="group" aria-label="Faixa que você vai prestar exame"></div>
       <div id="exam-root"></div>
     </div>
@@ -785,6 +856,21 @@ h2{color:var(--text)!important}
     </div>
   </div>
 </div></div>
+
+<dialog id="mybelt-dlg" class="ak-dlg" aria-labelledby="mybelt-title">
+  <div class="ak-dlg-hdr"><h3 id="mybelt-title">Qual é a sua faixa atual?</h3>
+    <button type="button" class="ak-dlg-x" aria-label="Fechar" onclick="this.closest('dialog').close()">✕</button></div>
+  <p class="ak-dlg-sub">O Atlas usa sua faixa para abrir no seu próximo exame e ajustar Dicionário, Kata e Ido-Geiko. Cada aba continua podendo mostrar outras faixas.</p>
+  <div id="mybelt-opts" class="mb-opts"></div>
+  <button type="button" class="ex-btn2" style="margin-top:14px" onclick="this.closest('dialog').close()">Agora não</button>
+</dialog>
+<dialog id="exam-dlg" class="ak-dlg ak-dlg-wide" aria-labelledby="exam-dlg-title">
+  <div class="ak-dlg-hdr"><h3 id="exam-dlg-title">Simulado</h3>
+    <button type="button" class="ak-dlg-x" aria-label="Fechar simulado" onclick="this.closest('dialog').close()">✕</button></div>
+  <div id="exam-dlg-body" class="ak-dlg-body"></div>
+  <div class="ak-dlg-foot"><button class="gen-btn" type="button" onclick="examSimulado()">Sortear outro</button>
+    <button class="ex-btn2" type="button" onclick="this.closest('dialog').close()">Fechar</button></div>
+</dialog>
 
 <script>
 const NT={acao:'#e8a030',buki_mao:'#e06060',buki_pe:'#4488dd',direcao:'#8866ee',alvo:'#44aa66',dachi:'#cc8833',ido:'#33aaaa'};
@@ -2805,8 +2891,10 @@ let dictFilters={belt:'all',action:'all'};
 function initDict(){
 const fs=document.getElementById('dict-filters');
 fs.innerHTML='';
-const beltLbl={all:'Todas as faixas',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',kata:'Só em kata'};
-['all','branca','laranja','azul','amarela','verde','marrom','kata'].forEach(b=>{
+const myT=targetBelt(myBelt);
+if(dictFilters.belt==='minha'&&!myT)dictFilters.belt='all';
+const beltLbl={minha:'★ Até '+(myT?BELT_LBL[myT]:''),all:'Todas as faixas',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',kata:'Só em kata'};
+[...(myT?['minha']:[]),'all','branca','laranja','azul','amarela','verde','marrom','kata'].forEach(b=>{
   const btn=document.createElement('button');
   const active=dictFilters.belt===b;
   btn.className='f-btn'+(active?' on':'');
@@ -2839,7 +2927,8 @@ function renderDict(){
 const q=(document.getElementById('dict-search').value||'').toLowerCase();
 const grid=document.getElementById('dict-grid');grid.innerHTML='';
 TECHS.filter(t=>{
-  if(dictFilters.belt!=='all'&&t.belt!==dictFilters.belt)return false;
+  if(dictFilters.belt==='minha'){const bi=BELT_ORDER.indexOf(t.belt);if(bi<0||bi>BELT_ORDER.indexOf(targetBelt(myBelt)))return false;}
+  else if(dictFilters.belt!=='all'&&t.belt!==dictFilters.belt)return false;
   if(dictFilters.action!=='all'&&t.action!==dictFilters.action)return false;
   if(q&&!t.name.toLowerCase().includes(q)&&!t.pt.toLowerCase().includes(q)
     &&!(t.desc||'').toLowerCase().includes(q)
@@ -2928,8 +3017,10 @@ function linkifyStep(text){
 function initKata(){
 const fs=document.getElementById('kata-filters');if(!fs)return;
 fs.innerHTML='';
-const beltLbl={all:'Todas',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',shodan:'Shodan'};
-['all','branca','laranja','azul','amarela','verde','marrom','shodan'].forEach(b=>{
+const myT=targetBelt(myBelt);
+if(kataFilter==='minha'&&!myT)kataFilter='all';
+const beltLbl={minha:'★ Até '+(myT?BELT_LBL[myT]:''),all:'Todas',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',shodan:'Shodan'};
+[...(myT?['minha']:[]),'all','branca','laranja','azul','amarela','verde','marrom','shodan'].forEach(b=>{
   const btn=document.createElement('button');
   const active=kataFilter===b;
   btn.className='f-btn'+(active?' on':'');
@@ -2965,6 +3056,7 @@ const SERIES={
 const grid=document.getElementById('kata-grid');grid.innerHTML='';
 KATA.filter(k=>{
   if(kataFilter==='all')return true;
+  if(kataFilter==='minha'){const bi=BELT_ORDER.indexOf(k.belt);return bi>=0&&bi<=BELT_ORDER.indexOf(targetBelt(myBelt));}
   if(SERIES[kataFilter])return SERIES[kataFilter](k);
   return k.belt===kataFilter;
 }).forEach(k=>{
@@ -3030,7 +3122,8 @@ Object.keys(BELT_REQ).forEach(b=>{
   btn.type='button';
   btn.setAttribute('role','tab');
   btn.setAttribute('aria-pressed',b===currentIdoBelt?'true':'false');
-  btn.textContent=beltLabels[b]||b;
+  btn.textContent=(b===targetBelt(myBelt)?'★ ':'')+(beltLabels[b]||b);
+  if(b===targetBelt(myBelt))btn.title='Seu próximo exame';
   btn.onclick=()=>{currentIdoBelt=b;_LS.save('idoBelt',b);initIdo()};
   tabs.appendChild(btn);
 });
@@ -3583,7 +3676,9 @@ svg.querySelectorAll('[data-ti]').forEach(el=>{
     (el.tagName==='line'||el.tagName==='path')&&el.getAttribute('stroke')!=='transparent'?'.05':'1');return;}
   const bi=BELT_ORDER.indexOf(tech.belt);
   const sel=BELT_ORDER.indexOf(belt);
-  const op=bi===sel?'.85':bi<sel?'.18':'.02';
+  // Faixas sem técnicas próprias (verde em diante) cobram o vocabulário acumulado
+  const own=TECHS.some(t=>t.belt===belt);
+  const op=bi===sel?'.85':bi<sel?(own?'.18':'.6'):'.02';
   el.setAttribute('opacity',op);
 });
 svg.querySelectorAll('[data-nid]').forEach(el=>{
@@ -3715,25 +3810,84 @@ leg.appendChild(grid);
 document.getElementById('det-techs').parentNode.appendChild(leg);
 }
 
+// ===== MINHA FAIXA (estado global) =====
+// A faixa que o aluno usa hoje; o alvo é sempre a próxima. Define os padrões de
+// Dicionário, Kata, Ido-Geiko, Exame e Constelação — cada aba ainda pode trocar localmente.
+const BELT_LBL={iniciante:'Iniciante',branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',shodan:'Shodan'};
+const MY_BELT_OPTS=['iniciante',...BELT_ORDER.slice(0,-1)];
+let myBelt=null;
+
+function targetBelt(b){
+if(!b)return null;
+if(b==='iniciante')return BELT_ORDER[0];
+const i=BELT_ORDER.indexOf(b);
+return i<0?null:BELT_ORDER[Math.min(i+1,BELT_ORDER.length-1)];
+}
+const _beltColor=b=>BS[b]||'var(--text3)';
+
+function setMyBelt(b){
+myBelt=b;_LS.save('myBelt',b);_LS.save('myBeltAsked',true);
+const t=targetBelt(b);
+examBelt=t;_LS.save('examBelt',t);
+currentIdoBelt=t;_LS.save('idoBelt',t);
+kataFilter='minha';_LS.save('kataFilter','minha');
+dictFilters.belt='minha';_LS.save('dictBelt','minha');
+activeBelt=t;
+initDict();initKata();renderKata();initIdo();initExame();
+initBeltBar();filterBelt(t);
+renderMyBelt();
+}
+
+function renderMyBelt(){
+const t=targetBelt(myBelt);
+const html=myBelt
+  ?'<span class="mb-dot" style="background:'+_beltColor(myBelt)+'"></span>'+BELT_LBL[myBelt]+
+   '<span class="mb-arrow" aria-hidden="true">→</span><span class="mb-dot" style="background:'+BS[t]+'"></span>'+BELT_LBL[t]
+  :'<span class="mb-dot mb-empty"></span>Definir minha faixa';
+const label=myBelt?'Minha faixa: '+BELT_LBL[myBelt]+', próximo exame: '+BELT_LBL[t]+'. Trocar':'Definir minha faixa atual';
+document.querySelectorAll('[data-mybelt-chip]').forEach(el=>{
+  el.innerHTML='<span class="mb-lbl">'+(myBelt?'Minha faixa':'Faixa')+'</span><span class="mb-val">'+html+'</span>';
+  el.setAttribute('aria-label',label);
+});
+}
+
+function openMyBeltDialog(){
+closeMaisMenu();
+const dlg=document.getElementById('mybelt-dlg');if(!dlg)return;
+const opts=document.getElementById('mybelt-opts');
+opts.innerHTML=MY_BELT_OPTS.map(b=>{
+  const t=targetBelt(b),on=b===myBelt;
+  return'<button type="button" class="mb-opt'+(on?' on':'')+'" aria-pressed="'+on+'" data-b="'+b+'">'+
+    '<span class="mb-dot'+(b==='iniciante'?' mb-empty':'')+'" style="background:'+(b==='iniciante'?'transparent':_beltColor(b))+'"></span>'+
+    '<span class="mb-opt-name">'+BELT_LBL[b]+'</span><span class="mb-opt-next">próximo exame: '+BELT_LBL[t]+'</span></button>';
+}).join('');
+opts.querySelectorAll('.mb-opt').forEach(btn=>btn.onclick=()=>{setMyBelt(btn.dataset.b);dlg.close();});
+if(!dlg.open)dlg.showModal();
+(opts.querySelector('.mb-opt.on')||opts.querySelector('.mb-opt'))?.focus();
+}
+
 // ===== EXAME DE FAIXA =====
 let examBelt='verde';
-const EXAM_BELT_LBL={branca:'Branca',laranja:'Laranja',azul:'Azul',amarela:'Amarela',verde:'Verde',marrom:'Marrom',shodan:'Shodan'};
 const _bIdx=b=>BELT_ORDER.indexOf(b);
 const _examDone=()=>_LS.get('examDone',{});
 const _pick=(arr,n)=>[...arr].sort(()=>Math.random()-.5).slice(0,n);
 
-// Tudo o que o exame da faixa `b` cobra: o que é novo nesta faixa + revisão das anteriores
+// Tudo o que o exame da faixa `b` cobra, separado em novo (desta faixa) e revisão (anteriores)
 function examPool(b){
 const bi=_bIdx(b);
 const upTo=x=>_bIdx(x.belt)>=0&&_bIdx(x.belt)<=bi;
-const newFirst=(x,y)=>(y.belt===b)-(x.belt===b);
-const kata=KATA.filter(upTo).sort(newFirst);
+const kata=KATA.filter(upTo);
+const newKataNames=kata.filter(k=>k.belt===b).map(k=>k.name);
 const kataNames=kata.map(k=>k.name);
+const kt=TECHS.filter(t=>t.kataOnly&&(t.kataSrc||[]).some(s=>kataNames.includes(s)));
+// técnica de kata é "nova" só se nenhum kata anterior já a exigia
+const ktNew=t=>t.kataSrc.some(s=>newKataNames.includes(s))&&!t.kataSrc.some(s=>kataNames.includes(s)&&!newKataNames.includes(s));
+const split=(arr,isNew)=>({novo:arr.filter(isNew),rev:arr.filter(x=>!isNew(x))});
 return{
-  kata,
-  renraku:RENRAKU.filter(upTo).sort(newFirst),
-  kihon:TECHS.filter(t=>!t.kataOnly&&upTo(t)),
-  kataTechs:TECHS.filter(t=>t.kataOnly&&(t.kataSrc||[]).some(s=>kataNames.includes(s))),
+  kata:split(kata,k=>k.belt===b),
+  renraku:split(RENRAKU.filter(upTo),r=>r.belt===b),
+  kihon:split(TECHS.filter(t=>!t.kataOnly&&upTo(t)),t=>t.belt===b),
+  kataTechs:split(kt,ktNew),
 };
 }
 
@@ -3745,74 +3899,103 @@ Object.keys(BELT_REQ).forEach(b=>{
   btn.className='ib-tab'+(b===examBelt?' on':'');
   btn.type='button';
   btn.setAttribute('aria-pressed',b===examBelt?'true':'false');
-  btn.textContent=EXAM_BELT_LBL[b]||b;
+  btn.innerHTML=(b===targetBelt(myBelt)?'<span aria-hidden="true">★ </span>':'')+BELT_LBL[b];
+  if(b===targetBelt(myBelt))btn.title='Seu próximo exame';
   btn.onclick=()=>{examBelt=b;_LS.save('examBelt',b);initExame();};
   tabs.appendChild(btn);
 });
 renderExame();
 }
 
-function _examCheck(id,color,inner,cls){
+function _examCheck(id,color,inner,cls,isNew){
 const done=_examDone()[id];
 return'<div class="'+cls+(done?' done':'')+'" style="border-left-color:'+color+'">'+
-  '<input type="checkbox" id="exc-'+id+'" data-exid="'+id+'"'+(done?' checked':'')+'>'+
+  '<input type="checkbox" id="exc-'+id+'" data-exid="'+id+'" data-new="'+(isNew?1:0)+'"'+(done?' checked':'')+'>'+
   '<div class="ex-body">'+inner.replace('%L','<label class="ex-name" for="exc-'+id+'">').replace('%/L','</label>')+'</div></div>';
 }
 
 function renderExame(){
 const root=document.getElementById('exam-root');if(!root)return;
-const b=examBelt,req=BELT_REQ[b],col=BS[b],lbl=EXAM_BELT_LBL[b];
+const b=examBelt,req=BELT_REQ[b],col=BS[b],lbl=BELT_LBL[b],myT=targetBelt(myBelt);
 const P=examPool(b);
-const newTag=x=>x.belt===b?'<span class="ex-new" style="background:'+col+'22;color:'+col+'">novo</span>':'';
+const isNewB=x=>x.belt===b;
+const beltTxt=x=>'<span style="color:'+(BS[x.belt]||'var(--text2)')+'">'+(BELT_LBL[x.belt]||'Kata')+'</span>';
 const stepsHtml=steps=>'<div class="ex-steps">'+steps.map(s=>'<div>'+s.replace(/^\s+▶/,'▶')+'</div>').join('')+'</div>';
+const verBtn=(fn,arg,txt,aria)=>'<button class="ex-link" type="button" aria-label="'+aria+'" onclick="'+fn+'(\''+arg.replace(/'/g,"\\'")+'\')">'+txt+'</button>';
 
-let h='<div class="req-box" style="border-left:3px solid '+col+'"><strong>Exame para faixa '+lbl+'</strong>'+
+const kataItem=k=>_examCheck(k.id,BS[k.belt],
+  '%L'+k.name+'%/L<div class="ex-meta">'+beltTxt(k)+(k.time?' · ~'+k.time:'')+(k.techs&&k.techs.length?' · '+k.techs.join(', '):'')+'</div>'+
+  verBtn('examOpenKata',k.id,'ver roteiro completo →','Ver roteiro completo de '+k.name),'ex-item',isNewB(k));
+const renItem=r=>_examCheck(r.id,BS[r.belt]||col,
+  '%L'+r.name+'%/L<div class="ex-meta">'+beltTxt(r)+(r.cat==='ido'?' · footwork':'')+' · '+r.note+'</div>'+
+  '<details><summary>passo a passo</summary>'+stepsHtml(r.steps)+'</details>','ex-item',isNewB(r));
+const techChip=(t,isNew)=>_examCheck(t.id,BS[t.belt]||BS.kata,
+  '<div class="ex-chip-txt">%L'+t.name+'%/L<div class="ex-meta">'+beltTxt(t)+' · '+t.pt+'</div></div>'+
+  verBtn('findAndShowTech',t.name,'↗','Ver '+t.name+' na constelação'),'ex-chip',isNew);
+const groups=[['Tsuki — socos',t=>t.action==='tsuki'],['Uchi — golpes percussivos',t=>t.action==='uchi'],
+  ['Uke e Barai — defesas',t=>t.action==='uke'||t.action==='barai'],['Geri e Keage — chutes',t=>t.action==='geri'||t.action==='keage']];
+const sec=(title,sub,body)=>body?'<div class="ex-sec" data-exsec><h3>'+title+' <span class="ex-count"></span></h3>'+(sub?'<div class="ex-sec-sub">'+sub+'</div>':'')+body+'</div>':'';
+const list=arr=>arr.length?'<div class="ex-list">'+arr.join('')+'</div>':'';
+const grid=arr=>arr.length?'<div class="ex-grid">'+arr.join('')+'</div>':'';
+const kihonGrouped=(ts,isNew)=>groups.map(([g,f])=>{const x=ts.filter(f);return x.length?'<div class="ex-grp">'+g+'</div>'+grid(x.map(t=>techChip(t,isNew))):'';}).join('');
+
+// Contexto: minha faixa
+let h='';
+if(!myBelt){
+  h+='<div class="ex-mybelt"><div><b>Qual é a sua faixa atual?</b><br>Com ela, o Atlas abre direto no seu próximo exame e ajusta Dicionário, Kata e Ido-Geiko para você.</div>'+
+    '<button class="gen-btn" type="button" onclick="openMyBeltDialog()">Definir minha faixa</button></div>';
+}else if(b!==myT){
+  h+='<div class="ex-mybelt"><div>Você está vendo o exame de <b style="color:'+col+'">'+lbl+'</b>. Seu próximo exame é <b style="color:'+BS[myT]+'">'+BELT_LBL[myT]+'</b>.</div>'+
+    '<button class="ex-btn2" type="button" onclick="examBelt=targetBelt(myBelt);_LS.save(\'examBelt\',examBelt);initExame()">Voltar ao meu exame</button></div>';
+}
+
+h+='<div class="req-box" style="border-left:3px solid '+col+'"><strong>Exame para faixa '+lbl+'</strong>'+
   (req.foco?'<div style="color:var(--text);font-style:italic;margin-bottom:4px">'+req.foco+'</div>':'')+
   '<div class="req-section"><span class="req-section-lbl">Requisitos</span>'+req.exam+'</div>'+
   '<div class="req-section"><span class="req-section-lbl">Ido-Geiko</span>'+req.ido+(req.min?' · <span style="color:var(--gold);font-weight:600">mínimo de '+req.min+' golpes</span>':'')+'</div></div>'+
-  '<p class="ex-note">Os requisitos variam entre dojos e organizações — confirme a lista oficial com o seu sensei. O exame costuma cobrar também tudo o que foi exigido nas faixas anteriores; por isso a revisão está incluída abaixo.</p>'+
-  '<div class="ex-prog"><div class="ex-prog-bar"><div class="ex-prog-fill" id="exam-fill" style="background:'+col+'"></div></div><span class="ex-prog-val" id="exam-prog-val"></span></div>'+
-  '<div class="ex-actions"><button class="gen-btn" type="button" onclick="examSimulado()">Sortear simulado</button>'+
+  '<p class="ex-note">Os requisitos variam entre dojos e organizações — confirme a lista oficial com o seu sensei.</p>';
+
+// Barra fixa de progresso
+const nNew=P.kata.novo.length+P.renraku.novo.length+P.kihon.novo.length+P.kataTechs.novo.length;
+const nRev=P.kata.rev.length+P.renraku.rev.length+P.kihon.rev.length+P.kataTechs.rev.length;
+h+='<div class="ex-sticky">'+
+  '<div class="ex-prog-main"><div class="ex-prog-lbl"><span>Novo nesta faixa</span><span id="exam-prog-val"></span></div>'+
+  '<div class="ex-prog-bar"><div class="ex-prog-fill" id="exam-fill" style="background:'+col+'"></div></div>'+
+  (nRev?'<div class="ex-prog-rev" id="exam-rev-val"></div>':'')+'</div>'+
+  '<button class="gen-btn ex-sim-btn" type="button" onclick="examSimulado()">Simulado</button></div>';
+
+h+='<div class="ex-actions">'+
   '<button class="ex-btn2" type="button" onclick="examGoIdo()">Gerar ido-geiko da faixa</button>'+
   '<button class="ex-btn2" type="button" onclick="examPrint()">Imprimir checklist</button>'+
-  '<button class="ex-btn2" type="button" onclick="examReset()">Limpar marcações</button></div>'+
-  '<div id="exam-sim" aria-live="polite"></div>';
+  '<button class="ex-btn2" type="button" onclick="examReset()">Limpar marcações</button></div>';
 
-// Kata
-h+='<div class="ex-sec" data-exsec><h3>Kata <span class="ex-count"></span></h3>'+
-  '<div class="ex-sec-sub">Execute cada kata com contagem própria e sem hesitar entre as sequências. Os novos desta faixa vêm primeiro.</div><div class="ex-list">'+
-  P.kata.map(k=>_examCheck(k.id,BS[k.belt],
-    '%L'+k.name+'%/L'+newTag(k)+
-    '<div class="ex-meta">'+(EXAM_BELT_LBL[k.belt]||k.belt)+(k.time?' · ~'+k.time:'')+(k.techs&&k.techs.length?' · '+k.techs.join(', '):'')+'</div>'+
-    '<button class="ex-link" type="button" onclick="examOpenKata(\''+k.id+'\')">ver roteiro completo →</button>','ex-item')).join('')+
-  '</div></div>';
-
-// Renraku e footwork
-h+='<div class="ex-sec" data-exsec><h3>Renraku e deslocamento <span class="ex-count"></span></h3>'+
-  '<div class="ex-sec-sub">Combinações encadeadas. Na faixa '+lbl.toLowerCase()+', atenção especial ao footwork: distância e ângulo contam tanto quanto o golpe.</div><div class="ex-list">'+
-  P.renraku.map(r=>_examCheck(r.id,BS[r.belt]||col,
-    '%L'+r.name+'%/L'+newTag(r)+
-    '<div class="ex-meta">'+(r.cat==='ido'?'Footwork · ':'')+r.note+'</div>'+
-    '<details><summary>passo a passo</summary>'+stepsHtml(r.steps)+'</details>','ex-item')).join('')+
-  '</div></div>';
-
-// Kihon
-const groups=[['Tsuki — socos',t=>t.action==='tsuki'],['Uchi — golpes percussivos',t=>t.action==='uchi'],
-  ['Uke e Barai — defesas',t=>t.action==='uke'||t.action==='barai'],['Geri e Keage — chutes',t=>t.action==='geri'||t.action==='keage']];
-const chip=t=>_examCheck(t.id,BS[t.belt]||col,
-  '%L'+t.name+'%/L<div class="ex-meta">'+t.pt+' · <button class="ex-link" type="button" onclick="findAndShowTech(\''+t.name.replace(/'/g,"\\'")+'\')">ver</button></div>','ex-chip');
-h+='<div class="ex-sec" data-exsec><h3>Kihon <span class="ex-count"></span></h3>'+
-  '<div class="ex-sec-sub">Todo o vocabulário técnico acumulado até esta faixa. O examinador chama em japonês — saiba executar e traduzir cada nome.</div>'+
-  groups.map(([g,f])=>{const ts=P.kihon.filter(f);return ts.length?'<div class="ex-grp">'+g+'</div><div class="ex-grid">'+ts.map(chip).join('')+'</div>':'';}).join('')+
-  (P.kataTechs.length?'<div class="ex-grp">Técnicas que só aparecem nos kata exigidos</div><div class="ex-grid">'+P.kataTechs.map(chip).join('')+'</div>':'')+
+// Novo nesta faixa
+h+='<div class="ex-part"><div class="ex-part-hdr" style="border-color:'+col+'"><span class="ex-part-t">Novo nesta faixa</span><span class="ex-part-n">'+nNew+' itens</span></div>';
+if(!nNew)h+='<p class="ex-sec-sub">Esta faixa não introduz itens novos no acervo do Atlas — o exame aprofunda o que já foi aprendido. Veja os requisitos acima e a revisão abaixo.</p>';
+h+=sec('Kata','Execute com contagem própria, kiai nos pontos marcados e zanshin ao final.',list(P.kata.novo.map(kataItem)))+
+  sec('Renraku e deslocamento',b==='verde'?'Na verde o footwork entra no cálculo: distância e ângulo contam tanto quanto o golpe.':'',list(P.renraku.novo.map(renItem)))+
+  sec('Kihon','O examinador chama em japonês — saiba executar e traduzir cada nome.',kihonGrouped(P.kihon.novo,true))+
+  sec('Técnicas dos kata novos','Aparecem só dentro dos kata desta faixa.',grid(P.kataTechs.novo.map(t=>techChip(t,true))))+
   '</div>';
 
+// Revisão
+if(nRev){
+  h+='<details class="ex-part ex-review" id="exam-review"><summary class="ex-part-hdr"><span class="ex-part-t">Revisão das faixas anteriores</span><span class="ex-part-n" id="exam-rev-n"></span></summary>'+
+    '<p class="ex-sec-sub" style="margin-top:12px">O exame costuma cobrar qualquer item das faixas anteriores. Se você já foi aprovado nelas, marque tudo e desmarque só o que estiver enferrujado.</p>'+
+    '<button class="ex-btn2" type="button" onclick="examMarkReview()" style="margin-bottom:16px">Já fui aprovado nessas — marcar tudo</button>'+
+    sec('Kata','',list(P.kata.rev.map(kataItem)))+
+    sec('Renraku e deslocamento','',list(P.renraku.rev.map(renItem)))+
+    sec('Kihon','',kihonGrouped(P.kihon.rev,false))+
+    sec('Técnicas de kata','',grid(P.kataTechs.rev.map(t=>techChip(t,false))))+
+    '</details>';
+}
+
 // Roteiro de estudo
-const nk=P.kata.filter(k=>k.belt===b),nr=P.renraku.filter(r=>r.belt===b);
+const nk=P.kata.novo,nr=P.renraku.novo;
 h+='<div class="ex-sec"><h3>Roteiro sugerido</h3><ol class="ex-plan">'+
-  '<li><b>Base.</b> Revise o kihon acima em '+(req.min?'blocos de '+req.min+' repetições':'blocos curtos')+', dizendo o nome em voz alta. Desmarque o que ainda sai sem convicção.</li>'+
+  '<li><b>Base.</b> Revise o kihon em '+(req.min?'blocos de '+req.min+' repetições':'blocos curtos')+', dizendo o nome em voz alta. Desmarque o que ainda sai sem convicção.</li>'+
   (nk.length?'<li><b>Kata novos.</b> '+nk.map(k=>k.name).join(' e ')+': primeiro o embusen devagar, depois ritmo e kiai. Use o cronômetro da aba Kata.</li>':'')+
-  '<li><b>Revisão de kata.</b> Um ciclo completo dos kata anteriores por sessão — o exame costuma pedir qualquer um deles.</li>'+
+  (nRev?'<li><b>Revisão de kata.</b> Um ciclo completo dos kata anteriores por sessão — o exame costuma pedir qualquer um deles.</li>':'')+
   (nr.length?'<li><b>Renraku e footwork.</b> '+nr.map(r=>r.name).join(' · ')+'. Grave-se ou treine com parceiro para checar a distância.</li>':'')+
   '<li><b>Simulado.</b> Na última semana, sorteie simulados e execute sem pausas, com kiai e zanshin — como no dia do exame.</li></ol></div>';
 
@@ -3831,37 +4014,50 @@ _examProgress();
 
 function _examProgress(){
 const root=document.getElementById('exam-root');if(!root)return;
+const cnt=sel=>{const a=[...root.querySelectorAll(sel)];return[a.filter(c=>c.checked).length,a.length];};
 root.querySelectorAll('[data-exsec]').forEach(sec=>{
-  const cbs=sec.querySelectorAll('input[data-exid]');
-  const n=[...cbs].filter(c=>c.checked).length;
-  sec.querySelector('.ex-count').textContent=n+'/'+cbs.length;
+  const a=[...sec.querySelectorAll('input[data-exid]')];
+  sec.querySelector('.ex-count').textContent=a.filter(c=>c.checked).length+'/'+a.length;
 });
-const all=root.querySelectorAll('input[data-exid]');
-const done=[...all].filter(c=>c.checked).length;
-const pct=all.length?Math.round(done/all.length*100):0;
+const[dn,tn]=cnt('input[data-new="1"]');
+const[dr,tr]=cnt('input[data-new="0"]');
+const pct=tn?Math.round(dn/tn*100):(tr?Math.round(dr/tr*100):0);
 document.getElementById('exam-fill').style.width=pct+'%';
-document.getElementById('exam-prog-val').textContent=done+' de '+all.length+' · '+pct+'%';
+document.getElementById('exam-prog-val').textContent=tn?dn+'/'+tn+' · '+pct+'%':'—';
+const rv=document.getElementById('exam-rev-val');
+if(rv)rv.textContent='Revisão: '+dr+'/'+tr;
+const rn=document.getElementById('exam-rev-n');
+if(rn)rn.textContent=dr+'/'+tr+' sólidos';
+}
+
+function examMarkReview(){
+const d=_examDone();
+document.querySelectorAll('#exam-root input[data-new="0"]').forEach(cb=>{d[cb.dataset.exid]=1;});
+_LS.save('examDone',d);renderExame();
+document.getElementById('exam-review')?.setAttribute('open','');
 }
 
 function examSimulado(){
 const b=examBelt,P=examPool(b),req=BELT_REQ[b];
-const nk=P.kata.filter(k=>k.belt===b),ok=P.kata.filter(k=>k.belt!==b);
-const kata=[..._pick(nk,1),..._pick(ok,nk.length?1:2)];
-const nr=P.renraku.filter(r=>r.belt===b),or=P.renraku.filter(r=>r.belt!==b);
-const ren=[..._pick(nr,2),..._pick(or,Math.max(0,3-Math.min(2,nr.length)))];
-const kihon=_pick(P.kihon,6);
+const kata=[..._pick(P.kata.novo,1),..._pick(P.kata.rev,P.kata.novo.length?1:2)];
+const ren=[..._pick(P.renraku.novo,2),..._pick(P.renraku.rev,Math.max(0,3-Math.min(2,P.renraku.novo.length)))];
+const kihon=_pick([...P.kihon.novo,...P.kihon.rev],6);
 const teoria=_pick(NODES.filter(n=>n.pt),4);
 const block=(label,body)=>'<div class="s-block"><div class="sb-label">'+label+'</div>'+body+'</div>';
-let h='<div class="script-out">'+
-  block('1 · Kihon — o examinador chama',kihon.map(t=>'<details><summary class="ex-sim-q" style="color:var(--text)">'+t.name+'</summary><div class="sb-note">'+t.pt+' — '+t.exec+'</div></details>').join(''))+
-  block('2 · Kata',kata.map(k=>'<div class="sb-name">'+k.name+(k.belt===b?' <span class="ex-new" style="background:'+BS[b]+'22;color:'+BS[b]+'">novo</span>':'')+'</div>').join('')+'<div class="sb-note">Anuncie o nome, execute com kiai nos pontos marcados e mantenha o zanshin no final.</div>')+
-  block('3 · Renraku / deslocamento',ren.map(r=>'<div class="sb-name">'+r.name+'</div><div class="sb-note">'+r.note+'</div>').join('<div style="height:8px"></div>'))+
-  (req.min?block('4 · Ido-Geiko','<div class="sb-name">Mínimo de '+req.min+' golpes</div><div class="sb-note">'+req.ido+'</div>'):'')+
-  block((req.min?'5':'4')+' · Teoria — responda antes de abrir',teoria.map(n=>'<details><summary class="ex-sim-q" style="color:var(--text)">O que significa <b>'+n.label+'</b>?</summary><div class="sb-note">'+n.pt+'</div></details>').join(''))+
+const newTag='<span class="ex-new" style="background:'+BS[b]+'22;color:'+BS[b]+'">novo</span>';
+let n=0;
+const h='<div class="script-out">'+
+  block((++n)+' · Kihon — o examinador chama',kihon.map(t=>'<details><summary class="ex-sim-q">'+t.name+'</summary><div class="sb-note">'+t.pt+' — '+t.exec+'</div></details>').join(''))+
+  (kata.length?block((++n)+' · Kata',kata.map(k=>'<div class="sb-name">'+k.name+(k.belt===b?' '+newTag:'')+'</div>').join('')+'<div class="sb-note">Anuncie o nome, execute com kiai nos pontos marcados e mantenha o zanshin no final.</div>'):'')+
+  (ren.length?block((++n)+' · Renraku / deslocamento',ren.map(r=>'<div class="sb-name">'+r.name+(r.belt===b?' '+newTag:'')+'</div><div class="sb-note">'+r.note+'</div>').join('<div style="height:8px"></div>')):'')+
+  (req.min?block((++n)+' · Ido-Geiko','<div class="sb-name">Mínimo de '+req.min+' golpes</div><div class="sb-note">'+req.ido+'</div>'):'')+
+  block((++n)+' · Teoria — responda antes de abrir',teoria.map(nd=>'<details><summary class="ex-sim-q">O que significa <b>'+nd.label+'</b>?</summary><div class="sb-note">'+nd.pt+'</div></details>').join(''))+
   '<div class="s-kiai">OSU!</div></div>';
-const out=document.getElementById('exam-sim');
-out.innerHTML=h;
-out.scrollIntoView({behavior:'smooth',block:'start'});
+const dlg=document.getElementById('exam-dlg');
+document.getElementById('exam-dlg-title').textContent='Simulado · faixa '+BELT_LBL[b];
+document.getElementById('exam-dlg-body').innerHTML=h;
+if(!dlg.open)dlg.showModal();
+document.getElementById('exam-dlg-body').scrollTop=0;
 }
 
 function examOpenKata(id){
@@ -3876,8 +4072,11 @@ currentIdoBelt=examBelt;_LS.save('idoBelt',examBelt);initIdo();switchTab('ido');
 }
 
 function examPrint(){
+const rev=document.getElementById('exam-review');
+const wasOpen=rev?.open;
+if(rev)rev.open=true;
 document.body.classList.add('print-exam');
-const done=()=>{document.body.classList.remove('print-exam');window.removeEventListener('afterprint',done);};
+const done=()=>{document.body.classList.remove('print-exam');if(rev)rev.open=wasOpen;window.removeEventListener('afterprint',done);};
 window.addEventListener('afterprint',done);
 window.print();
 }
@@ -4796,7 +4995,7 @@ function setMandalMode(mode){
 
 function init(){
 // Restore persisted state before rendering
-const savedTab=location.hash.slice(1)||_LS.get('tab','constelacao');
+const savedTab=location.hash.slice(1)||_LS.get('tab',_LS.get('myBelt',null)?'exame':'constelacao');
 const validTabs=['constelacao','dicionario','construtor','kata','ido','exame','math','fontes','gramatica'];
 const startTab=validTabs.includes(savedTab)?savedTab:'constelacao';
 cvMode=_LS.get('cvMode','mandala');
@@ -4805,11 +5004,15 @@ dictFilters.belt=_LS.get('dictBelt','all');
 dictFilters.action=_LS.get('dictAction','all');
 kataFilter=_LS.get('kataFilter','all');
 currentIdoBelt=_LS.get('idoBelt','branca');
-examBelt=_LS.get('examBelt','verde');
+myBelt=_LS.get('myBelt',null);
+if(myBelt&&!MY_BELT_OPTS.includes(myBelt))myBelt=null;
+examBelt=_LS.get('examBelt',targetBelt(myBelt)||'verde');
+if(myBelt)activeBelt=targetBelt(myBelt);
 
 requestAnimationFrame(()=>requestAnimationFrame(()=>{
   initConstellation();
   initBeltBar();
+  if(activeBelt!=='all')filterBelt(activeBelt);
   // Sync mode buttons to restored state
   ['solidos','palavras','implicitos'].forEach(m=>{
     const btn=document.getElementById('mt-'+m);
@@ -4830,7 +5033,13 @@ renderGramatica();
 initConstrutor();
 initAutoDemo();
 initSearch();
+renderMyBelt();
 if(startTab!=='constelacao')switchTab(startTab);
+// Primeiro acesso: pergunta a faixa uma única vez
+if(!myBelt&&!_LS.get('myBeltAsked',false)){
+  _LS.save('myBeltAsked',true);
+  setTimeout(openMyBeltDialog,600);
+}
 }
 init();
 </script></body></html>
