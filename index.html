@@ -18,7 +18,7 @@
   index.html é a versão autocontida (portável) para deploy sem servidor.
   Editar os arquivos em css/ e js/ para manutenção; sincronizar com o index.
 -->
-<html lang="pt"><head>
+<html lang="pt-BR"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Atlas Kyokushin</title>
 <style>
@@ -593,6 +593,22 @@ td{padding:8px 10px;border-bottom:1px solid rgba(30,30,48,.6);color:var(--text);
   .mb-opts{grid-template-columns:1fr}
   .ak-dlg{max-height:calc(100vh - 80px)}
 }
+/* ===== PALAVRA POR PALAVRA ===== */
+.wbw{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.wbw-w{display:flex;flex-direction:column;align-items:flex-start;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;min-width:0}
+.wbw-w b{font-size:var(--fs-sm);color:var(--text);font-weight:600}
+.wbw-k{font-size:var(--fs-md);color:var(--gold);line-height:1.3}
+.wbw-pt{font-size:var(--fs-xs);color:var(--text2)}
+.wbw-w[title]{cursor:help;border-style:dashed}
+.kc-kanji{font-size:var(--fs-xs);color:var(--text2);margin:-1px 0 6px}
+.kc-kanji [lang="ja"]{color:var(--gold);font-size:var(--fs-sm)}
+.kc-deb{color:var(--text3);font-style:italic}
+.ex-vocab{margin-bottom:26px}
+.ex-vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
+.ex-v{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:baseline;background:var(--bg3);border-radius:7px;padding:8px 10px}
+.ex-v b{font-size:var(--fs-sm);color:var(--text)}
+.ex-v [lang="ja"]{color:var(--gold);font-size:var(--fs-sm);justify-self:end}
+.ex-v-pt{grid-column:1/-1;font-size:var(--fs-xs);color:var(--text2);margin-top:2px}
 /* ===== STEP TECH LINK ===== */
 .step-tech-link{color:var(--gold);cursor:pointer;
   text-decoration:underline dotted;text-underline-offset:2px;
@@ -786,7 +802,7 @@ h2{color:var(--text)!important}
   <div class="panel" id="p-dicionario" role="tabpanel" aria-labelledby="tab-dicionario">
     <div class="panel-inner">
       <h2>Dicionário técnico</h2>
-      <p class="sub">As 54 técnicas do currículo: kihon canônico (branca → amarela) mais técnicas que aparecem exclusivamente em kata. Toque um card para abrir os detalhes de execução.</p>
+      <p class="sub">As <span data-count="techs">54</span> técnicas do currículo: kihon canônico (branca → amarela) mais técnicas que aparecem exclusivamente em kata. Toque um card para abrir os detalhes de execução.</p>
       <div class="filters" id="dict-filters" role="group" aria-label="Filtros do dicionário"></div>
       <input class="search" id="dict-search" placeholder="Buscar por nome japonês, tradução ou nó…" autocomplete="off" type="search" aria-label="Buscar no dicionário">
       <div class="dict-grid" id="dict-grid" aria-live="polite"></div>
@@ -796,7 +812,7 @@ h2{color:var(--text)!important}
   <div class="panel" id="p-kata" role="tabpanel" aria-labelledby="tab-kata">
     <div class="panel-inner">
       <h2>Kata</h2>
-      <p class="sub">As 23 formas do currículo IKO1, da branca ao Shodan. Cada card abre o roteiro de prática, o embusen (linha do movimento) e os silêncios canônicos da forma.</p>
+      <p class="sub">As <span data-count="kata">22</span> formas do currículo IKO1, da branca ao Shodan. Cada card abre o roteiro de prática, o embusen (linha do movimento) e os silêncios canônicos da forma.</p>
       <div class="filters" id="kata-filters" role="group" aria-label="Filtros de kata"></div>
       <div class="kata-grid" id="kata-grid" aria-live="polite"></div>
     </div>
@@ -905,7 +921,7 @@ note:'裏拳 — 裏 = verso, avesso; 拳 = punho. "Punho invertido." Impacta co
 {id:'tettsui',label:'Tettsui',pt:'punho martelo',type:'buki_mao',
 note:'鉄槌 — 鉄 = ferro, aço; 槌 = martelo. "Martelo de ferro." A base do punho cerrado — o lado oposto ao seiken. Impacto descendente ou lateral com massa óssea.'},
 {id:'shuto',label:'Shuto',pt:'mão faca',type:'buki_mao',
-note:'手刀 — 手 = mão; 刀 = espada, faca. "Faca de mão." A lateral da mão mimética da lâmina. O mesmo gesto corta nos dois sentidos: Shuto Uchi e Shuto Uke usam a mesma superfície.'},
+note:'手刀 — 手 = mão; 刀 = espada, faca. "Faca de mão." A lateral da mão imita a lâmina. O mesmo gesto corta nos dois sentidos: Shuto Uchi e Shuto Uke usam a mesma superfície.'},
 {id:'haito',label:'Haito',pt:'mão crista',type:'buki_mao',
 note:'背刀 — 背 = dorso, costas; 刀 = faca. "Faca do dorso." O lado oposto ao shuto — a crista interna da mão. Shuto e Haito são dois gumes da mesma lâmina.'},
 {id:'shotei',label:'Shotei',pt:'calcanhar da palma',type:'buki_mao',
@@ -1049,7 +1065,7 @@ exec:'Antebraço começa ao quadril oposto. Sobe em arco de dentro para fora.'},
 nodes:['barai','gedan','mae'],dachi:'zenkutsu',
 desc:'Antebraço desce e abre em diagonal, defendendo ataques baixos. Barai = varrer/desviar.',
 exec:'Punho começa ao ombro oposto. Antebraço varre para baixo e fora. Termina ao nível do joelho.'},
-{id:'t20',name:'Uchi Uke Gedan Barai',pt:'bloqueio duplo alto+baixo',belt:'branca',action:'uke',kataOnly:false,
+{id:'t20',name:'Uchi Uke Gedan Barai',pt:'bloqueio interno + varredura baixa',belt:'branca',action:'uke',kataOnly:false,
 nodes:['uke','barai','mae'],dachi:'zenkutsu',
 desc:'Combinação simultânea: Uchi Uke com um braço + Gedan Barai com o outro. Defende dois níveis ao mesmo tempo.',
 exec:'Ambos os braços em direções opostas simultaneamente. Sincronizar chegada dos dois antebraços.'},
@@ -1057,18 +1073,18 @@ exec:'Ambos os braços em direções opostas simultaneamente. Sincronizar chegad
 nodes:['keage','haisoku','mae'],dachi:'zenkutsu',
 desc:'Keage é chicote de perna esticada, NÃO chute. Perna sobe reta — joelho não dobra como no geri. Haisoku golpeia.',
 exec:'Perna sobe RETA — joelho não dobra. Haisoku (peito do pé) chicoteia para cima e retorna.'},
-{id:'t22',name:'Uchi Mawashi Geri',pt:'chute circular de dentro p/ fora',belt:'branca',action:'geri',kataOnly:false,
+{id:'t22',name:'Uchi Mawashi Geri',pt:'chute circular de dentro para fora',belt:'branca',action:'geri',kataOnly:false,
 nodes:['geri','haisoku','mawashi'],dachi:'zenkutsu',
 desc:'Chute circular de dentro para fora. Arco do pé vai de dentro do eixo para fora. Haisoku golpeia.',
 exec:'Perna faz arco horizontal de dentro para fora. Joelho lidera, pé segue.'},
-{id:'t23',name:'Soto Mawashi Geri',pt:'chute circular de fora p/ dentro',belt:'branca',action:'geri',kataOnly:false,
+{id:'t23',name:'Soto Mawashi Geri',pt:'chute circular de fora para dentro',belt:'branca',action:'geri',kataOnly:false,
 nodes:['geri','haisoku','mawashi'],dachi:'zenkutsu',
 desc:'Inverso do Uchi Mawashi — arco de fora para dentro. Mesma arma (haisoku), trajetória oposta.',
 exec:'Perna em arco de fora para dentro. Imagem espelhada do Uchi Mawashi.'},
 {id:'t24',name:'Hiza Geri',pt:'chute de joelho',belt:'branca',action:'geri',kataOnly:false,
 nodes:['geri','hiza','mae'],dachi:'zenkutsu',
 desc:'Hiza (joelho) como arma — família geri, mas buki é hiza, não pé. Ponto pedagógico fundamental.',
-exec:'Joelho sobe ao nível chudan. Alvo: solar plexus. Em clinch: perna não precisa se estender.'},
+exec:'Joelho sobe ao nível chudan. Alvo: plexo solar. Em clinch: perna não precisa se estender.'},
 {id:'t25',name:'Kin Geri',pt:'chute na virilha',belt:'branca',action:'geri',kataOnly:false,
 nodes:['geri','haisoku','mae'],dachi:'zenkutsu',
 desc:'Chute frontal baixo à virilha. Haisoku em trajetória ascendente. Diferente do Mae Geri (buki e alvo distintos).',
@@ -1144,7 +1160,7 @@ desc:'Dois antebraços cruzados formam X. Defende socos altos ou baixos. Primeir
 exec:'Ambos os punhos cruzam simultaneamente. Para jodan: sobem juntos. A estrutura X recebe o golpe.'},
 {id:'k01',name:'Ura Tsuki',pt:'soco invertido (uppercut curto)',belt:'kata',action:'tsuki',kataOnly:true,
 kataSrc:['Saifa','Seienchin'],nodes:['seiken','tsuki','gyaku'],dachi:'zenkutsu',
-desc:'Soco com punho invertido (palma para cima). Técnica de clinch — distância mínima. Não canonizado no kihon porque requer contacto.',
+desc:'Soco com punho invertido (palma para cima). Técnica de clinch — distância mínima. Não canonizado no kihon porque requer contato.',
 exec:'Punho invertido. Soco curto em linha reta. Cotovelo quase reto — distância de combate real.'},
 {id:'k02',name:'Tate Tsuki',pt:'soco com punho vertical',belt:'kata',action:'tsuki',kataOnly:true,
 kataSrc:['Tsuki no Kata'],nodes:['seiken','tsuki','mae'],dachi:'zenkutsu',
@@ -1242,7 +1258,7 @@ steps:[
   'Mawatte! — Yame!',
 ]},
 {id:'k_tai3',name:'Taikyoku Sono San',belt:'laranja',time:'22s',
-origin:'Terceiro Taikyoku. Introduz Kokutsu Dachi e Chudan Uchi Uke nas viragens laterais.',
+origin:'Terceiro Taikyoku. Introduz Kokutsu Dachi e Chudan Uchi Uke nos giros laterais.',
 embusen:'M30,80 L30,10 M5,60 L55,60 M5,30 L55,30',
 techs:['Gedan Barai','Chudan Uchi Uke','Seiken Jodan Oi Tsuki','Seiken Chudan Oi Tsuki'],
 note:'Primeiro kata com duas posturas (Zenkutsu + Kokutsu). Kokutsu ensina que recuar não é enfraquecer — é mudar o ângulo de força.',
@@ -1255,7 +1271,7 @@ steps:[
   '4. Avança → Hidari Seiken Chudan Oi Tsuki',
   '5. Giro esq 90° → Hidari Chudan Uchi Uke · kokutsu dachi',
   '  ▶ Kokutsu: 70% peso atrás, antebraço bloqueia de dentro para fora.',
-  '6. Avança (muda p/ zenkutsu) → Migi Seiken Jodan Oi Tsuki',
+  '6. Avança (muda para zenkutsu) → Migi Seiken Jodan Oi Tsuki',
   '7. Avança → Migi Seiken Jodan Oi Tsuki · KIAI',
   '8. Mawatte! → Migi Chudan Uchi Uke · kokutsu',
   '9. Avança → Hidari Jodan Oi Tsuki',
@@ -1381,14 +1397,14 @@ steps:[
 {id:'k_pi3',name:'Pinan Sono San',belt:'azul',time:'22s',
 origin:'Kiba Dachi predomina. Introduz Hiji Uke, Ushiro Hiji Ate e Ushiro Tsuki.',
 embusen:'M5,50 L55,50 M20,50 L20,15 M40,50 L40,15',
-techs:['Hiji Uke','Ushiro Hiji Ate','Ushiro Tsuki','Uraken Sayu Ganmen Uchi','Yonhon Nukite'],
+techs:['Hiji Uke','Ushiro Hiji Ate','Ushiro Tsuki','Uraken Sayu Gammen Uchi','Yonhon Nukite'],
 note:'Kata de combate de curta distância. Ushiro Tsuki é exclusivo deste kata.',
 silences:'Sem geri.',
 steps:[
   'Yoi! — heisoku dachi',
   '1. Hidari Chudan Uchi Uke + Migi Chudan Uchi Uke (simultâneos, kiba dachi)',
   '  ▶ Hiji Uke: cotovelos de dentro para fora, defendendo duas linhas.',
-  '2. Migi Uraken Sayu Ganmen Uchi (dorso do punho → rosto lateral)',
+  '2. Migi Uraken Sayu Gammen Uchi (dorso do punho → rosto lateral)',
   '3. Giro esq 90° → Hidari Gedan Barai · zenkutsu',
   '4. Avança → Migi Oi Tsuki chudan',
   '5. Avança → Migi Oi Tsuki chudan',
@@ -1511,7 +1527,7 @@ steps:[
   '7. Avança → Migi Oi Tsuki jodan · KIAI',
   '8. Mawashi Geri jodan migi (chute circular alto)',
   '  ▶ Quadril orbita; haisoku à têmpora. Jodan = arriscar, alto retorno.',
-  '9. Migi Tettsui Hizo Uchi + Hidari Uraken Ganmen Uchi (simultâneos)',
+  '9. Migi Tettsui Hizo Uchi + Hidari Uraken Gammen Uchi (simultâneos)',
   '10. Yoko Geri jodan hidari (chute lateral ao rosto)',
   '  ▶ Sokuto ao queixo — técnica de competição de alto nível.',
   '11. Hidari Tettsui + Migi Uraken (simultâneos)',
@@ -1734,7 +1750,7 @@ steps:['Chudan Soto Uke + Gyaku Tsuki + Mae Geri — Hajime!','  ▶ Soto Uke: b
 note:'O Soto Uke abre a guarda do oponente para o Gyaku Tsuki.'},
 {id:'r08',name:'Mae Geri + Jodan Uke + Uraken + Gyaku Tsuki',belt:'amarela',
 steps:['Mae Geri + Jodan Uke + Uraken + Gyaku Tsuki — Hajime!','  ▶ Mae Geri: chute frontal','  ▶ Jodan Uke: bloqueio alto ao avançar','  ▶ Uraken Gammen Uchi: chicote ao rosto','  ▶ Gyaku Tsuki: soco reverso','  ▶ Yame! Mawatte!'],
-note:'Renraku de 4 tempos. Introduce Uraken em combinação.'},
+note:'Renraku de 4 tempos. Introduz o Uraken em combinação.'},
 {id:'r09',name:'Yoko Geri + Gyaku Tsuki',belt:'azul',
 steps:['Yoko Geri + Gyaku Tsuki — Hajime!','  ▶ Câmara lateral: joelho aponta para baixo','  ▶ Yoko Geri: sokuto lateral ao tronco','  ▶ Gyaku Tsuki ao pousar','  ▶ Yame! Mawatte!'],
 note:'Câmara do yoko geri: joelho aponta para baixo antes de estender. Erro comum: joelho apontar para cima.'},
@@ -1808,6 +1824,89 @@ verde:{exam:'Pinan Sono Ichi–Go. Gekisai Dai. Footwork de kumite (okuri-ashi, 
 marrom:{exam:'Yantsu, Tensho, Gekisai Sho, Saifa. Yakusoku Kumite (combate combinado). Tenshin, oi-ashi, nidan geri. Tameshiwari de 1 a 2 tábuas.',ido:'25–30 golpes · tai sabaki · renraku de 4 ou mais técnicas com movimentação',min:25,foco:'Movimentação tática — a estrutura inteira do corpo se desloca em função do oponente.'},
 shodan:{exam:'Kanku, Seienchin, Garyu, Seipai. 10 lutas de 3 minutos. Tameshiwari de 3 tábuas. Prova teórica com nota mínima 7. Ido-Geiko de no mínimo 30 golpes.',ido:'Mínimo 30 golpes · síntese de todos os recursos das faixas anteriores',min:30,foco:'Síntese: o praticante navega o vocabulário inteiro como linguagem fluente.'},
 };
+
+// ===== LÉXICO COMPLEMENTAR =====
+// Palavras que aparecem nos nomes das técnicas mas não são nós da constelação,
+// mais o vocabulário de dojo e a contagem cobrados em exame.
+const GLOSS_EXTRA={
+ago:{k:'顎',pt:'queixo'},
+hiji:{k:'肘',pt:'cotovelo',nota:'Sinônimo de Empi (猿臂). No Kyokushin, os golpes de cotovelo costumam ser chamados Hiji Ate.'},
+juji:{k:'十字',pt:'em cruz, em X'},
+kagi:{k:'鉤',pt:'gancho'},
+kake:{k:'掛け',pt:'enganchar'},
+kakiwake:{k:'掻き分け',pt:'abrir afastando'},
+kin:{k:'金',pt:'virilha',nota:'Abreviação de 金的 (kinteki), eufemismo para a região genital.'},
+morote:{k:'諸手',pt:'as duas mãos'},
+nidan:{k:'二段',pt:'dois níveis'},
+osae:{k:'押さえ',pt:'pressionar, conter'},
+otoshi:{k:'落とし',pt:'deixar cair, descendente'},
+sakotsu:{k:'鎖骨',pt:'clavícula'},
+sayu:{k:'左右',pt:'esquerda e direita'},
+shita:{k:'下',pt:'por baixo'},
+tate:{k:'縦',pt:'vertical'},
+teisho:{k:'底掌',pt:'base da palma',nota:'Variante de Shotei (掌底), com os kanji em ordem inversa.'},
+uchikomi:{k:'打ち込み',pt:'golpe que penetra'},
+ura:{k:'裏',pt:'avesso, invertido'},
+};
+// "Uchi" tem dois sentidos: 打ち (golpear) no fim do nome; 内 (de dentro) antes de outra palavra
+const UCHI_IN={k:'内',pt:'de dentro, interno',nota:'Homônimo de Uchi (打ち, golpear). Antônimo de Soto (外).'};
+
+const DOJO_VOCAB=[
+{grp:'Comandos',itens:[
+  ['Yoi','用意','preparar — posição de prontidão'],['Hajime','始め','começar'],['Yame','止め','parar'],
+  ['Mawatte','回って','virar (meia-volta)'],['Naore','直れ','voltar à posição inicial'],['Kiai','気合','grito que concentra a energia'],
+  ['Zanshin','残心','atenção mantida após a técnica'],['Kamae','構え','guarda'],['Migi','右','direita'],['Hidari','左','esquerda']]},
+{grp:'Dojo e etiqueta',itens:[
+  ['Osu','押忍','saudação do Kyokushin — perseverança sob pressão'],['Rei','礼','saudação, reverência'],['Seiza','正座','sentar-se de joelhos'],
+  ['Mokuso','黙想','meditação de olhos fechados'],['Dojo','道場','local de treino'],['Sensei','先生','professor'],['Senpai','先輩','aluno mais graduado']]},
+{grp:'Formas de treino',itens:[
+  ['Kihon','基本','fundamentos'],['Kata','型','forma'],['Kumite','組手','luta'],['Ido Geiko','移動稽古','treino em deslocamento'],
+  ['Renraku','連絡','combinação encadeada'],['Tameshiwari','試し割り','teste de quebramento']]},
+{grp:'Contagem',itens:[
+  ['Ichi','一','um'],['Ni','二','dois'],['San','三','três'],['Shi / Yon','四','quatro'],['Go','五','cinco'],
+  ['Roku','六','seis'],['Shichi / Nana','七','sete'],['Hachi','八','oito'],['Kyu / Ku','九','nove'],['Ju','十','dez']]},
+];
+
+// Nome dos kata: kanji e sentido. `deb` marca leituras em que as fontes divergem.
+const KATA_NAME={
+k_tai1:['太極その一','grande princípio, primeiro'],k_tai2:['太極その二','grande princípio, segundo'],k_tai3:['太極その三','grande princípio, terceiro'],
+k_stai1:['足技太極その一','grande princípio com técnicas de pé, primeiro'],k_stai2:['足技太極その二','grande princípio com técnicas de pé, segundo'],k_stai3:['足技太極その三','grande princípio com técnicas de pé, terceiro'],
+k_pi1:['平安その一','paz e tranquilidade, primeiro'],k_pi2:['平安その二','paz e tranquilidade, segundo'],k_pi3:['平安その三','paz e tranquilidade, terceiro'],
+k_pi4:['平安その四','paz e tranquilidade, quarto'],k_pi5:['平安その五','paz e tranquilidade, quinto'],
+k_sanchin:['三戦の型','forma das três batalhas'],k_tsuki:['突きの型','forma dos socos'],
+k_gekidai:['撃砕大','atacar e esmagar (maior)'],k_gekisho:['撃砕小','atacar e esmagar (menor)'],
+k_tensho:['転掌','palmas que giram'],k_saifa:['最破','romper ao máximo'],k_kanku:['観空','contemplar o céu'],
+k_seipai:['十八','dezoito'],k_garyu:['臥龍','dragão reclinado'],
+k_yantsu:['安三','três pacíficos',1],k_seien:['征遠鎮','conquistar e pacificar à distância',1],
+};
+
+const _kanjiOf=n=>{const m=(n.note||'').match(/^([぀-ヿ㐀-鿿]+)/);return m?m[1]:'';};
+const jaSpan=s=>String(s).replace(/([぀-ヿ㐀-鿿]+)/g,'<span lang="ja">$1</span>');
+
+// Decompõe o nome de uma técnica em palavras com kanji e tradução
+function techWords(name){
+const ws=name.split(/\s+/);
+return ws.map((w,i)=>{
+  const low=w.toLowerCase();
+  if(low==='uchi'&&i<ws.length-1)return{w,...UCHI_IN};
+  const n=NODES.find(x=>x.label.toLowerCase()===low);
+  if(n)return{w,k:_kanjiOf(n),pt:n.pt};
+  const e=GLOSS_EXTRA[low];
+  return e?{w,...e}:{w,k:'',pt:''};
+});
+}
+function techWordsHtml(name){
+return'<div class="wbw" aria-label="Palavra por palavra">'+techWords(name).map(x=>
+  '<span class="wbw-w"'+(x.nota?' title="'+x.nota.replace(/"/g,'&quot;')+'"':'')+'><b>'+x.w+'</b>'+
+  (x.k?'<span class="wbw-k" lang="ja">'+x.k+'</span>':'')+
+  '<span class="wbw-pt">'+(x.pt||'—')+'</span></span>').join('')+'</div>';
+}
+// Texto para a síntese de voz: kanji quando todas as palavras têm grafia conhecida (pronúncia mais fiel que o romaji)
+function techSpeech(name){
+const ws=techWords(name);
+return ws.every(x=>x.k)?ws.map(x=>x.k).join(''):name;
+}
+
 
 // Node lookup
 const NMAP=Object.fromEntries(NODES.map(n=>[n.id,n]));
@@ -2549,7 +2648,7 @@ const roleDesc={
   dachi:'Fundação — postura e base · Cubo / Terra',
   ido:'Movimento — deslocamento e footwork · Icosaedro / Água',
 };
-document.getElementById('det-desc').innerHTML=(roleDesc[node.type]||'')+(node.note?'<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;line-height:1.7;color:var(--text2)">'+node.note+'</div>':'');
+document.getElementById('det-desc').innerHTML=(roleDesc[node.type]||'')+(node.note?'<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;line-height:1.7;color:var(--text2)">'+jaSpan(node.note)+'</div>':'');
 const ul=document.getElementById('det-techs');
 const techsForNode=TECHS.filter(t=>t.nodes.includes(nid)||t.dachi===nid||getIdo(t.id)===nid);
 ul.innerHTML='<div style="font-size:10px;color:var(--text2);margin-bottom:6px">TÉCNICAS ('+techsForNode.length+')</div>';
@@ -2580,12 +2679,12 @@ det.classList.remove('bodymap');
 const kw=document.getElementById('karateka-wrap');if(kw)kw.remove();
 document.getElementById('det-name').textContent=tech.name;
 document.getElementById('det-type').innerHTML=tech.pt+
-  ('speechSynthesis'in window?` <button class="speak-btn" title="Pronunciar em japonês" onclick="speak('${tech.name.replace(/'/g,'\\\'')}')" style="margin-left:8px">🔊 ouvir</button>`:'');
+  ('speechSynthesis'in window?` <button class="speak-btn" title="Pronunciar em japonês" onclick="speak('${techSpeech(tech.name).replace(/'/g,'\\\'')}')" style="margin-left:8px">🔊 ouvir</button>`:'');
 document.getElementById('det-tags').innerHTML=
   '<span class="tag" style="color:'+BS[tech.belt]+';border-color:'+BS[tech.belt]+'">'+tech.belt+'</span>'+
   '<span class="tag" style="color:var(--text2);border-color:var(--border)">'+tech.action+'</span>'+
   (tech.kataOnly?'<span class="tag" style="color:var(--kata);border-color:var(--kata)">só em kata</span>':'');
-document.getElementById('det-desc').innerHTML=
+document.getElementById('det-desc').innerHTML=techWordsHtml(tech.name)+
   (tech.img?'<div style="margin-bottom:10px;border-radius:8px;overflow:hidden;border:1px solid var(--border)"><img src="'+tech.img+'" alt="'+tech.name+'" loading="lazy" style="width:100%;max-height:160px;object-fit:cover;display:block"/><div style="font-size:9px;color:var(--text2);padding:4px 8px">Wikimedia Commons · CC-BY</div></div>':'')
   +(tech.desc?'<p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:8px">'+tech.desc+'</p>':'')
   +(tech.exec?'<div class="dc-exec" style="font-size:12px;padding:8px 12px;background:var(--bg2);border-radius:6px;border-left:3px solid var(--gold);line-height:1.5">'+tech.exec+'</div>':'');
@@ -2950,6 +3049,7 @@ TECHS.filter(t=>{
     '</div>'+
     '<div class="dc-hint" aria-hidden="true">▸ toque para abrir</div>'+
     '<div class="dc-exp">'+
+      techWordsHtml(t.name)+
       '<div class="dc-desc">'+(t.desc||'')+'</div>'+
       (t.exec?'<div class="dc-exec"><strong style="color:var(--gold);font-size:var(--fs-micro);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px">Execução</strong>'+t.exec+'</div>':'')+
     '</div>';
@@ -3065,6 +3165,7 @@ KATA.filter(k=>{
   div.innerHTML=
     '<div class="kc-belt" style="background:'+BS[belt]+'22;color:'+BS[belt]+'">'+belt+'</div>'+
     '<div class="kc-name">'+k.name+'</div>'+
+    (KATA_NAME[k.id]?'<div class="kc-kanji"><span lang="ja">'+KATA_NAME[k.id][0]+'</span> · '+KATA_NAME[k.id][1]+(KATA_NAME[k.id][2]?' <span class="kc-deb" title="As fontes divergem sobre o sentido deste nome">(leitura debatida)</span>':'')+'</div>':'')+
     '<div class="kc-origin">'+k.origin+'</div>'+
     '<div class="kc-emb"><svg viewBox="0 0 60 90" width="60" height="90" style="display:block">'+
     '<rect width="60" height="90" fill="#111118" rx="4"/>'+
@@ -3094,7 +3195,7 @@ KATA.filter(k=>{
   if(nameEl){
     nameEl.setAttribute('title','Toque para ouvir a pronúncia');
     nameEl.style.cursor='pointer';
-    nameEl.addEventListener('click',e=>{e.stopPropagation();speak(k.name);});
+    nameEl.addEventListener('click',e=>{e.stopPropagation();speak(KATA_NAME[k.id]?KATA_NAME[k.id][0]:k.name);});
   }
   div.setAttribute('role','button');
   div.setAttribute('tabindex','0');
@@ -3990,6 +4091,12 @@ if(nRev){
     '</details>';
 }
 
+// Vocabulário do dojo (cobrado na parte teórica de qualquer exame)
+h+='<details class="ex-part ex-review ex-vocab"><summary class="ex-part-hdr"><span class="ex-part-t">Vocabulário do dojo</span><span class="ex-part-n">comandos, etiqueta e contagem</span></summary>'+
+  DOJO_VOCAB.map(g=>'<div class="ex-grp">'+g.grp+'</div><div class="ex-vgrid">'+g.itens.map(([w,k,pt])=>
+    '<div class="ex-v"><b>'+w+'</b><span lang="ja">'+k+'</span><span class="ex-v-pt">'+pt+'</span></div>').join('')+'</div>').join('')+
+  '<div style="height:10px"></div></details>';
+
 // Roteiro de estudo
 const nk=P.kata.novo,nr=P.renraku.novo;
 h+='<div class="ex-sec"><h3>Roteiro sugerido</h3><ol class="ex-plan">'+
@@ -4042,7 +4149,10 @@ const b=examBelt,P=examPool(b),req=BELT_REQ[b];
 const kata=[..._pick(P.kata.novo,1),..._pick(P.kata.rev,P.kata.novo.length?1:2)];
 const ren=[..._pick(P.renraku.novo,2),..._pick(P.renraku.rev,Math.max(0,3-Math.min(2,P.renraku.novo.length)))];
 const kihon=_pick([...P.kihon.novo,...P.kihon.rev],6);
-const teoria=_pick(NODES.filter(n=>n.pt),4);
+const vocab=[...NODES.filter(n=>n.pt).map(n=>({w:n.label,k:_kanjiOf(n),pt:n.pt})),
+  ...Object.entries(GLOSS_EXTRA).map(([w,e])=>({w:w[0].toUpperCase()+w.slice(1),k:e.k,pt:e.pt})),
+  ...DOJO_VOCAB.flatMap(g=>g.itens.map(([w,k,pt])=>({w,k,pt})))];
+const teoria=_pick(vocab,5);
 const block=(label,body)=>'<div class="s-block"><div class="sb-label">'+label+'</div>'+body+'</div>';
 const newTag='<span class="ex-new" style="background:'+BS[b]+'22;color:'+BS[b]+'">novo</span>';
 let n=0;
@@ -4051,7 +4161,7 @@ const h='<div class="script-out">'+
   (kata.length?block((++n)+' · Kata',kata.map(k=>'<div class="sb-name">'+k.name+(k.belt===b?' '+newTag:'')+'</div>').join('')+'<div class="sb-note">Anuncie o nome, execute com kiai nos pontos marcados e mantenha o zanshin no final.</div>'):'')+
   (ren.length?block((++n)+' · Renraku / deslocamento',ren.map(r=>'<div class="sb-name">'+r.name+(r.belt===b?' '+newTag:'')+'</div><div class="sb-note">'+r.note+'</div>').join('<div style="height:8px"></div>')):'')+
   (req.min?block((++n)+' · Ido-Geiko','<div class="sb-name">Mínimo de '+req.min+' golpes</div><div class="sb-note">'+req.ido+'</div>'):'')+
-  block((++n)+' · Teoria — responda antes de abrir',teoria.map(nd=>'<details><summary class="ex-sim-q">O que significa <b>'+nd.label+'</b>?</summary><div class="sb-note">'+nd.pt+'</div></details>').join(''))+
+  block((++n)+' · Teoria — responda antes de abrir',teoria.map(nd=>'<details><summary class="ex-sim-q">O que significa <b>'+nd.w+'</b>?</summary><div class="sb-note">'+(nd.k?'<span lang="ja">'+nd.k+'</span> · ':'')+nd.pt+'</div></details>').join(''))+
   '<div class="s-kiai">OSU!</div></div>';
 const dlg=document.getElementById('exam-dlg');
 document.getElementById('exam-dlg-title').textContent='Simulado · faixa '+BELT_LBL[b];
@@ -4928,7 +5038,7 @@ function advanceDemo(){
   setVal('cs-bukim',bm||''); setVal('cs-bukipe',bp||'');
   setVal('cs-dir',dir||''); setVal('cs-alvo',alvo||'');
   updateConstrutor();
-  speak(t.name);
+  speak(techSpeech(t.name));
 }
 
 // ===== KATA TIMER =====
@@ -5034,6 +5144,8 @@ initConstrutor();
 initAutoDemo();
 initSearch();
 renderMyBelt();
+document.querySelectorAll('[data-count="techs"]').forEach(e=>e.textContent=TECHS.length);
+document.querySelectorAll('[data-count="kata"]').forEach(e=>e.textContent=KATA.length);
 if(startTab!=='constelacao')switchTab(startTab);
 // Primeiro acesso: pergunta a faixa uma única vez
 if(!myBelt&&!_LS.get('myBeltAsked',false)){
