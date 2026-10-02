@@ -1,6 +1,6 @@
 # Auditoria de riqueza linguística — Atlas Kyokushin
 
-Data: 30/09/2026 · Escopo: todo o conteúdo textual de `index.html` (léxico `NODES`, 54 técnicas, 22 kata, 21 renraku, requisitos de faixa e os textos renderizados de todas as abas).
+Data: 30/09/2026, atualizada em 02/10/2026 · Escopo: todo o conteúdo textual de `index.html` (léxico `NODES`, 54 técnicas, 22 kata, 21 renraku, requisitos de faixa e os textos renderizados de todas as abas).
 
 ## Resumo
 
@@ -147,11 +147,23 @@ Entrou o `DOJO_VOCAB` (comandos, etiqueta, formas de treino e contagem), com kan
 - Contagens de técnicas e kata calculadas a partir dos dados.
 - As correções de português da tabela da seção 1.
 
-## 4. Próximos passos, por impacto
+## 4. Segunda rodada — itens corrigidos (02/10/2026)
 
-1. Nó `uchi (内)` e reanotação de Shuto Uchi Uchi, Chudan Uchi Uke, Uchi Uke Gedan Barai e Uchi Mawashi Geri (§2.2).
-2. Decidir a forma principal de Empi/Hiji, Jodan/Age Uke e Shotei/Teisho, e registrar a variante (§2.3).
-3. Padronizar as 16 glosas que nomeiam só a arma (§1).
-4. Campo `kana` para pronúncia garantida e mácron no detalhe (§2.4, §2.5).
-5. Posturas e deslocamentos faltantes no léxico (§2.7).
-6. Validar os pontos da §2.8 com o sensei.
+Todos os próximos passos da primeira versão deste relatório foram aplicados. Onde havia uma escolha de terminologia, a decisão está registrada abaixo, para validação com o sensei.
+
+| Item | O que mudou |
+|---|---|
+| Nó **Uchi 内** (§2.2) | Novo nó de direção `uchi_in` ("de dentro para fora", antônimo de Soto). Reanotadas: Shuto Uchi Uchi (antes registrava **Soto**, o oposto), Chudan Uchi Uke e Uchi Uke Gedan Barai (antes **Mae**) e Uchi Mawashi Geri. Soto Mawashi Geri ganhou a direção Soto. Uchi Uke Gedan Barai ganhou também o alvo Gedan. |
+| **Hiji / Empi** (§2.3) | **Hiji (肘)** passa a ser a forma principal do nó de cotovelo e **Hiji Ate** a das técnicas: Otoshi, Mawashi e Age Hiji Ate, e Mae Hiji Ate nos renraku. Empi (猿臂) fica registrado como sinônimo, na nota do nó e no glossário. |
+| **Shotei / Teisho** | **Shotei (掌底)** é a forma principal (Teisho Uke → Shotei Uke; roteiro do Tensho). Teisho fica como variante na descrição. |
+| **Jodan Uke / Age Uke** | **Jodan Uke**, a forma do kihon, passa a valer em todos os roteiros de kata. Age Uke fica citado como sinônimo na descrição da técnica e na nota do nó Age. |
+| **Uraken Shomen Uchi** | Unificado em **Uraken Gammen Uchi**: os passos agora viram link para a técnica. |
+| **Saifa → Saiha (最破)** (§2.8) | Nome do kata, origem e referências atualizados. A nota do kata trazia o kanji errado (破壊, "hakai"); agora traz 最破, "romper ao máximo". |
+| **Seiken Kagi Tsuki** (§2.8) | Alvo corrigido para **chudan** na fórmula e na descrição. |
+| **16 glosas** (§1) | Padronizadas em ação + arma + alvo. Exemplos: "Tettsui Uchi → golpe de punho martelo", "Nukite → estocada com a ponta dos dedos". |
+| **Kana e mácron** (§2.4, §2.5) | Cada palavra tem a romanização Hepburn com mácron (chūdan, shutō, kōkutsu) e a leitura em hiragana. O painel "palavra por palavra" mostra as duas. **A voz agora recebe kana, não kanji**, o que garante a leitura. Os kata ganharam kana próprio, porque vários nomes usam a pronúncia de Okinawa: 平安 é Pinan (não Heian) e 十八 é Seipai (não Jūhachi). |
+| **Posturas e deslocamentos** (§2.7) | O vocabulário do dojo ganhou 7 posturas (Heisoku, Musubi, Uchi Hachiji, Fudo, Shiko, Neko Ashi, Tsuru Ashi), 6 deslocamentos (Fumi-dashi, Kosa-ashi, Oi-ashi, Tenshin, Tai Sabaki, Kaiten), Ibuki, Hikite e Dojo Kun. |
+| **Jargão em inglês** (§1) | snap → estalo, clinch → corpo a corpo, timing → tempo de reação, "uppercut de cotovelo" → gancho ascendente de cotovelo, footwork → deslocamento. "Uppercut" ficou só entre parênteses nas glosas de soco, como referência. |
+| Espaço de combinações | A Gramática dizia "54 de 10.584", e a Matemática calculava 3.780. As duas abas agora usam a mesma conta a partir dos dados: **4.320** com o novo nó, dos quais 54 viram técnica (1,3%). |
+
+**Continua em aberto:** a convenção de Uchi × Soto Mawashi Geri (§2.8). A definição do app é coerente internamente, mas convém confirmar a do dojo.
