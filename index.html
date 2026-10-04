@@ -1044,6 +1044,28 @@ h2{font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing
   .tr-st.cur .tr-dot{transform:none}
   .td-big{font-size:64px}
 }
+
+/* --- guia editorial da faixa --- */
+.ex-g-k{font-family:var(--font-display);font-weight:700;color:var(--gold);margin-left:4px}
+.ex-g{margin-top:8px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm)}
+.ex-g-h{font-size:var(--fs-micro);letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:700;margin:10px 0 4px}
+.ex-g-h:first-child{margin-top:0}
+.ex-g-ol,.ex-g-ul{padding-left:20px;font-size:var(--fs-sm);color:var(--text);line-height:1.6}
+.ex-g-ul li::marker{color:var(--gold)}
+.ex-g-p{font-size:var(--fs-sm);color:var(--text2);line-height:1.6;margin-top:4px}
+.ex-g-p b{color:var(--text)}
+.ex-g-at{font-size:var(--fs-xs);color:var(--text2);margin-top:4px;line-height:1.5}
+.ex-g-at b{color:var(--gold)}
+.ex-g-qa{display:flex;flex-direction:column;gap:6px}
+.ex-qa{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:0 14px;box-shadow:var(--sh-sm)}
+.ex-qa summary{cursor:pointer;font-size:var(--fs-base);font-weight:600;color:var(--text);padding:12px 0;min-height:44px;display:flex;align-items:center}
+.ex-qa[open] summary{color:var(--gold)}
+.ex-qa p{font-size:var(--fs-sm);color:var(--text2);line-height:1.6;padding:0 0 12px}
+.ex-add{display:flex;gap:8px;margin-top:10px}
+.ex-add .search{margin:0;flex:1}
+.ex-sug{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ex-del{margin-left:10px;font-size:var(--fs-xs);color:var(--text3)}
+.ex-grp .ex-link{margin-left:8px;text-transform:none;letter-spacing:0;font-size:var(--fs-xs)}
 </style></head><body>
 <div id="help-overlay" role="dialog" aria-modal="true" aria-labelledby="help-title" aria-hidden="true">
   <div class="help-box">
@@ -3132,7 +3154,10 @@ const done=_examDone();
 let hero;
 if(t){
   const P=examPool(t);
-  const nov=[...P.kata.novo,...P.renraku.novo,...P.kihon.novo,...P.kataTechs.novo];
+  // Mesma conta do Exame: técnicas novas + guia da faixa + itens do dojo
+  const G=EXAM_GUIDE[t];
+  const nov=[...P.kata.novo,...P.renraku.novo,...P.kihon.novo,...P.kataTechs.novo,
+    ...(G?[...G.desloc,...Object.values(G.kata).flat().map(m=>({id:m[0]}))]:[]),...(_examCustom()[t]||[])];
   const ok=nov.filter(x=>done[x.id]).length;
   const pct=nov.length?Math.round(ok/nov.length*100):0;
   const kjK=Object.keys(_kjKnown()).filter(_isKanji).length;
@@ -4233,6 +4258,64 @@ Object.keys(BELT_REQ).forEach(b=>{
 renderExame();
 }
 
+// ===== GUIA EDITORIAL POR FAIXA =====
+// O que os requisitos citam mas o resto do Atlas não ensina passo a passo. Os movimentos-chave
+// saem dos roteiros dos kata; os deslocamentos seguem os renraku da faixa. Começa pela verde.
+const EXAM_GUIDE={
+verde:{
+ desloc:[
+  {id:'g_v_okuri',nome:'Okuri-ashi',k:'送り足',pt:'passo deslizante',ren:'r13',
+   oque:'O pé da frente avança e o de trás acompanha deslizando a mesma distância, sem cruzar e sem juntar os pés. A base e a guarda não mudam durante o passo.',
+   passos:['Parta do kamae, com o peso distribuído.','Empurre com o pé de trás e deslize o pé da frente cerca de meio passo.','Traga o pé de trás a mesma distância, sem encostar no da frente.','O golpe (Oi Tsuki) chega junto com o assentamento do pé da frente.'],
+   erros:['O pé de trás encosta no da frente antes do soco.','Pular em vez de deslizar: a cabeça sobe e desce.','Encurtar a base no fim do passo.'],
+   treino:'10 idas e voltas em linha reta só com o passo; depois as mesmas 10 com Oi Tsuki ao chegar.'},
+  {id:'g_v_fumi',nome:'Fumi-dashi',k:'踏み出し',pt:'passo de saída',ren:'r15',
+   oque:'Um passo largo em diagonal, cerca de 45°, que tira o corpo da linha do ataque e já posiciona para o contra-ataque. É o tai sabaki básico do kumite.',
+   passos:['Parta do kamae, de frente para a linha de ataque.','Pise em diagonal (cerca de 45°) para fora da linha.','O quadril e o olhar voltam para o oponente enquanto o outro pé se ajusta.','Contra-ataque já da nova posição: Yoko Geri e, ao pousar, Uraken.'],
+   erros:['Recuar em linha reta em vez de sair para o lado.','Cruzar os pés e perder a base.','Baixar a guarda durante a saída.'],
+   treino:'Marque um ponto no chão e saia 45° para a esquerda e para a direita, 10 vezes de cada lado, voltando sempre ao kamae.'},
+  {id:'g_v_kosa',nome:'Kosa-ashi',k:'交差足',pt:'passo cruzado',ren:'r14',
+   oque:'O pé de trás cruza à frente do outro num passo diagonal. O cruzamento gira o quadril e pré-carrega o Mawashi Geri. Diferente do okuri-ashi, aqui os pés se cruzam de verdade.',
+   passos:['Parta do kamae.','Cruze o pé de trás à frente do pé da frente, em diagonal.','Use a rotação do cruzamento para abrir o quadril.','Solte o Mawashi Geri e, ao pousar, o Gyaku Tsuki.'],
+   erros:['Ficar de costas para o oponente por tempo demais.','Cruzar curto e chutar sem alcance.','Olhar para os pés durante o cruzamento.'],
+   treino:'10 cruzamentos sem chute, só sentindo o giro do quadril; depois 10 com Mawashi Geri chudan.'}],
+ kata:{
+  k_pi5:[['g_v_pi5_morote','Morote Uchi Uke','Os dois antebraços defendem ao mesmo tempo, em vetores opostos.','Os dois braços chegam juntos, não um depois do outro.'],
+         ['g_v_pi5_hiji','Yoko Geri + Hiji Ate','Chute lateral em kiba dachi seguido de cotovelada lateral ao estômago.','Pouse o chute já em kiba dachi, sem perder a altura do quadril.'],
+         ['g_v_pi5_osae','Shuto Osae Uke','A mão faca desce e pressiona o ataque para baixo, em kokutsu dachi.','É pressão contínua, sem estalo.'],
+         ['g_v_pi5_tobi','Tobi — o salto','Câmara, salto e Yoko Geri no ar, com kiai. É o primeiro salto do currículo.','Aterrisse equilibrado em kiba dachi antes de seguir.']],
+  k_gekidai:[['g_v_gek_abre','Jodan Uke + Jodan Tsuki','A abertura: defesa alta e soco ao rosto, com giros de 90° e 180°.','Termine cada giro na base certa antes de socar.'],
+         ['g_v_gek_mae','Mae Geri + Oi Tsuki jodan','Chute frontal e avanço com soco alto, com kiai.','O soco chega junto com o pé que pousa à frente.'],
+         ['g_v_gek_mawashi','Mawashi Geri jodan','Chute circular alto: o quadril gira e o haisoku vai à têmpora.','Não incline o tronco para trás para ganhar altura.'],
+         ['g_v_gek_duplo','Tettsui + Uraken simultâneos','Punho martelo e dorso do punho ao mesmo tempo.','Os dois braços saem e chegam juntos.'],
+         ['g_v_gek_yoko','Yoko Geri jodan','Chute lateral alto com o sokuto.','Câmara alta antes de estender.']]},
+ teoria:[
+  ['O que significa Kyokushin (極真)?','“Verdade última”: 極 é extremo, máximo; 真 é verdade.'],
+  ['Quem fundou o Kyokushin?','Masutatsu (Mas) Oyama, chamado de Sosai, o presidente-fundador.'],
+  ['O que significa Pinan (平安)?','Paz e tranquilidade. São cinco Pinan; o Sono Go é o quinto e o último.'],
+  ['O que significa Gekisai (撃砕)?','Atacar e esmagar. Dai quer dizer “maior”; o Gekisai Sho, “menor”, vem na marrom.'],
+  ['De onde vem o Gekisai Dai?','Do Goju-ryu de Chojun Miyagi: força pelo movimento, não pela rigidez.'],
+  ['O que são okuri-ashi, fumi-dashi e kosa-ashi?','Passo deslizante, passo de saída em diagonal e passo cruzado.'],
+  ['O que significa Morote?','“As duas mãos”. Por isso o Morote Uchi Uke usa os dois antebraços.'],
+  ['Hiji e Empi são a mesma coisa?','Sim, os dois são o cotovelo. No Kyokushin se diz Hiji Ate.'],
+  ['O que é Tobi?','Salto. O Pinan Sono Go é o primeiro kata com salto.'],
+  ['Qual o mínimo de golpes no ido-geiko da verde?','20 golpes (o Atlas sugere de 20 a 25), usando okuri, fumi e kosa.'],
+  ['Que comando manda voltar à posição inicial?','Naore (直れ).'],
+  ['O que significa Osu (押忍)?','A saudação do Kyokushin: perseverar sob pressão.']]}
+};
+const EXAM_CUSTOM_SUG=['Kumite — quantas lutas e de quanto tempo','Preparo físico — flexões, abdominais, agachamentos','Dojo Kun — recitar','Teoria escrita ou oral'];
+const _examCustom=()=>_LS.get('examCustom',{});
+function examAddCustom(t){
+t=(t||'').trim();if(!t)return;
+const c=_examCustom();(c[examBelt]=c[examBelt]||[]).push({id:'c_'+Date.now().toString(36),t});
+_LS.save('examCustom',c);renderExame();
+document.getElementById('ex-custom')?.scrollIntoView({block:'nearest'});
+}
+function examDelCustom(id){
+const c=_examCustom();c[examBelt]=(c[examBelt]||[]).filter(x=>x.id!==id);_LS.save('examCustom',c);
+const d=_examDone();delete d[id];_LS.save('examDone',d);renderExame();
+}
+
 function _examCheck(id,color,inner,cls,isNew){
 const done=_examDone()[id];
 return'<div class="'+cls+(done?' done':'')+'" style="border-left-color:'+color+'">'+
@@ -4282,7 +4365,9 @@ h+='<div class="req-box" style="border-left:3px solid '+col+'"><strong>Exame par
   '<p class="ex-note">Os requisitos variam entre dojos e organizações — confirme a lista oficial com o seu sensei.</p>';
 
 // Barra fixa de progresso
-const nNew=P.kata.novo.length+P.renraku.novo.length+P.kihon.novo.length+P.kataTechs.novo.length;
+const G=EXAM_GUIDE[b];
+const nNew=P.kata.novo.length+P.renraku.novo.length+P.kihon.novo.length+P.kataTechs.novo.length+
+  (G?G.desloc.length+Object.values(G.kata).flat().length:0)+((_examCustom()[b]||[]).length);
 const nRev=P.kata.rev.length+P.renraku.rev.length+P.kihon.rev.length+P.kataTechs.rev.length;
 h+='<div class="ex-sticky">'+
   '<div class="ex-prog-main"><div class="ex-prog-lbl"><span>Novo nesta faixa</span><span id="exam-prog-val"></span></div>'+
@@ -4297,11 +4382,12 @@ h+='<div class="ex-actions">'+
 
 // Novo nesta faixa
 h+='<div class="ex-part"><div class="ex-part-hdr" style="border-color:'+col+'"><span class="ex-part-t">Novo nesta faixa</span><span class="ex-part-n">'+nNew+' itens</span></div>';
-if(!nNew)h+='<p class="ex-sec-sub">Esta faixa não introduz itens novos no acervo do Atlas — o exame aprofunda o que já foi aprendido. Veja os requisitos acima e a revisão abaixo.</p>';
+if(!P.kata.novo.length&&!P.renraku.novo.length&&!P.kihon.novo.length&&!G)h+='<p class="ex-sec-sub">Esta faixa não introduz técnicas novas no acervo do Atlas: o exame aprofunda o que já foi aprendido. Veja os requisitos acima, a revisão abaixo e acrescente os itens próprios do seu dojo.</p>';
 h+=sec('Kata','Execute com contagem própria, kiai nos pontos marcados e zanshin ao final.',list(P.kata.novo.map(kataItem)))+
   sec('Renraku e deslocamento',b==='verde'?'Na verde o deslocamento entra no cálculo: distância e ângulo contam tanto quanto o golpe.':'',list(P.renraku.novo.map(renItem)))+
   sec('Kihon','O examinador chama em japonês — saiba executar e traduzir cada nome.',kihonGrouped(P.kihon.novo,true))+
   sec('Técnicas dos kata novos','Aparecem só dentro dos kata desta faixa.',grid(P.kataTechs.novo.map(t=>techChip(t,true))))+
+  _examGuideHtml(b,col)+_examCustomHtml(b,col)+
   '</div>';
 
 // Revisão
@@ -4329,6 +4415,7 @@ h+='<div class="ex-sec"><h3>Roteiro sugerido</h3><ol class="ex-plan">'+
   (nk.length?'<li><b>Kata novos.</b> '+nk.map(k=>k.name).join(' e ')+': primeiro o embusen devagar, depois ritmo e kiai. Use o cronômetro da aba Kata.</li>':'')+
   (nRev?'<li><b>Revisão de kata.</b> Um ciclo completo dos kata anteriores por sessão — o exame costuma pedir qualquer um deles.</li>':'')+
   (nr.length?'<li><b>Renraku e deslocamento.</b> '+nr.map(r=>r.name).join(' · ')+'. Grave-se ou treine com parceiro para checar a distância.</li>':'')+
+  (G?'<li><b>Passos e teoria.</b> Faça o treino em casa de cada deslocamento ('+G.desloc.map(d=>d.nome).join(', ')+') e passe pelas perguntas de teoria até responder sem abrir.</li>':'')+
   '<li><b>Simulado.</b> Na última semana, sorteie simulados e execute sem pausas, com kiai e zanshin — como no dia do exame.</li></ol></div>';
 
 root.innerHTML=h;
@@ -4342,6 +4429,34 @@ root.querySelectorAll('input[data-exid]').forEach(cb=>{
   };
 });
 _examProgress();
+}
+
+function _examGuideHtml(b,col){
+const G=EXAM_GUIDE[b];if(!G)return'';
+const desloc=G.desloc.map(d=>_examCheck(d.id,col,
+  '%L'+d.nome+'%/L <span class="ex-g-k" lang="ja">'+kjLinkAll(d.k)+'</span><div class="ex-meta">'+d.pt+' · '+d.oque+'</div>'+
+  '<details><summary>como executar, erros comuns e treino</summary><div class="ex-g">'+
+   '<div class="ex-g-h">Passo a passo</div><ol class="ex-g-ol">'+d.passos.map(x=>'<li>'+x+'</li>').join('')+'</ol>'+
+   '<div class="ex-g-h">Erros comuns</div><ul class="ex-g-ul">'+d.erros.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+   '<div class="ex-g-h">Treino em casa</div><p class="ex-g-p">'+d.treino+'</p>'+
+   (RENRAKU.find(r=>r.id===d.ren)?'<p class="ex-g-p">No exame aparece no renraku <b>'+RENRAKU.find(r=>r.id===d.ren).name+'</b>.</p>':'')+
+  '</div></details>','ex-item',true)).join('');
+const kata=Object.entries(G.kata).map(([kid,moves])=>{const k=KATA.find(x=>x.id===kid);if(!k)return'';
+  return'<div class="ex-grp">'+k.name+' <button type="button" class="ex-link" onclick="examOpenKata(\''+kid+'\')">ver roteiro →</button></div><div class="ex-list">'+
+   moves.map(([id,nome,oque,aten])=>_examCheck(id,col,'%L'+nome+'%/L<div class="ex-meta">'+oque+'</div><div class="ex-g-at"><b>Atenção:</b> '+aten+'</div>','ex-item',true)).join('')+'</div>';}).join('');
+const teoria='<div class="ex-g-qa">'+G.teoria.map(([q,a])=>'<details class="ex-qa"><summary>'+q+'</summary><p>'+jaSpan(a)+'</p></details>').join('')+'</div>';
+return'<div class="ex-sec ex-guide" data-exsec><h3>Deslocamentos do exame <span class="ex-count"></span></h3><div class="ex-sec-sub">Os três passos que os requisitos citam. Abra cada um para ver como executar, os erros mais comuns e um treino para fazer em casa.</div><div class="ex-list">'+desloc+'</div></div>'+
+  '<div class="ex-sec" data-exsec><h3>Movimentos-chave dos kata novos <span class="ex-count"></span></h3><div class="ex-sec-sub">O que costuma separar uma execução segura de uma hesitante, tirado dos roteiros do Atlas.</div>'+kata+'</div>'+
+  '<div class="ex-sec"><h3>Perguntas de teoria</h3><div class="ex-sec-sub">Tente responder antes de abrir. Elas também entram no simulado.</div>'+teoria+'</div>';
+}
+function _examCustomHtml(b,col){
+const items=_examCustom()[b]||[];
+const used=new Set(items.map(x=>x.t));
+return'<div class="ex-sec" id="ex-custom" data-exsec><h3>Itens do meu dojo <span class="ex-count"></span></h3>'+
+ '<div class="ex-sec-sub">Kumite, preparo físico e outras exigências variam entre dojos e não estão no Atlas. Anote aqui o que o seu sensei cobra; o item entra no progresso.</div>'+
+ (items.length?'<div class="ex-list">'+items.map(x=>_examCheck(x.id,col,'%L'+x.t.replace(/</g,'&lt;')+'%/L<button type="button" class="ex-link ex-del" aria-label="Remover '+x.t.replace(/"/g,'')+'" onclick="examDelCustom(\''+x.id+'\')">remover</button>','ex-item',true)).join('')+'</div>':'')+
+ '<form class="ex-add" onsubmit="event.preventDefault();examAddCustom(this.t.value)"><input name="t" class="search" maxlength="120" placeholder="Ex.: 2 lutas de 1 minuto" aria-label="Novo item do meu dojo"><button type="submit" class="ex-btn2">Adicionar</button></form>'+
+ '<div class="ex-sug">'+EXAM_CUSTOM_SUG.filter(t=>!used.has(t)).map(t=>'<button type="button" class="f-btn" onclick="examAddCustom(this.textContent)">'+t+'</button>').join('')+'</div></div>';
 }
 
 function _examProgress(){
@@ -4377,7 +4492,9 @@ const kihon=_pick([...P.kihon.novo,...P.kihon.rev],6);
 const vocab=[...NODES.filter(n=>n.pt).map(n=>({w:n.label,k:_kanjiOf(n),pt:n.pt})),
   ...Object.entries(GLOSS_EXTRA).map(([w,e])=>({w:w[0].toUpperCase()+w.slice(1),k:e.k,pt:e.pt})),
   ...DOJO_VOCAB.flatMap(g=>g.itens.map(([w,k,pt])=>({w,k,pt})))];
-const teoria=_pick(vocab,5);
+const G=EXAM_GUIDE[b];
+const teoria=_pick(vocab,G?3:5);
+const teoriaFaixa=G?_pick(G.teoria,2):[];
 const block=(label,body)=>'<div class="s-block"><div class="sb-label">'+label+'</div>'+body+'</div>';
 const newTag='<span class="ex-new" style="background:'+tint(BS[b],'22')+';color:'+BS[b]+'">novo</span>';
 let n=0;
@@ -4386,7 +4503,7 @@ const h='<div class="script-out">'+
   (kata.length?block((++n)+' · Kata',kata.map(k=>'<div class="sb-name">'+k.name+(k.belt===b?' '+newTag:'')+'</div>').join('')+'<div class="sb-note">Anuncie o nome, execute com kiai nos pontos marcados e mantenha o zanshin no final.</div>'):'')+
   (ren.length?block((++n)+' · Renraku / deslocamento',ren.map(r=>'<div class="sb-name">'+r.name+(r.belt===b?' '+newTag:'')+'</div><div class="sb-note">'+r.note+'</div>').join('<div style="height:8px"></div>')):'')+
   (req.min?block((++n)+' · Ido-Geiko','<div class="sb-name">Mínimo de '+req.min+' golpes</div><div class="sb-note">'+req.ido+'</div>'):'')+
-  block((++n)+' · Teoria — responda antes de abrir',teoria.map(nd=>'<details><summary class="ex-sim-q">O que significa <b>'+nd.w+'</b>?</summary><div class="sb-note">'+(nd.k?'<span lang="ja">'+nd.k+'</span> · ':'')+nd.pt+'</div></details>').join(''))+
+  block((++n)+' · Teoria — responda antes de abrir',teoria.map(nd=>'<details><summary class="ex-sim-q">O que significa <b>'+nd.w+'</b>?</summary><div class="sb-note">'+(nd.k?'<span lang="ja">'+nd.k+'</span> · ':'')+nd.pt+'</div></details>').join('')+teoriaFaixa.map(([q,a])=>'<details><summary class="ex-sim-q">'+q+'</summary><div class="sb-note">'+jaSpan(a)+'</div></details>').join(''))+
   block((++n)+' · Kanji — diga o sentido e a leitura',_pick(Object.keys(KANJI_DB),3).map(c=>'<details><summary class="ex-sim-q"><span class="sim-kj" lang="ja">'+c+'</span></summary><div class="sb-note">'+KANJI_DB[c].pt+(KANJI_DB[c].on.length?' · on '+KANJI_DB[c].on[0]+' ('+kanaRomaji(KANJI_DB[c].on[0])+')':'')+(KANJI_DB[c].kun.length?' · kun '+KANJI_DB[c].kun[0].replace('.','')+' ('+kanaRomaji(KANJI_DB[c].kun[0].replace('.',''),false)+')':'')+'</div></details>').join(''))+
   '<div class="s-kiai">OSU!</div></div>';
 const dlg=document.getElementById('exam-dlg');
