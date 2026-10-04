@@ -458,6 +458,8 @@ td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text);line
 .mb-dot.mb-empty{background:transparent!important;border:1.5px dashed var(--text3)}
 .mb-arrow{color:var(--text3);font-weight:400}
 .mybelt-chip-inline{display:none;margin:0 0 6px}
+.ex-mybelt-act{display:flex;gap:8px;flex-wrap:wrap}
+.ex-mybelt-act>button{margin:0}
 .mb-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mb-opt{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;
   background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;min-height:52px;cursor:pointer;color:var(--text);font-family:inherit}
@@ -1272,9 +1274,9 @@ h2{font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing
 </div>
 
 <dialog id="mybelt-dlg" class="ak-dlg" aria-labelledby="mybelt-title">
-  <div class="ak-dlg-hdr"><h3 id="mybelt-title">Qual é a sua faixa atual?</h3>
+  <div class="ak-dlg-hdr"><h3 id="mybelt-title">Qual exame você vai prestar?</h3>
     <button type="button" class="ak-dlg-x" aria-label="Fechar" onclick="this.closest('dialog').close()">✕</button></div>
-  <p class="ak-dlg-sub">O Atlas usa sua faixa para abrir no seu próximo exame e ajustar Dicionário, Kata e Ido-Geiko. Cada aba continua podendo mostrar outras faixas.</p>
+  <p class="ak-dlg-sub">Escolha a passagem de faixa que você está preparando. O Início, o Exame, o Dicionário, os Kata e o Ido-Geiko passam a seguir esse exame, e cada aba continua podendo mostrar outras faixas.</p>
   <div id="mybelt-opts" class="mb-opts"></div>
   <button type="button" class="ex-btn2" style="margin-top:14px" onclick="this.closest('dialog').close()">Agora não</button>
 </dialog>
@@ -4175,6 +4177,8 @@ const i=BELT_ORDER.indexOf(b);
 return i<0?null:BELT_ORDER[Math.min(i+1,BELT_ORDER.length-1)];
 }
 const _beltColor=b=>BS[b]||'var(--text3)';
+// Faixa que se usa para prestar o exame `t` (o inverso de targetBelt)
+const beltBefore=t=>{const i=BELT_ORDER.indexOf(t);return i<=0?'iniciante':BELT_ORDER[i-1];};
 
 function setMyBelt(b){
 myBelt=b;_LS.save('myBelt',b);_LS.save('myBeltAsked',true);
@@ -4209,8 +4213,9 @@ const opts=document.getElementById('mybelt-opts');
 opts.innerHTML=MY_BELT_OPTS.map(b=>{
   const t=targetBelt(b),on=b===myBelt;
   return'<button type="button" class="mb-opt'+(on?' on':'')+'" aria-pressed="'+on+'" data-b="'+b+'">'+
-    '<span class="mb-dot'+(b==='iniciante'?' mb-empty':'')+'" style="background:'+(b==='iniciante'?'transparent':_beltColor(b))+'"></span>'+
-    '<span class="mb-opt-name">'+BELT_LBL[b]+'</span><span class="mb-opt-next">próximo exame: '+BELT_LBL[t]+'</span></button>';
+    '<span class="mb-dot" style="background:'+BS[t]+'"></span>'+
+    '<span class="mb-opt-name">'+(b==='iniciante'?'Primeira faixa':BELT_LBL[b]+' → '+BELT_LBL[t])+'</span>'+
+    '<span class="mb-opt-next">'+(b==='iniciante'?'ainda sem faixa · exame da '+BELT_LBL[t].toLowerCase():'uso a '+BELT_LBL[b].toLowerCase()+' · exame da '+BELT_LBL[t].toLowerCase())+'</span></button>';
 }).join('');
 opts.querySelectorAll('.mb-opt').forEach(btn=>btn.onclick=()=>{setMyBelt(btn.dataset.b);dlg.close();});
 if(!dlg.open)dlg.showModal();
@@ -4351,11 +4356,12 @@ const kihonGrouped=(ts,isNew)=>groups.map(([g,f])=>{const x=ts.filter(f);return 
 // Contexto: minha faixa
 let h='';
 if(!myBelt){
-  h+='<div class="ex-mybelt"><div><b>Qual é a sua faixa atual?</b><br>Com ela, o Atlas abre direto no seu próximo exame e ajusta Dicionário, Kata e Ido-Geiko para você.</div>'+
+  h+='<div class="ex-mybelt"><div><b>Qual exame você vai prestar?</b><br>Com ele, o Atlas abre direto no seu próximo exame e ajusta Dicionário, Kata e Ido-Geiko para você.</div>'+
     '<button class="gen-btn" type="button" onclick="openMyBeltDialog()">Definir minha faixa</button></div>';
 }else if(b!==myT){
   h+='<div class="ex-mybelt"><div>Você está vendo o exame de <b style="color:'+col+'">'+lbl+'</b>. Seu próximo exame é <b style="color:'+BS[myT]+'">'+BELT_LBL[myT]+'</b>.</div>'+
-    '<button class="ex-btn2" type="button" onclick="examBelt=targetBelt(myBelt);_LS.save(\'examBelt\',examBelt);initExame()">Voltar ao meu exame</button></div>';
+    '<div class="ex-mybelt-act"><button class="gen-btn" type="button" onclick="setMyBelt(beltBefore(\''+b+'\'))">Meu próximo exame é este</button>'+
+    '<button class="ex-btn2" type="button" onclick="examBelt=targetBelt(myBelt);_LS.save(\'examBelt\',examBelt);initExame()">Voltar ao exame de '+BELT_LBL[myT].toLowerCase()+'</button></div></div>';
 }
 
 h+='<div class="req-box" style="border-left:3px solid '+col+'"><strong>Exame para faixa '+lbl+'</strong>'+
